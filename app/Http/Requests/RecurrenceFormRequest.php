@@ -33,8 +33,8 @@ use FireflyIII\Support\Request\ChecksLogin;
 use FireflyIII\Support\Request\ConvertsDataTypes;
 use FireflyIII\Validation\AccountValidator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Validator;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\Validator;
 
 /**
  * Class RecurrenceFormRequest
@@ -133,7 +133,7 @@ class RecurrenceFormRequest extends FormRequest
         $factory = app(CategoryFactory::class);
         $factory->setUser(auth()->user());
         /**
-         * @var int $index
+         * @var int   $index
          * @var array $transaction
          */
         foreach ($return['transactions'] as $index => $transaction) {
@@ -196,7 +196,7 @@ class RecurrenceFormRequest extends FormRequest
         $rules    = [
             // mandatory info for recurrence.
             'title'                   => 'required|between:1,255|uniqueObjectForUser:recurrences,title',
-            'first_date'              => 'required|date|after:'.$today->format('Y-m-d'),
+            'first_date'              => 'required|date|after:' . $today->format('Y-m-d'),
             'repetition_type'         => ['required', new ValidRecurrenceRepetitionValue(), new ValidRecurrenceRepetitionType(), 'between:1,20'],
             'skip'                    => 'required|numeric|integer|gte:0|lte:31',
 
@@ -240,7 +240,7 @@ class RecurrenceFormRequest extends FormRequest
 
         // if ends at date X, set another rule.
         if ('until_date' === $this->convertString('repetition_end')) {
-            $rules['repeat_until'] = 'required|date|after:'.$tomorrow->format('Y-m-d');
+            $rules['repeat_until'] = 'required|date|after:' . $tomorrow->format('Y-m-d');
         }
 
         // switch on type to expand rules for source and destination accounts:
@@ -264,7 +264,7 @@ class RecurrenceFormRequest extends FormRequest
         $recurrence = $this->route()->parameter('recurrence');
         if ($recurrence instanceof Recurrence) {
             $rules['id']         = 'required|numeric|exists:recurrences,id';
-            $rules['title']      = 'required|between:1,255|uniqueObjectForUser:recurrences,title,'.$recurrence->id;
+            $rules['title']      = 'required|between:1,255|uniqueObjectForUser:recurrences,title,' . $recurrence->id;
             $rules['first_date'] = 'required|date';
         }
 
@@ -274,7 +274,7 @@ class RecurrenceFormRequest extends FormRequest
     /**
      * Configure the validator instance with special rules for after the basic validation rules.
      *
-     * @param  Validator  $validator
+     * @param Validator $validator
      *
      * @return void
      */
@@ -291,7 +291,7 @@ class RecurrenceFormRequest extends FormRequest
     /**
      * Validates the given account information. Switches on given transaction type.
      *
-     * @param  Validator  $validator
+     * @param Validator $validator
      *
      * @throws FireflyException
      */

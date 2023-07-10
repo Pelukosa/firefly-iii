@@ -37,8 +37,8 @@ use FireflyIII\Transformers\TransactionGroupTransformer;
 use FireflyIII\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use JsonException;
 use Illuminate\Support\Facades\Log;
+use JsonException;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
@@ -102,7 +102,7 @@ class StandardMessageGenerator implements MessageGeneratorInterface
     }
 
     /**
-     * @param  Webhook  $webhook
+     * @param Webhook $webhook
      * @throws FireflyException
      * @throws JsonException
      */
@@ -116,8 +116,8 @@ class StandardMessageGenerator implements MessageGeneratorInterface
     }
 
     /**
-     * @param  Webhook  $webhook
-     * @param  Model  $model
+     * @param Webhook $webhook
+     * @param Model   $model
      * @throws FireflyException
      * @throws JsonException
      */
@@ -196,7 +196,7 @@ class StandardMessageGenerator implements MessageGeneratorInterface
     }
 
     /**
-     * @param  TransactionGroup  $transactionGroup
+     * @param TransactionGroup $transactionGroup
      *
      * @return Collection
      */
@@ -215,8 +215,8 @@ class StandardMessageGenerator implements MessageGeneratorInterface
     }
 
     /**
-     * @param  Webhook  $webhook
-     * @param  array  $message
+     * @param Webhook $webhook
+     * @param array   $message
      *
      * @return void
      */
@@ -233,7 +233,7 @@ class StandardMessageGenerator implements MessageGeneratorInterface
     }
 
     /**
-     * @param  Collection  $objects
+     * @param Collection $objects
      */
     public function setObjects(Collection $objects): void
     {
@@ -241,7 +241,7 @@ class StandardMessageGenerator implements MessageGeneratorInterface
     }
 
     /**
-     * @param  int  $trigger
+     * @param int $trigger
      */
     public function setTrigger(int $trigger): void
     {
@@ -249,7 +249,7 @@ class StandardMessageGenerator implements MessageGeneratorInterface
     }
 
     /**
-     * @param  User  $user
+     * @param User $user
      */
     public function setUser(User $user): void
     {

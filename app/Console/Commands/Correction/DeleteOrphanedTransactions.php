@@ -24,10 +24,10 @@ declare(strict_types=1);
 namespace FireflyIII\Console\Commands\Correction;
 
 use Exception;
+use FireflyIII\Console\Commands\ShowsFriendlyMessages;
 use FireflyIII\Models\Transaction;
 use FireflyIII\Models\TransactionJournal;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Log;
 use stdClass;
 
 /**
@@ -35,6 +35,8 @@ use stdClass;
  */
 class DeleteOrphanedTransactions extends Command
 {
+    use ShowsFriendlyMessages;
+
     /**
      * The console command description.
      *
@@ -56,12 +58,9 @@ class DeleteOrphanedTransactions extends Command
      */
     public function handle(): int
     {
-        $start = microtime(true);
         $this->deleteOrphanedJournals();
         $this->deleteOrphanedTransactions();
         $this->deleteFromOrphanedAccounts();
-        $end = round(microtime(true) - $start, 2);
-        $this->info(sprintf('Verified orphans in %s seconds', $end));
 
         return 0;
     }
@@ -74,22 +73,21 @@ class DeleteOrphanedTransactions extends Command
                                    ->get(['transaction_journals.id', 'transaction_journals.transaction_group_id']);
         $count = $set->count();
         if (0 === $count) {
-            $this->info('No orphaned journals.');
+            $this->friendlyPositive('No orphaned journals.');
+            return;
         }
-        if ($count > 0) {
-            $this->info(sprintf('Found %d orphaned journal(s).', $count));
-            foreach ($set as $entry) {
-                $journal = TransactionJournal::withTrashed()->find((int)$entry->id);
-                if (null !== $journal) {
-                    $journal->delete();
-                    $this->info(
-                        sprintf(
-                            'Journal #%d (part of deleted transaction group #%d) has been deleted as well.',
-                            $entry->id,
-                            $entry->transaction_group_id
-                        )
-                    );
-                }
+        $this->friendlyInfo(sprintf('Found %d orphaned journal(s).', $count));
+        foreach ($set as $entry) {
+            $journal = TransactionJournal::withTrashed()->find((int)$entry->id);
+            if (null !== $journal) {
+                $journal->delete();
+                $this->friendlyWarning(
+                    sprintf(
+                        'Journal #%d (part of deleted transaction group #%d) has been deleted as well.',
+                        $entry->id,
+                        $entry->transaction_group_id
+                    )
+                );
             }
         }
     }
@@ -115,7 +113,7 @@ class DeleteOrphanedTransactions extends Command
             $transaction = Transaction::find((int)$entry->transaction_id);
             if (null !== $transaction) {
                 $transaction->delete();
-                $this->info(
+                $this->friendlyWarning(
                     sprintf(
                         'Transaction #%d (part of deleted transaction journal #%d) has been deleted as well.',
                         $entry->transaction_id,
@@ -126,7 +124,7 @@ class DeleteOrphanedTransactions extends Command
             }
         }
         if (0 === $count) {
-            $this->info('No orphaned transactions.');
+            $this->friendlyPositive('No orphaned transactions.');
         }
     }
 
@@ -148,7 +146,7 @@ class DeleteOrphanedTransactions extends Command
                 $journal->delete();
             }
             Transaction::where('transaction_journal_id', (int)$transaction->transaction_journal_id)->delete();
-            $this->line(
+            $this->friendlyWarning(
                 sprintf(
                     'Deleted transaction journal #%d because account #%d was already deleted.',
                     $transaction->transaction_journal_id,
@@ -158,7 +156,7 @@ class DeleteOrphanedTransactions extends Command
             $count++;
         }
         if (0 === $count) {
-            $this->info('No orphaned accounts.');
+            $this->friendlyPositive('No orphaned accounts.');
         }
     }
 }

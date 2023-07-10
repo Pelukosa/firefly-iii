@@ -40,7 +40,7 @@ use FireflyIII\Models\TransactionJournalMeta;
 class GroupCloneService
 {
     /**
-     * @param  TransactionGroup  $group
+     * @param TransactionGroup $group
      *
      * @return TransactionGroup
      */
@@ -56,9 +56,9 @@ class GroupCloneService
     }
 
     /**
-     * @param  TransactionJournal  $journal
-     * @param  TransactionGroup  $newGroup
-     * @param  int  $originalGroup
+     * @param TransactionJournal $journal
+     * @param TransactionGroup   $newGroup
+     * @param int                $originalGroup
      */
     private function cloneJournal(TransactionJournal $journal, TransactionGroup $newGroup, int $originalGroup): void
     {
@@ -115,8 +115,8 @@ class GroupCloneService
     }
 
     /**
-     * @param  Transaction  $transaction
-     * @param  TransactionJournal  $newJournal
+     * @param Transaction        $transaction
+     * @param TransactionJournal $newJournal
      */
     private function cloneTransaction(Transaction $transaction, TransactionJournal $newJournal): void
     {
@@ -127,9 +127,9 @@ class GroupCloneService
     }
 
     /**
-     * @param  Note  $note
-     * @param  TransactionJournal  $newJournal
-     * @param  int  $oldGroupId
+     * @param Note               $note
+     * @param TransactionJournal $newJournal
+     * @param int                $oldGroupId
      */
     private function cloneNote(Note $note, TransactionJournal $newJournal, int $oldGroupId): void
     {
@@ -143,8 +143,8 @@ class GroupCloneService
     }
 
     /**
-     * @param  TransactionJournalMeta  $meta
-     * @param  TransactionJournal  $newJournal
+     * @param TransactionJournalMeta $meta
+     * @param TransactionJournal     $newJournal
      */
     private function cloneMeta(TransactionJournalMeta $meta, TransactionJournal $newJournal): void
     {

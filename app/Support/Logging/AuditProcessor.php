@@ -34,14 +34,14 @@ use Monolog\LogRecord;
 class AuditProcessor
 {
     /**
-     * @param  LogRecord  $record
+     * @param LogRecord $record
      *
      * @return LogRecord
      */
     public function __invoke(LogRecord $record): LogRecord
     {
         if (auth()->check()) {
-            $message =  sprintf(
+            $message = sprintf(
                 'AUDIT: %s (%s (%s) -> %s:%s)',
                 $record['message'],
                 app('request')->ip(),

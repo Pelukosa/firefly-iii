@@ -70,7 +70,7 @@ class UpdateController extends Controller
      *
      * Disable a currency.
      *
-     * @param  TransactionCurrency  $currency
+     * @param TransactionCurrency $currency
      *
      * @return JsonResponse
      * @throws FireflyException
@@ -103,7 +103,7 @@ class UpdateController extends Controller
      *
      * Make the currency a default currency.
      *
-     * @param  TransactionCurrency  $currency
+     * @param TransactionCurrency $currency
      *
      * @return JsonResponse
      * @throws FireflyException
@@ -134,7 +134,7 @@ class UpdateController extends Controller
      *
      * Enable a currency.
      *
-     * @param  TransactionCurrency  $currency
+     * @param TransactionCurrency $currency
      *
      * @return JsonResponse
      * @throws FireflyException
@@ -163,8 +163,8 @@ class UpdateController extends Controller
      *
      * Update a currency.
      *
-     * @param  UpdateRequest  $request
-     * @param  TransactionCurrency  $currency
+     * @param UpdateRequest       $request
+     * @param TransactionCurrency $currency
      *
      * @return JsonResponse
      * @throws FireflyException

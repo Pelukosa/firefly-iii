@@ -85,7 +85,7 @@ class RuleFormRequest extends FormRequest
     }
 
     /**
-     * @param  array  $array
+     * @param array $array
      * @return array
      */
     public static function replaceAmountTrigger(array $array): array
@@ -156,9 +156,9 @@ class RuleFormRequest extends FormRequest
             'stop_processing'  => 'boolean',
             'rule_group_id'    => 'required|belongsToUser:rule_groups',
             'trigger'          => 'required|in:store-journal,update-journal',
-            'triggers.*.type'  => 'required|in:'.implode(',', $validTriggers),
+            'triggers.*.type'  => 'required|in:' . implode(',', $validTriggers),
             'triggers.*.value' => sprintf('required_if:triggers.*.type,%s|max:1024|min:1|ruleTriggerValue', $contextTriggers),
-            'actions.*.type'   => 'required|in:'.implode(',', $validActions),
+            'actions.*.type'   => 'required|in:' . implode(',', $validActions),
             'actions.*.value'  => sprintf('required_if:actions.*.type,%s|min:0|max:1024|ruleActionValue', $contextActions),
             'strict'           => 'in:0,1',
         ];
@@ -167,7 +167,7 @@ class RuleFormRequest extends FormRequest
         $rule = $this->route()->parameter('rule');
 
         if (null !== $rule) {
-            $rules['title'] = 'required|between:1,100|uniqueObjectForUser:rules,title,'.$rule->id;
+            $rules['title'] = 'required|between:1,100|uniqueObjectForUser:rules,title,' . $rule->id;
         }
 
         return $rules;

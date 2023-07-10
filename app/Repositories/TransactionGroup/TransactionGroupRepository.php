@@ -48,8 +48,8 @@ use FireflyIII\User;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
-use JsonException;
 use Illuminate\Support\Facades\Log;
+use JsonException;
 
 /**
  * Class TransactionGroupRepository
@@ -72,7 +72,7 @@ class TransactionGroupRepository implements TransactionGroupRepositoryInterface
     /**
      * Find a transaction group by its ID.
      *
-     * @param  int  $groupId
+     * @param int $groupId
      *
      * @return TransactionGroup|null
      */
@@ -82,7 +82,7 @@ class TransactionGroupRepository implements TransactionGroupRepositoryInterface
     }
 
     /**
-     * @param  TransactionGroup  $group
+     * @param TransactionGroup $group
      */
     public function destroy(TransactionGroup $group): void
     {
@@ -107,7 +107,7 @@ class TransactionGroupRepository implements TransactionGroupRepositoryInterface
     }
 
     /**
-     * @param  TransactionJournal  $journal
+     * @param TransactionJournal $journal
      *
      * @return array
      */
@@ -134,7 +134,7 @@ class TransactionGroupRepository implements TransactionGroupRepositoryInterface
     }
 
     /**
-     * @param  Transaction  $transaction
+     * @param Transaction $transaction
      *
      * @return array
      */
@@ -159,7 +159,7 @@ class TransactionGroupRepository implements TransactionGroupRepositoryInterface
     /**
      * Return all attachments for all journals in the group.
      *
-     * @param  TransactionGroup  $group
+     * @param TransactionGroup $group
      *
      * @return array
      */
@@ -190,9 +190,9 @@ class TransactionGroupRepository implements TransactionGroupRepositoryInterface
     }
 
     /**
-     * @param  User|Authenticatable|null  $user
+     * @param User|Authenticatable|null $user
      */
-    public function setUser(User|Authenticatable|null $user): void
+    public function setUser(User | Authenticatable | null $user): void
     {
         if (null !== $user) {
             $this->user = $user;
@@ -202,7 +202,7 @@ class TransactionGroupRepository implements TransactionGroupRepositoryInterface
     /**
      * Get the note text for a journal (by ID).
      *
-     * @param  int  $journalId
+     * @param int $journalId
      *
      * @return string|null
      */
@@ -222,7 +222,7 @@ class TransactionGroupRepository implements TransactionGroupRepositoryInterface
     /**
      * Return all journal links for all journals in the group.
      *
-     * @param  TransactionGroup  $group
+     * @param TransactionGroup $group
      *
      * @return array
      */
@@ -278,7 +278,7 @@ class TransactionGroupRepository implements TransactionGroupRepositoryInterface
     }
 
     /**
-     * @param  TransactionJournal  $journal
+     * @param TransactionJournal $journal
      *
      * @return string
      */
@@ -301,7 +301,7 @@ class TransactionGroupRepository implements TransactionGroupRepositoryInterface
     }
 
     /**
-     * @param  TransactionJournal  $journal
+     * @param TransactionJournal $journal
      *
      * @return string
      */
@@ -343,8 +343,8 @@ class TransactionGroupRepository implements TransactionGroupRepositoryInterface
     /**
      * Return object with all found meta field things as Carbon objects.
      *
-     * @param  int  $journalId
-     * @param  array  $fields
+     * @param int   $journalId
+     * @param array $fields
      *
      * @return NullArrayObject
      * @throws Exception
@@ -368,8 +368,8 @@ class TransactionGroupRepository implements TransactionGroupRepositoryInterface
     /**
      * Return object with all found meta field things.
      *
-     * @param  int  $journalId
-     * @param  array  $fields
+     * @param int   $journalId
+     * @param array $fields
      *
      * @return NullArrayObject
      */
@@ -392,7 +392,7 @@ class TransactionGroupRepository implements TransactionGroupRepositoryInterface
     /**
      * Return all piggy bank events for all journals in the group.
      *
-     * @param  TransactionGroup  $group
+     * @param TransactionGroup $group
      *
      * @return array
      * @throws FireflyException
@@ -449,7 +449,7 @@ class TransactionGroupRepository implements TransactionGroupRepositoryInterface
     /**
      * Get the tags for a journal (by ID).
      *
-     * @param  int  $journalId
+     * @param int $journalId
      *
      * @return array
      */
@@ -465,7 +465,7 @@ class TransactionGroupRepository implements TransactionGroupRepositoryInterface
     }
 
     /**
-     * @param  array  $data
+     * @param array $data
      *
      * @return TransactionGroup
      * @throws DuplicateTransactionException
@@ -491,8 +491,8 @@ class TransactionGroupRepository implements TransactionGroupRepositoryInterface
     }
 
     /**
-     * @param  TransactionGroup  $transactionGroup
-     * @param  array  $data
+     * @param TransactionGroup $transactionGroup
+     * @param array            $data
      *
      * @return TransactionGroup
      *

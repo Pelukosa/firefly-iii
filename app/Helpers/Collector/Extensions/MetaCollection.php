@@ -75,7 +75,7 @@ trait MetaCollection
     /**
      * Exclude a specific budget.
      *
-     * @param  Budget  $budget
+     * @param Budget $budget
      *
      * @return GroupCollectorInterface
      */
@@ -168,7 +168,7 @@ trait MetaCollection
     /**
      * Exclude a specific category.
      *
-     * @param  Category  $category
+     * @param Category $category
      *
      * @return GroupCollectorInterface
      */
@@ -319,7 +319,7 @@ trait MetaCollection
     }
 
     /**
-     * @param  string  $url
+     * @param string $url
      * @return GroupCollectorInterface
      */
     public function externalUrlContains(string $url): GroupCollectorInterface
@@ -334,7 +334,7 @@ trait MetaCollection
     }
 
     /**
-     * @param  string  $url
+     * @param string $url
      * @return GroupCollectorInterface
      */
     public function externalUrlDoesNotContain(string $url): GroupCollectorInterface
@@ -349,7 +349,7 @@ trait MetaCollection
     }
 
     /**
-     * @param  string  $url
+     * @param string $url
      * @return GroupCollectorInterface
      */
     public function externalUrlDoesNotEnd(string $url): GroupCollectorInterface
@@ -364,7 +364,7 @@ trait MetaCollection
     }
 
     /**
-     * @param  string  $url
+     * @param string $url
      * @return GroupCollectorInterface
      */
     public function externalUrlDoesNotStart(string $url): GroupCollectorInterface
@@ -381,7 +381,7 @@ trait MetaCollection
     }
 
     /**
-     * @param  string  $url
+     * @param string $url
      * @return GroupCollectorInterface
      */
     public function externalUrlEnds(string $url): GroupCollectorInterface
@@ -396,7 +396,7 @@ trait MetaCollection
     }
 
     /**
-     * @param  string  $url
+     * @param string $url
      * @return GroupCollectorInterface
      */
     public function externalUrlStarts(string $url): GroupCollectorInterface
@@ -529,7 +529,7 @@ trait MetaCollection
     }
 
     /**
-     * @param  string  $value
+     * @param string $value
      *
      * @return GroupCollectorInterface
      */
@@ -565,7 +565,7 @@ trait MetaCollection
     }
 
     /**
-     * @param  string  $value
+     * @param string $value
      *
      * @return GroupCollectorInterface
      */
@@ -581,7 +581,7 @@ trait MetaCollection
     }
 
     /**
-     * @param  string  $value
+     * @param string $value
      *
      * @return GroupCollectorInterface
      */
@@ -597,7 +597,7 @@ trait MetaCollection
     }
 
     /**
-     * @param  string  $value
+     * @param string $value
      *
      * @return GroupCollectorInterface
      */
@@ -613,7 +613,7 @@ trait MetaCollection
     }
 
     /**
-     * @param  string  $value
+     * @param string $value
      *
      * @return GroupCollectorInterface
      */
@@ -626,7 +626,7 @@ trait MetaCollection
     }
 
     /**
-     * @param  string  $value
+     * @param string $value
      *
      * @return GroupCollectorInterface
      */
@@ -639,7 +639,7 @@ trait MetaCollection
     }
 
     /**
-     * @param  string  $value
+     * @param string $value
      *
      * @return GroupCollectorInterface
      */
@@ -655,7 +655,7 @@ trait MetaCollection
     }
 
     /**
-     * @param  string  $value
+     * @param string $value
      *
      * @return GroupCollectorInterface
      */
@@ -670,7 +670,7 @@ trait MetaCollection
     /**
      * Limit the search to a specific bill.
      *
-     * @param  Bill  $bill
+     * @param Bill $bill
      *
      * @return GroupCollectorInterface
      */
@@ -685,7 +685,7 @@ trait MetaCollection
     /**
      * Limit the search to a specific set of bills.
      *
-     * @param  Collection  $bills
+     * @param Collection $bills
      *
      * @return GroupCollectorInterface
      */
@@ -700,7 +700,7 @@ trait MetaCollection
     /**
      * Limit the search to a specific budget.
      *
-     * @param  Budget  $budget
+     * @param Budget $budget
      *
      * @return GroupCollectorInterface
      */
@@ -715,7 +715,7 @@ trait MetaCollection
     /**
      * Limit the search to a specific set of budgets.
      *
-     * @param  Collection  $budgets
+     * @param Collection $budgets
      *
      * @return GroupCollectorInterface
      */
@@ -732,7 +732,7 @@ trait MetaCollection
     /**
      * Limit the search to a specific bunch of categories.
      *
-     * @param  Collection  $categories
+     * @param Collection $categories
      *
      * @return GroupCollectorInterface
      */
@@ -749,7 +749,7 @@ trait MetaCollection
     /**
      * Limit the search to a specific category.
      *
-     * @param  Category  $category
+     * @param Category $category
      *
      * @return GroupCollectorInterface
      */
@@ -826,7 +826,7 @@ trait MetaCollection
     /**
      * Limit results to a specific tag.
      *
-     * @param  Tag  $tag
+     * @param Tag $tag
      *
      * @return GroupCollectorInterface
      */
@@ -841,7 +841,7 @@ trait MetaCollection
     /**
      * Limit results to a specific set of tags.
      *
-     * @param  Collection  $tags
+     * @param Collection $tags
      *
      * @return GroupCollectorInterface
      */
@@ -856,7 +856,7 @@ trait MetaCollection
     /**
      * Without tags
      *
-     * @param  Collection  $tags
+     * @param Collection $tags
      *
      * @return GroupCollectorInterface
      */

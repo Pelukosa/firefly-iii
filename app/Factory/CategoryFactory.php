@@ -37,8 +37,8 @@ class CategoryFactory
     private User $user;
 
     /**
-     * @param  int|null  $categoryId
-     * @param  null|string  $categoryName
+     * @param int|null    $categoryId
+     * @param null|string $categoryName
      *
      * @return Category|null
      * @throws FireflyException
@@ -84,7 +84,7 @@ class CategoryFactory
     }
 
     /**
-     * @param  string  $name
+     * @param string $name
      *
      * @return Category|null
      */
@@ -94,7 +94,7 @@ class CategoryFactory
     }
 
     /**
-     * @param  User  $user
+     * @param User $user
      */
     public function setUser(User $user): void
     {

@@ -65,7 +65,7 @@ class CreateController extends Controller
     /**
      * Form to create a budget.
      *
-     * @param  Request  $request
+     * @param Request $request
      *
      * @return Factory|View
      */
@@ -78,6 +78,7 @@ class CreateController extends Controller
             0                                => (string)trans('firefly.auto_budget_none'),
             AutoBudget::AUTO_BUDGET_RESET    => (string)trans('firefly.auto_budget_reset'),
             AutoBudget::AUTO_BUDGET_ROLLOVER => (string)trans('firefly.auto_budget_rollover'),
+            AutoBudget::AUTO_BUDGET_ADJUSTED => (string)trans('firefly.auto_budget_adjusted'),
         ];
         $autoBudgetPeriods = [
             'daily'     => (string)trans('firefly.auto_budget_period_daily'),
@@ -109,7 +110,7 @@ class CreateController extends Controller
     /**
      * Stores a budget.
      *
-     * @param  BudgetFormStoreRequest  $request
+     * @param BudgetFormStoreRequest $request
      *
      * @return RedirectResponse
      * @throws FireflyException

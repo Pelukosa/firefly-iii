@@ -48,8 +48,8 @@ use FireflyIII\Support\NullArrayObject;
 use FireflyIII\User;
 use FireflyIII\Validation\AccountValidator;
 use Illuminate\Support\Collection;
-use JsonException;
 use Illuminate\Support\Facades\Log;
+use JsonException;
 
 /**
  * Class TransactionJournalFactory
@@ -93,7 +93,7 @@ class TransactionJournalFactory
     /**
      * Store a new (set of) transaction journals.
      *
-     * @param  array  $data
+     * @param array $data
      *
      * @return Collection
      * @throws DuplicateTransactionException
@@ -144,7 +144,7 @@ class TransactionJournalFactory
     }
 
     /**
-     * @param  NullArrayObject  $row
+     * @param NullArrayObject $row
      *
      * @return TransactionJournal|null
      * @throws DuplicateTransactionException
@@ -305,7 +305,7 @@ class TransactionJournalFactory
     }
 
     /**
-     * @param  NullArrayObject  $row
+     * @param NullArrayObject $row
      *
      * @return string
      * @throws JsonException
@@ -325,7 +325,7 @@ class TransactionJournalFactory
     /**
      * If this transaction already exists, throw an error.
      *
-     * @param  string  $hash
+     * @param string $hash
      *
      * @throws DuplicateTransactionException
      * @throws JsonException
@@ -355,7 +355,7 @@ class TransactionJournalFactory
     }
 
     /**
-     * @param  NullArrayObject  $data
+     * @param NullArrayObject $data
      *
      * @throws FireflyException
      */
@@ -399,7 +399,7 @@ class TransactionJournalFactory
     /**
      * Set the user.
      *
-     * @param  User  $user
+     * @param User $user
      */
     public function setUser(User $user): void
     {
@@ -414,8 +414,8 @@ class TransactionJournalFactory
     }
 
     /**
-     * @param  Account|null  $sourceAccount
-     * @param  Account|null  $destinationAccount
+     * @param Account|null $sourceAccount
+     * @param Account|null $destinationAccount
      * @return array
      */
     private function reconciliationSanityCheck(?Account $sourceAccount, ?Account $destinationAccount): array
@@ -443,10 +443,10 @@ class TransactionJournalFactory
     }
 
     /**
-     * @param  string  $type
-     * @param  TransactionCurrency|null  $currency
-     * @param  Account  $source
-     * @param  Account  $destination
+     * @param string                   $type
+     * @param TransactionCurrency|null $currency
+     * @param Account                  $source
+     * @param Account                  $destination
      *
      * @return TransactionCurrency
      * @throws FireflyException
@@ -463,8 +463,8 @@ class TransactionJournalFactory
     }
 
     /**
-     * @param  TransactionCurrency|null  $currency
-     * @param  Account  $account
+     * @param TransactionCurrency|null $currency
+     * @param Account                  $account
      *
      * @return TransactionCurrency
      * @throws FireflyException
@@ -488,8 +488,8 @@ class TransactionJournalFactory
     /**
      * Set foreign currency to NULL if it's the same as the normal currency:
      *
-     * @param  TransactionCurrency|null  $currency
-     * @param  TransactionCurrency|null  $foreignCurrency
+     * @param TransactionCurrency|null $currency
+     * @param TransactionCurrency|null $foreignCurrency
      *
      * @return TransactionCurrency|null
      */
@@ -506,9 +506,9 @@ class TransactionJournalFactory
     }
 
     /**
-     * @param  string  $type
-     * @param  TransactionCurrency|null  $foreignCurrency
-     * @param  Account  $destination
+     * @param string                   $type
+     * @param TransactionCurrency|null $foreignCurrency
+     * @param Account                  $destination
      *
      * @return TransactionCurrency|null
      * @throws FireflyException
@@ -524,7 +524,7 @@ class TransactionJournalFactory
     }
 
     /**
-     * @param  string  $description
+     * @param string $description
      *
      * @return string
      */
@@ -539,7 +539,7 @@ class TransactionJournalFactory
      * Force the deletion of an entire set of transaction journals and their meta object in case of
      * an error creating a group.
      *
-     * @param  Collection  $collection
+     * @param Collection $collection
      */
     private function forceDeleteOnError(Collection $collection): void
     {
@@ -553,7 +553,7 @@ class TransactionJournalFactory
     }
 
     /**
-     * @param  Transaction  $transaction
+     * @param Transaction $transaction
      */
     private function forceTrDelete(Transaction $transaction): void
     {
@@ -563,17 +563,12 @@ class TransactionJournalFactory
     /**
      * Link a piggy bank to this journal.
      *
-     * @param  TransactionJournal  $journal
-     * @param  NullArrayObject  $data
+     * @param TransactionJournal $journal
+     * @param NullArrayObject    $data
      */
     private function storePiggyEvent(TransactionJournal $journal, NullArrayObject $data): void
     {
         Log::debug('Will now store piggy event.');
-        if (!$journal->isTransfer()) {
-            Log::debug('Journal is not a transfer, do nothing.');
-
-            return;
-        }
 
         $piggyBank = $this->piggyRepository->findPiggyBank((int)$data['piggy_bank_id'], $data['piggy_bank_name']);
 
@@ -587,8 +582,8 @@ class TransactionJournalFactory
     }
 
     /**
-     * @param  TransactionJournal  $journal
-     * @param  NullArrayObject  $transaction
+     * @param TransactionJournal $journal
+     * @param NullArrayObject    $transaction
      */
     private function storeMetaFields(TransactionJournal $journal, NullArrayObject $transaction): void
     {
@@ -598,9 +593,9 @@ class TransactionJournalFactory
     }
 
     /**
-     * @param  TransactionJournal  $journal
-     * @param  NullArrayObject  $data
-     * @param  string  $field
+     * @param TransactionJournal $journal
+     * @param NullArrayObject    $data
+     * @param string             $field
      */
     protected function storeMeta(TransactionJournal $journal, NullArrayObject $data, string $field): void
     {
@@ -623,7 +618,7 @@ class TransactionJournalFactory
     }
 
     /**
-     * @param  bool  $errorOnHash
+     * @param bool $errorOnHash
      */
     public function setErrorOnHash(bool $errorOnHash): void
     {

@@ -1706,6 +1706,7 @@ return [
     'auto_budget_none'                          => 'Nessun budget automatico',
     'auto_budget_reset'                         => 'Imposta un importo fisso per ogni periodo',
     'auto_budget_rollover'                      => 'Aggiungi un importo per ogni periodo',
+    'auto_budget_adjusted'                      => 'Add an amount every period and correct for overspending',
     'auto_budget_period_daily'                  => 'Giornaliero',
     'auto_budget_period_weekly'                 => 'Settimanale',
     'auto_budget_period_monthly'                => 'Mensile',
@@ -1715,6 +1716,7 @@ return [
     'auto_budget_help'                          => 'Puoi leggere di più su questa funzione nella guida. Clicca sull\'icona (?) in alto a destra.',
     'auto_budget_reset_icon'                    => 'Questo budget sarà impostato periodicamente',
     'auto_budget_rollover_icon'                 => 'L\'importo del budget aumenterà periodicamente',
+    'auto_budget_adjusted_icon'                 => 'The budget amount will increase periodically and will correct for overspending',
     'remove_budgeted_amount'                    => 'Rimuovi l\'import a budget in :currency',
 
     // bills:
@@ -2292,6 +2294,7 @@ return [
     'budgeted'                                  => 'Preventivato',
     'period'                                    => 'Periodo',
     'balance'                                   => 'Saldo',
+    'in_out_period'                             => 'In + out this period',
     'sum'                                       => 'Somma',
     'summary'                                   => 'Riepilogo',
     'average'                                   => 'Media',
@@ -2692,6 +2695,9 @@ return [
     'ale_action_log_add'                 => 'Added :amount to piggy bank ":name"',
     'ale_action_log_remove'              => 'Removed :amount from piggy bank ":name"',
     'ale_action_clear_budget'            => 'Removed from budget',
+    'ale_action_update_group_title'      => 'Updated transaction group title',
+    'ale_action_update_date'             => 'Updated transaction date',
+    'ale_action_update_order'            => 'Updated transaction order',
     'ale_action_clear_category'          => 'Removed from category',
     'ale_action_clear_notes'             => 'Removed notes',
     'ale_action_clear_tag'               => 'Etichette cancellate',

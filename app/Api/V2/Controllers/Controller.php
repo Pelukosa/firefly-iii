@@ -75,7 +75,7 @@ class Controller extends BaseController
         $bag = new ParameterBag();
         try {
             $page = (int)request()->get('page');
-        } catch (ContainerExceptionInterface|NotFoundExceptionInterface $e) {
+        } catch (ContainerExceptionInterface | NotFoundExceptionInterface $e) {
             $page = 1;
         }
 
@@ -104,7 +104,7 @@ class Controller extends BaseController
             if (null !== $date) {
                 try {
                     $obj = Carbon::parse($date);
-                } catch (InvalidDateException|InvalidFormatException $e) {
+                } catch (InvalidDateException | InvalidFormatException $e) {
                     // don't care
                     app('log')->warning(sprintf('Ignored invalid date "%s" in API v2 controller parameter check: %s', substr($date, 0, 20), $e->getMessage()));
                 }
@@ -133,15 +133,16 @@ class Controller extends BaseController
     }
 
     /**
-     * @param  string  $key
-     * @param  LengthAwarePaginator  $paginator
-     * @param  AbstractTransformer  $transformer
+     * @param string               $key
+     * @param LengthAwarePaginator $paginator
+     * @param AbstractTransformer  $transformer
+     *
      * @return array
      */
     final protected function jsonApiList(string $key, LengthAwarePaginator $paginator, AbstractTransformer $transformer): array
     {
         $manager = new Manager();
-        $baseUrl = request()->getSchemeAndHttpHost().'/api/v2';
+        $baseUrl = request()->getSchemeAndHttpHost() . '/api/v2';
         $manager->setSerializer(new JsonApiSerializer($baseUrl));
 
         $objects = $paginator->getCollection();
@@ -159,21 +160,23 @@ class Controller extends BaseController
     /**
      * Returns a JSON API object and returns it.
      *
-     * @param  string  $key
-     * @param  Model  $object
-     * @param  AbstractTransformer  $transformer
+     * @param string              $key
+     * @param Model               $object
+     * @param AbstractTransformer $transformer
+     *
      * @return array
      */
     final protected function jsonApiObject(string $key, Model $object, AbstractTransformer $transformer): array
     {
         // create some objects:
         $manager = new Manager();
-        $baseUrl = request()->getSchemeAndHttpHost().'/api/v2';
+        $baseUrl = request()->getSchemeAndHttpHost() . '/api/v2';
         $manager->setSerializer(new JsonApiSerializer($baseUrl));
 
         $transformer->collectMetaData(new Collection([$object]));
 
         $resource = new Item($object, $transformer, $key);
+
         return $manager->createData($resource)->toArray();
     }
 }

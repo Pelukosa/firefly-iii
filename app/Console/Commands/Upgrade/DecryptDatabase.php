@@ -26,6 +26,7 @@ namespace FireflyIII\Console\Commands\Upgrade;
 
 use Crypt;
 use DB;
+use FireflyIII\Console\Commands\ShowsFriendlyMessages;
 use FireflyIII\Exceptions\FireflyException;
 use FireflyIII\Models\Preference;
 use Illuminate\Console\Command;
@@ -41,18 +42,10 @@ use stdClass;
  */
 class DecryptDatabase extends Command
 {
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
+    use ShowsFriendlyMessages;
+
     protected $description = 'Decrypts the database.';
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'firefly-iii:decrypt-all';
+    protected $signature   = 'firefly-iii:decrypt-all';
 
     /**
      * Execute the console command.
@@ -61,7 +54,6 @@ class DecryptDatabase extends Command
      */
     public function handle(): int
     {
-        $this->line('Going to decrypt the database.');
         $tables = [
             'accounts'             => ['name', 'iban'],
             'attachments'          => ['filename', 'mime', 'title', 'description'],
@@ -77,40 +69,39 @@ class DecryptDatabase extends Command
         ];
         /**
          * @var string $table
-         * @var array $fields
+         * @var array  $fields
          */
         foreach ($tables as $table => $fields) {
             $this->decryptTable($table, $fields);
         }
-        $this->info('Done!');
-
         return 0;
     }
 
     /**
-     * @param  string  $table
-     * @param  array  $fields
+     * @param string $table
+     * @param array  $fields
+     *
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
     private function decryptTable(string $table, array $fields): void
     {
         if ($this->isDecrypted($table)) {
-            $this->info(sprintf('No decryption required for table "%s".', $table));
+            $this->friendlyInfo(sprintf('No decryption required for table "%s".', $table));
 
             return;
         }
         foreach ($fields as $field) {
             $this->decryptField($table, $field);
         }
-        $this->line(sprintf('Decrypted the data in table "%s".', $table));
+        $this->friendlyPositive(sprintf('Decrypted the data in table "%s".', $table));
         // mark as decrypted:
         $configName = sprintf('is_decrypted_%s', $table);
         app('fireflyconfig')->set($configName, true);
     }
 
     /**
-     * @param  string  $table
+     * @param string $table
      *
      * @return bool
      * @throws ContainerExceptionInterface
@@ -133,8 +124,8 @@ class DecryptDatabase extends Command
     }
 
     /**
-     * @param  string  $table
-     * @param  string  $field
+     * @param string $table
+     * @param string $field
      */
     private function decryptField(string $table, string $field): void
     {
@@ -146,9 +137,9 @@ class DecryptDatabase extends Command
     }
 
     /**
-     * @param  string  $table
-     * @param  string  $field
-     * @param  stdClass  $row
+     * @param string   $table
+     * @param string   $field
+     * @param stdClass $row
      */
     private function decryptRow(string $table, string $field, stdClass $row): void
     {
@@ -163,7 +154,7 @@ class DecryptDatabase extends Command
             $value = $this->tryDecrypt($original);
         } catch (FireflyException $e) {
             $message = sprintf('Could not decrypt field "%s" in row #%d of table "%s": %s', $field, $id, $table, $e->getMessage());
-            $this->error($message);
+            $this->friendlyError($message);
             Log::error($message);
             Log::error($e->getTraceAsString());
         }
@@ -183,7 +174,7 @@ class DecryptDatabase extends Command
     /**
      * Tries to decrypt data. Will only throw an exception when the MAC is invalid.
      *
-     * @param  mixed  $value
+     * @param mixed $value
      *
      * @return string
      * @throws FireflyException
@@ -202,8 +193,8 @@ class DecryptDatabase extends Command
     }
 
     /**
-     * @param  int  $id
-     * @param  string  $value
+     * @param int    $id
+     * @param string $value
      */
     private function decryptPreferencesRow(int $id, string $value): void
     {
@@ -212,7 +203,7 @@ class DecryptDatabase extends Command
             $newValue = json_decode($value, true, 512, JSON_THROW_ON_ERROR) ?? $value;
         } catch (JsonException $e) {
             $message = sprintf('Could not JSON decode preference row #%d: %s. This does not have to be a problem.', $id, $e->getMessage());
-            $this->error($message);
+            $this->friendlyError($message);
             app('log')->warning($message);
             app('log')->warning($value);
             app('log')->warning($e->getTraceAsString());

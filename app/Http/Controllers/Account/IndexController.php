@@ -32,9 +32,9 @@ use FireflyIII\Support\Http\Controllers\BasicDataSupport;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use JsonException;
-use Illuminate\Support\Facades\Log;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
@@ -71,8 +71,8 @@ class IndexController extends Controller
     }
 
     /**
-     * @param  Request  $request
-     * @param  string  $objectType
+     * @param Request $request
+     * @param string  $objectType
      *
      * @return Factory|View
      * @throws FireflyException
@@ -127,8 +127,8 @@ class IndexController extends Controller
     /**
      * Show list of accounts.
      *
-     * @param  Request  $request
-     * @param  string  $objectType
+     * @param Request $request
+     * @param string  $objectType
      *
      * @return Factory|View
      * @throws FireflyException

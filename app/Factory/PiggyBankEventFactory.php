@@ -25,7 +25,6 @@ namespace FireflyIII\Factory;
 
 use FireflyIII\Models\PiggyBank;
 use FireflyIII\Models\TransactionJournal;
-use FireflyIII\Models\TransactionType;
 use FireflyIII\Repositories\PiggyBank\PiggyBankRepositoryInterface;
 use Illuminate\Support\Facades\Log;
 
@@ -37,20 +36,14 @@ use Illuminate\Support\Facades\Log;
 class PiggyBankEventFactory
 {
     /**
-     * @param  TransactionJournal  $journal
-     * @param  PiggyBank|null  $piggyBank
+     * @param TransactionJournal $journal
+     * @param PiggyBank|null     $piggyBank
      */
     public function create(TransactionJournal $journal, ?PiggyBank $piggyBank): void
     {
         Log::debug(sprintf('Now in PiggyBankEventCreate for a %s', $journal->transactionType->type));
         if (null === $piggyBank) {
             Log::debug('Piggy bank is null');
-
-            return;
-        }
-
-        if (TransactionType::TRANSFER !== $journal->transactionType->type) {
-            Log::info(sprintf('Will not connect %s #%d to a piggy bank.', $journal->transactionType->type, $journal->id));
 
             return;
         }

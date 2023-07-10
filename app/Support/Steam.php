@@ -32,8 +32,8 @@ use FireflyIII\Models\Transaction;
 use FireflyIII\Models\TransactionCurrency;
 use FireflyIII\Repositories\Account\AccountRepositoryInterface;
 use Illuminate\Support\Collection;
-use JsonException;
 use Illuminate\Support\Facades\Log;
+use JsonException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use stdClass;
@@ -48,8 +48,8 @@ use ValueError;
 class Steam
 {
     /**
-     * @param  Account  $account
-     * @param  Carbon  $date
+     * @param Account $account
+     * @param Carbon  $date
      *
      * @return string
      */
@@ -80,8 +80,8 @@ class Steam
     }
 
     /**
-     * @param  array  $transactions
-     * @param  string  $key
+     * @param array  $transactions
+     * @param string $key
      *
      * @return string
      */
@@ -103,10 +103,10 @@ class Steam
      *
      * [yyyy-mm-dd] => 123,2
      *
-     * @param  Account  $account
-     * @param  Carbon  $start
-     * @param  Carbon  $end
-     * @param  TransactionCurrency|null  $currency
+     * @param Account                  $account
+     * @param Carbon                   $start
+     * @param Carbon                   $end
+     * @param TransactionCurrency|null $currency
      *
      * @return array
      * @throws FireflyException
@@ -191,9 +191,9 @@ class Steam
     /**
      * Gets balance at the end of current month by default
      *
-     * @param  Account  $account
-     * @param  Carbon  $date
-     * @param  TransactionCurrency|null  $currency
+     * @param Account                  $account
+     * @param Carbon                   $date
+     * @param TransactionCurrency|null $currency
      *
      * @return string
      * @throws FireflyException
@@ -241,8 +241,8 @@ class Steam
     /**
      * This method always ignores the virtual balance.
      *
-     * @param  Collection  $accounts
-     * @param  Carbon  $date
+     * @param Collection $accounts
+     * @param Carbon     $date
      *
      * @return array
      * @throws FireflyException
@@ -274,8 +274,8 @@ class Steam
     /**
      * Same as above, but also groups per currency.
      *
-     * @param  Collection  $accounts
-     * @param  Carbon  $date
+     * @param Collection $accounts
+     * @param Carbon     $date
      *
      * @return array
      */
@@ -304,8 +304,8 @@ class Steam
     }
 
     /**
-     * @param  Account  $account
-     * @param  Carbon  $date
+     * @param Account $account
+     * @param Carbon  $date
      *
      * @return array
      */
@@ -337,8 +337,8 @@ class Steam
     /**
      * https://stackoverflow.com/questions/1642614/how-to-ceil-floor-and-round-bcmath-numbers
      *
-     * @param  null|string  $number
-     * @param  int  $precision
+     * @param null|string $number
+     * @param int         $precision
      * @return string
      */
     public function bcround(?string $number, int $precision = 0): string
@@ -351,23 +351,23 @@ class Steam
         }
         // if the number contains "E", it's in scientific notation, so we need to convert it to a normal number first.
         if (false !== stripos($number, 'e')) {
-            $number = sprintf('%.24f', $number);
+            $number = sprintf('%.12f', $number);
         }
 
         // Log::debug(sprintf('Trying bcround("%s",%d)', $number, $precision));
         if (str_contains($number, '.')) {
             if ($number[0] !== '-') {
-                return bcadd($number, '0.'.str_repeat('0', $precision).'5', $precision);
+                return bcadd($number, '0.' . str_repeat('0', $precision) . '5', $precision);
             }
 
-            return bcsub($number, '0.'.str_repeat('0', $precision).'5', $precision);
+            return bcsub($number, '0.' . str_repeat('0', $precision) . '5', $precision);
         }
 
         return $number;
     }
 
     /**
-     * @param  string  $string
+     * @param string $string
      *
      * @return string
      */
@@ -429,7 +429,7 @@ class Steam
     }
 
     /**
-     * @param  string  $ipAddress
+     * @param string $ipAddress
      * @return string
      * @throws FireflyException
      */
@@ -444,7 +444,7 @@ class Steam
     }
 
     /**
-     * @param  array  $accounts
+     * @param array $accounts
      *
      * @return array
      */
@@ -507,7 +507,7 @@ class Steam
     }
 
     /**
-     * @param  string  $locale
+     * @param string $locale
      *
      * @return array
      */
@@ -540,8 +540,8 @@ class Steam
     /**
      * Make sure URL is safe.
      *
-     * @param  string  $unknownUrl
-     * @param  string  $safeUrl
+     * @param string $unknownUrl
+     * @param string $safeUrl
      *
      * @return string
      */
@@ -566,7 +566,7 @@ class Steam
     }
 
     /**
-     * @param  string  $amount
+     * @param string $amount
      *
      * @return string
      */
@@ -590,7 +590,7 @@ class Steam
      * Convert a scientific notation to float
      * Additionally fixed a problem with PHP <= 5.2.x with big integers
      *
-     * @param  string  $value
+     * @param string $value
      * @return string
      */
     public function floatalize(string $value): string
@@ -615,7 +615,7 @@ class Steam
     }
 
     /**
-     * @param  string|null  $amount
+     * @param string|null $amount
      *
      * @return string|null
      */
@@ -629,7 +629,7 @@ class Steam
     }
 
     /**
-     * @param  string  $string
+     * @param string $string
      *
      * @return int
      */
@@ -662,7 +662,7 @@ class Steam
     }
 
     /**
-     * @param  string  $amount
+     * @param string $amount
      *
      * @return string
      */

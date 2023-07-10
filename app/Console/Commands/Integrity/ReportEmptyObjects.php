@@ -23,6 +23,7 @@ declare(strict_types=1);
 
 namespace FireflyIII\Console\Commands\Integrity;
 
+use FireflyIII\Console\Commands\ShowsFriendlyMessages;
 use FireflyIII\Models\Account;
 use FireflyIII\Models\Budget;
 use FireflyIII\Models\Category;
@@ -35,6 +36,8 @@ use stdClass;
  */
 class ReportEmptyObjects extends Command
 {
+    use ShowsFriendlyMessages;
+
     /**
      * The console command description.
      *
@@ -55,14 +58,11 @@ class ReportEmptyObjects extends Command
      */
     public function handle(): int
     {
-        $start = microtime(true);
         $this->reportEmptyBudgets();
         $this->reportEmptyCategories();
         $this->reportEmptyTags();
         $this->reportAccounts();
         $this->reportBudgetLimits();
-        $end = round(microtime(true) - $start, 2);
-        $this->info(sprintf('Report on empty objects finished in %s seconds', $end));
 
         return 0;
     }
@@ -88,7 +88,7 @@ class ReportEmptyObjects extends Command
                 $entry->id,
                 $entry->name
             );
-            $this->line($line);
+            $this->friendlyWarning($line);
         }
     }
 
@@ -113,7 +113,7 @@ class ReportEmptyObjects extends Command
                 $entry->id,
                 $entry->name
             );
-            $this->line($line);
+            $this->friendlyWarning($line);
         }
     }
 
@@ -138,7 +138,7 @@ class ReportEmptyObjects extends Command
                 $entry->id,
                 $entry->tag
             );
-            $this->line($line);
+            $this->friendlyWarning($line);
         }
     }
 
@@ -159,7 +159,7 @@ class ReportEmptyObjects extends Command
         foreach ($set as $entry) {
             $line = 'User #%d (%s) has account #%d ("%s") which has no transactions.';
             $line = sprintf($line, $entry->user_id, $entry->email, $entry->id, $entry->name);
-            $this->line($line);
+            $this->friendlyWarning($line);
         }
     }
 
@@ -183,7 +183,7 @@ class ReportEmptyObjects extends Command
                 $entry->id,
                 $entry->name
             );
-            $this->line($line);
+            $this->friendlyWarning($line);
         }
     }
 }

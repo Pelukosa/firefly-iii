@@ -61,14 +61,18 @@ return [
     'invalid_selection'              => 'Ваш вибір є неприпустимим.',
     'belongs_user'                   => 'Це значення є неприпустимим для цього поля.',
     'at_least_one_transaction'       => 'Потрібна хоча б одна транзакція.',
+    'recurring_transaction_id'       => 'Need at least one transaction.',
+    'need_id_to_match'               => 'You need to submit this entry with an ID for the API to be able to match it.',
+    'too_many_unmatched'             => 'Too many submitted transactions cannot be matched to their respective database entries. Make sure existing entries have a valid ID.',
+    'id_does_not_match'              => 'Submitted ID #:id does not match expected ID. Make sure it matches or omit the field.',
     'at_least_one_repetition'        => 'Потрібно принаймні одне повторення.',
     'require_repeat_until'           => 'Потрібно вказати або кількість повторювань, або кінцеву дату (repeat_until). Але не обидва параметри разом.',
     'require_currency_info'          => 'Вміст цього поля є недійсним без інформації про валюту.',
     'not_transfer_account'           => 'Цей рахунок не є рахунком, який може бути використаний для переказу.',
     'require_currency_amount'        => 'Вміст цього поля є недійсним без інформації про валюту.',
-    'require_foreign_currency'       => 'This field requires a number',
-    'require_foreign_dest'           => 'This field value must match the currency of the destination account.',
-    'require_foreign_src'            => 'This field value must match the currency of the source account.',
+    'require_foreign_currency'       => 'Це поле має бути числом',
+    'require_foreign_dest'           => 'Це значення поля повинне відповідати валюті рахунку призначення.',
+    'require_foreign_src'            => 'Це значення поля повинне відповідати валюті вихідного рахунку.',
     'equal_description'              => 'Опис транзакції має відрізнятися від глобального опису.',
     'file_invalid_mime'              => 'Файл ":name" має заборонений для завантаження тип ":mime".',
     'file_too_large'                 => 'Файл ":name" надто великий.',
@@ -76,15 +80,15 @@ return [
     'accepted'                       => ':attribute має бути прийнятий.',
     'bic'                            => 'Це не коректний BIC.',
     'at_least_one_trigger'           => 'Правило має мати принаймні одну умову.',
-    'at_least_one_active_trigger'    => 'Rule must have at least one active trigger.',
+    'at_least_one_active_trigger'    => 'Правило має мати принаймні одну умову.',
     'at_least_one_action'            => 'Правило має мати принаймні одну дію.',
-    'at_least_one_active_action'     => 'Rule must have at least one active action.',
+    'at_least_one_active_action'     => 'Правило має мати принаймні одну дію.',
     'base64'                         => 'Base64 будьласка! Помилка розпізнавання.',
     'model_id_invalid'               => 'Вказаний ID здається недійсним для цієї моделі.',
     'less'                           => 'Поле :attribute має бути менше 10,000,000',
     'active_url'                     => ':attribute є не допустимою URL-адресою.',
     'after'                          => ':attribute має бути після :date.',
-    'date_after'                     => 'The start date must be before the end date.',
+    'date_after'                     => 'Дата початку має бути раніше дати завершення.',
     'alpha'                          => ':attribute має містити лише літери.',
     'alpha_dash'                     => ':attribute має містити лише букви, цифри та тире.',
     'alpha_num'                      => ':attribute має містити лише літери та цифри.',
@@ -168,11 +172,11 @@ return [
     'current_target_amount'      => 'Поточна сума повинна бути меншою, ніж цільова сума.',
     'unique_piggy_bank_for_user' => 'Назва скарбнички має бути унікальною.',
     'unique_object_group'        => 'Назва групи повинна бути унікальною',
-    'starts_with'                => 'The value must start with :values.',
-    'unique_webhook'             => 'You already have a webhook with this combination of URL, trigger, response and delivery.',
-    'unique_existing_webhook'    => 'You already have another webhook with this combination of URL, trigger, response and delivery.',
-    'same_account_type'          => 'Both accounts must be of the same account type',
-    'same_account_currency'      => 'Both accounts must have the same currency setting',
+    'starts_with'                => 'Значення має починатися з :values.',
+    'unique_webhook'             => 'У вас вже є веб хук з цією комбінацією URL, тригера, відповіді та доставкою.',
+    'unique_existing_webhook'    => 'У вас вже є інший веб хук з цією комбінацією URL, тригера, відповіді та доставкою.',
+    'same_account_type'          => 'Обидва рахунки повинні бути того самого типу',
+    'same_account_currency'      => 'Обидва рахунки повинні мати однакові налаштування валюти',
 
 /*
  * PLEASE DO NOT EDIT THIS FILE DIRECTLY.
@@ -194,7 +198,7 @@ return [
         'email'                   => 'eлектронна адреса',
         'description'             => 'опис',
         'amount'                  => 'сума',
-        'transactions.*.amount'   => 'transaction amount',
+        'transactions.*.amount'   => 'сума платежу',
         'name'                    => 'назва',
         'piggy_bank_id'           => 'iD скарбнички',
         'targetamount'            => 'сума накопичення',
@@ -230,17 +234,20 @@ return [
 
     // validation of accounts:
     'withdrawal_source_need_data' => 'Щоб продовжити, необхідно вказати дійсний ID рахунку і/або його назву.',
-    'withdrawal_source_bad_data'  => 'Не вдалося знайти дійсний рахунок з ID ":id" або іменем ":name".',
-    'withdrawal_dest_need_data'   => 'Щоб продовжити, необхідно вказати дійсний ID рахунку і/або його назву.',
+    'withdrawal_source_bad_data'  => '[a] Could not find a valid source account when searching for ID ":id" or name ":name".',
+    'withdrawal_dest_need_data'   => '[a] Need to get a valid destination account ID and/or valid destination account name to continue.',
     'withdrawal_dest_bad_data'    => 'Не вдалося знайти дійсний рахунок з ID ":id" або іменем ":name".',
+
+    'withdrawal_dest_iban_exists' => 'This destination account IBAN is already in use by an asset account or a liability and cannot be used as a withdrawal destination.',
+    'deposit_src_iban_exists'     => 'This source account IBAN is already in use by an asset account or a liability and cannot be used as a deposit source.',
 
     'reconciliation_source_bad_data' => 'Could not find a valid reconciliation account when searching for ID ":id" or name ":name".',
 
-    'generic_source_bad_data' => 'Could not find a valid source account when searching for ID ":id" or name ":name".',
+    'generic_source_bad_data' => '[e] Could not find a valid source account when searching for ID ":id" or name ":name".',
 
     'deposit_source_need_data' => 'Щоб продовжити, необхідно вказати дійсний ID вихідного рахунку і/або його назву.',
-    'deposit_source_bad_data'  => 'Не вдалося знайти дійсний вихідний рахунок при пошуку ID ":id" або імені ":name".',
-    'deposit_dest_need_data'   => 'Щоб продовжити, необхідно вказати дійсний ID рахунку призначення і/або його назву.',
+    'deposit_source_bad_data'  => '[b] Could not find a valid source account when searching for ID ":id" or name ":name".',
+    'deposit_dest_need_data'   => '[b] Need to get a valid destination account ID and/or valid destination account name to continue.',
     'deposit_dest_bad_data'    => 'Не вдалося знайти дійсний рахунок призначення з ID ":id" або іменем ":name".',
     'deposit_dest_wrong_type'  => 'Збережений рахунок призначення - некоректний.',
 
@@ -257,14 +264,14 @@ return [
 
 
     'transfer_source_need_data' => 'Щоб продовжити, необхідно вказати дійсний ID вихідного рахунку і/або його назву.',
-    'transfer_source_bad_data'  => 'Не вдалося знайти дійсний вихідний рахунок з ID ":id" або іменем ":name".',
-    'transfer_dest_need_data'   => 'Щоб продовжити, необхідно вказати дійсний ID рахунку призначення і/або його назву.',
+    'transfer_source_bad_data'  => '[c] Could not find a valid source account when searching for ID ":id" or name ":name".',
+    'transfer_dest_need_data'   => '[c] Need to get a valid destination account ID and/or valid destination account name to continue.',
     'transfer_dest_bad_data'    => 'Не вдалося знайти дійсний рахунок призначення з ID ":id" або іменем ":name".',
     'need_id_in_edit'           => 'Кожна розділена транзакція повинна мати transaction_journal_id (дійсний ID або 0).',
 
     'ob_source_need_data'           => 'Щоб продовжити, необхідно вказати дійсний ID вихідного рахунку і/або його назву.',
     'lc_source_need_data'           => 'Need to get a valid source account ID to continue.',
-    'ob_dest_need_data'             => 'Щоб продовжити, необхідно вказати дійсний ID рахунку призначення і/або його назву.',
+    'ob_dest_need_data'             => '[d] Need to get a valid destination account ID and/or valid destination account name to continue.',
     'ob_dest_bad_data'              => 'Не вдалося знайти дійсний рахунок призначення з ID ":id" або іменем ":name".',
     'reconciliation_either_account' => 'To submit a reconciliation, you must submit either a source or a destination account. Not both, not neither.',
 
@@ -285,7 +292,7 @@ return [
     'auto_budget_period_mandatory'    => 'Автоматичний період бюджета - обов\'язкове поле.',
 
     // no access to administration:
-    'no_access_user_group'            => 'You do not have the correct access rights for this administration.',
+    'no_access_user_group'            => 'У Вас немає необхідних прав доступу для цих налаштувань.',
 ];
 
 /*

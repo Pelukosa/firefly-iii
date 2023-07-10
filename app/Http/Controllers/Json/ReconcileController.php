@@ -34,8 +34,8 @@ use FireflyIII\Repositories\Account\AccountRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use JsonException;
 use Illuminate\Support\Facades\Log;
+use JsonException;
 use Throwable;
 
 /**
@@ -70,10 +70,10 @@ class ReconcileController extends Controller
     /**
      * Overview of reconciliation.
      *
-     * @param  Request  $request
-     * @param  Account|null  $account
-     * @param  Carbon|null  $start
-     * @param  Carbon|null  $end
+     * @param Request      $request
+     * @param Account|null $account
+     * @param Carbon|null  $start
+     * @param Carbon|null  $end
      *
      * @return JsonResponse
      * @throws FireflyException
@@ -170,10 +170,10 @@ class ReconcileController extends Controller
     }
 
     /**
-     * @param  Account  $account
-     * @param  TransactionCurrency  $currency
-     * @param  array  $journal
-     * @param  string  $amount
+     * @param Account             $account
+     * @param TransactionCurrency $currency
+     * @param array               $journal
+     * @param string              $amount
      *
      * @return string
      */
@@ -212,9 +212,9 @@ class ReconcileController extends Controller
     /**
      * Returns a list of transactions in a modal.
      *
-     * @param  Account  $account
-     * @param  Carbon|null  $start
-     * @param  Carbon|null  $end
+     * @param Account     $account
+     * @param Carbon|null $start
+     * @param Carbon|null $end
      *
      * @return JsonResponse
      * @throws FireflyException
@@ -268,8 +268,8 @@ class ReconcileController extends Controller
     /**
      * "fix" amounts to make it easier on the reconciliation overview:
      *
-     * @param  Account  $account
-     * @param  array  $array
+     * @param Account $account
+     * @param array   $array
      *
      * @return array
      */

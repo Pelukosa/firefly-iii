@@ -75,7 +75,7 @@ class CategoryRepository implements CategoryRepositoryInterface
     }
 
     /**
-     * @param  Category  $category
+     * @param Category $category
      *
      * @return bool
      *
@@ -117,8 +117,8 @@ class CategoryRepository implements CategoryRepositoryInterface
     }
 
     /**
-     * @param  int|null  $categoryId
-     * @param  string|null  $categoryName
+     * @param int|null    $categoryId
+     * @param string|null $categoryName
      *
      * @return Category|null
      * @throws FireflyException
@@ -147,7 +147,7 @@ class CategoryRepository implements CategoryRepositoryInterface
     /**
      * Find a category or return NULL
      *
-     * @param  int  $categoryId
+     * @param int $categoryId
      *
      * @return Category|null
      */
@@ -159,7 +159,7 @@ class CategoryRepository implements CategoryRepositoryInterface
     /**
      * Find a category.
      *
-     * @param  string  $name
+     * @param string $name
      *
      * @return Category|null
      */
@@ -169,7 +169,7 @@ class CategoryRepository implements CategoryRepositoryInterface
     }
 
     /**
-     * @param  array  $data
+     * @param array $data
      *
      * @return Category
      * @throws FireflyException
@@ -197,9 +197,9 @@ class CategoryRepository implements CategoryRepositoryInterface
     }
 
     /**
-     * @param  User|Authenticatable|null  $user
+     * @param User|Authenticatable|null $user
      */
-    public function setUser(User|Authenticatable|null $user): void
+    public function setUser(User | Authenticatable | null $user): void
     {
         if (null !== $user) {
             $this->user = $user;
@@ -207,7 +207,7 @@ class CategoryRepository implements CategoryRepositoryInterface
     }
 
     /**
-     * @param  Category  $category
+     * @param Category $category
      */
     public function removeNotes(Category $category): void
     {
@@ -229,7 +229,7 @@ class CategoryRepository implements CategoryRepositoryInterface
     }
 
     /**
-     * @param  Category  $category
+     * @param Category $category
      *
      * @return Carbon|null
      *
@@ -257,7 +257,7 @@ class CategoryRepository implements CategoryRepositoryInterface
     }
 
     /**
-     * @param  Category  $category
+     * @param Category $category
      *
      * @return Carbon|null
      */
@@ -274,7 +274,7 @@ class CategoryRepository implements CategoryRepositoryInterface
     }
 
     /**
-     * @param  Category  $category
+     * @param Category $category
      *
      * @return Carbon|null
      */
@@ -317,7 +317,7 @@ class CategoryRepository implements CategoryRepositoryInterface
     /**
      * Get all categories with ID's.
      *
-     * @param  array  $categoryIds
+     * @param array $categoryIds
      *
      * @return Collection
      */
@@ -340,8 +340,8 @@ class CategoryRepository implements CategoryRepositoryInterface
     }
 
     /**
-     * @param  Category  $category
-     * @param  Collection  $accounts
+     * @param Category   $category
+     * @param Collection $accounts
      *
      * @return Carbon|null
      * @throws Exception
@@ -369,8 +369,8 @@ class CategoryRepository implements CategoryRepositoryInterface
     }
 
     /**
-     * @param  Category  $category
-     * @param  Collection  $accounts
+     * @param Category   $category
+     * @param Collection $accounts
      *
      * @return Carbon|null
      */
@@ -393,8 +393,8 @@ class CategoryRepository implements CategoryRepositoryInterface
     }
 
     /**
-     * @param  Category  $category
-     * @param  Collection  $accounts
+     * @param Category   $category
+     * @param Collection $accounts
      *
      * @return Carbon|null
      * @throws Exception
@@ -419,8 +419,8 @@ class CategoryRepository implements CategoryRepositoryInterface
     }
 
     /**
-     * @param  string  $query
-     * @param  int  $limit
+     * @param string $query
+     * @param int    $limit
      *
      * @return Collection
      */
@@ -435,8 +435,8 @@ class CategoryRepository implements CategoryRepositoryInterface
     }
 
     /**
-     * @param  Category  $category
-     * @param  array  $data
+     * @param Category $category
+     * @param array    $data
      *
      * @return Category
      * @throws Exception

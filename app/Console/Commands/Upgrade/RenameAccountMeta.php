@@ -23,6 +23,7 @@ declare(strict_types=1);
 
 namespace FireflyIII\Console\Commands\Upgrade;
 
+use FireflyIII\Console\Commands\ShowsFriendlyMessages;
 use FireflyIII\Exceptions\FireflyException;
 use FireflyIII\Models\AccountMeta;
 use Illuminate\Console\Command;
@@ -34,6 +35,8 @@ use Psr\Container\NotFoundExceptionInterface;
  */
 class RenameAccountMeta extends Command
 {
+    use ShowsFriendlyMessages;
+
     public const CONFIG_NAME = '480_rename_account_meta';
     /**
      * The console command description.
@@ -58,10 +61,8 @@ class RenameAccountMeta extends Command
      */
     public function handle(): int
     {
-        $start = microtime(true);
-
         if ($this->isExecuted() && true !== $this->option('force')) {
-            $this->warn('This command has already been executed.');
+            $this->friendlyInfo('This command has already been executed.');
 
             return 0;
         }
@@ -88,14 +89,11 @@ class RenameAccountMeta extends Command
         $this->markAsExecuted();
 
         if (0 === $count) {
-            $this->line('All account meta is OK.');
+            $this->friendlyPositive('All account meta is OK.');
         }
         if (0 !== $count) {
-            $this->line(sprintf('Renamed %d account meta entries (entry).', $count));
+            $this->friendlyInfo(sprintf('Renamed %d account meta entries (entry).', $count));
         }
-
-        $end = round(microtime(true) - $start, 2);
-        $this->info(sprintf('Fixed account meta data in %s seconds.', $end));
 
         return 0;
     }

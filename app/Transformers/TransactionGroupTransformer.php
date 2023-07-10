@@ -78,7 +78,7 @@ class TransactionGroupTransformer extends AbstractTransformer
     }
 
     /**
-     * @param  array  $group
+     * @param array $group
      *
      * @return array
      */
@@ -97,14 +97,14 @@ class TransactionGroupTransformer extends AbstractTransformer
             'links'        => [
                 [
                     'rel' => 'self',
-                    'uri' => '/transactions/'.$first['transaction_group_id'],
+                    'uri' => '/transactions/' . $first['transaction_group_id'],
                 ],
             ],
         ];
     }
 
     /**
-     * @param  NullArrayObject  $data
+     * @param NullArrayObject $data
      *
      * @return array
      */
@@ -120,7 +120,7 @@ class TransactionGroupTransformer extends AbstractTransformer
     }
 
     /**
-     * @param  array  $transaction
+     * @param array $transaction
      *
      * @return array
      */
@@ -232,9 +232,9 @@ class TransactionGroupTransformer extends AbstractTransformer
     }
 
     /**
-     * @param  array  $array
-     * @param  string  $key
-     * @param  string|null  $default
+     * @param array       $array
+     * @param string      $key
+     * @param string|null $default
      *
      * @return string|null
      */
@@ -261,7 +261,7 @@ class TransactionGroupTransformer extends AbstractTransformer
     }
 
     /**
-     * @param  int  $journalId
+     * @param int $journalId
      *
      * @return Location|null
      */
@@ -271,7 +271,7 @@ class TransactionGroupTransformer extends AbstractTransformer
     }
 
     /**
-     * @param  TransactionJournal  $journal
+     * @param TransactionJournal $journal
      *
      * @return Location|null
      */
@@ -281,8 +281,8 @@ class TransactionGroupTransformer extends AbstractTransformer
     }
 
     /**
-     * @param  array  $array
-     * @param  string  $key
+     * @param array  $array
+     * @param string $key
      *
      * @return int|null
      */
@@ -296,8 +296,8 @@ class TransactionGroupTransformer extends AbstractTransformer
     }
 
     /**
-     * @param  NullArrayObject  $object
-     * @param  string  $key
+     * @param NullArrayObject $object
+     * @param string          $key
      *
      * @return string|null
      */
@@ -311,7 +311,7 @@ class TransactionGroupTransformer extends AbstractTransformer
     }
 
     /**
-     * @param  int  $journalId
+     * @param int $journalId
      *
      * @return bool
      */
@@ -321,7 +321,7 @@ class TransactionGroupTransformer extends AbstractTransformer
     }
 
     /**
-     * @param  TransactionGroup  $group
+     * @param TransactionGroup $group
      *
      * @return array
      * @throws FireflyException
@@ -339,7 +339,7 @@ class TransactionGroupTransformer extends AbstractTransformer
                 'links'        => [
                     [
                         'rel' => 'self',
-                        'uri' => '/transactions/'.$group->id,
+                        'uri' => '/transactions/' . $group->id,
                     ],
                 ],
             ];
@@ -355,7 +355,7 @@ class TransactionGroupTransformer extends AbstractTransformer
     }
 
     /**
-     * @param  Collection  $transactionJournals
+     * @param Collection $transactionJournals
      *
      * @return array
      * @throws FireflyException
@@ -372,7 +372,7 @@ class TransactionGroupTransformer extends AbstractTransformer
     }
 
     /**
-     * @param  TransactionJournal  $journal
+     * @param TransactionJournal $journal
      *
      * @return array
      * @throws FireflyException
@@ -382,17 +382,17 @@ class TransactionGroupTransformer extends AbstractTransformer
         $source          = $this->getSourceTransaction($journal);
         $destination     = $this->getDestinationTransaction($journal);
         $type            = $journal->transactionType->type;
-        $amount          = $this->getAmount($type, (string)$source->amount);
+        $currency        = $source->transactionCurrency;
+        $amount          = app('steam')->bcround($this->getAmount($type, (string)$source->amount), $currency->decimal_places ?? 0);
         $foreignAmount   = $this->getForeignAmount($type, null === $source->foreign_amount ? null : (string)$source->foreign_amount);
         $metaFieldData   = $this->groupRepos->getMetaFields($journal->id, $this->metaFields);
         $metaDates       = $this->getDates($this->groupRepos->getMetaDateFields($journal->id, $this->metaDateFields));
-        $currency        = $source->transactionCurrency;
         $foreignCurrency = $this->getForeignCurrency($source->foreignCurrency);
         $budget          = $this->getBudget($journal->budgets->first());
         $category        = $this->getCategory($journal->categories->first());
         $bill            = $this->getBill($journal->bill);
 
-        if (null !== $foreignAmount && null !== $foreignCurrency) {
+        if (null !== $foreignAmount && null !== $source->foreignCurrency) {
             $foreignAmount = app('steam')->bcround($foreignAmount, $foreignCurrency['decimal_places'] ?? 0);
         }
 
@@ -482,7 +482,7 @@ class TransactionGroupTransformer extends AbstractTransformer
     }
 
     /**
-     * @param  TransactionJournal  $journal
+     * @param TransactionJournal $journal
      *
      * @return Transaction
      * @throws FireflyException
@@ -502,7 +502,7 @@ class TransactionGroupTransformer extends AbstractTransformer
     }
 
     /**
-     * @param  TransactionJournal  $journal
+     * @param TransactionJournal $journal
      *
      * @return Transaction
      * @throws FireflyException
@@ -522,24 +522,19 @@ class TransactionGroupTransformer extends AbstractTransformer
     }
 
     /**
-     * @param  string  $type
-     * @param  string  $amount
+     * @param string $type
+     * @param string $amount
      *
      * @return string
      */
     private function getAmount(string $type, string $amount): string
     {
-        $amount = app('steam')->positive($amount);
-        if (TransactionType::WITHDRAWAL !== $type) {
-            $amount = app('steam')->negative($amount);
-        }
-
-        return $amount;
+        return app('steam')->positive($amount);
     }
 
     /**
-     * @param  string  $type
-     * @param  string|null  $foreignAmount
+     * @param string      $type
+     * @param string|null $foreignAmount
      *
      * @return string|null
      */
@@ -547,14 +542,14 @@ class TransactionGroupTransformer extends AbstractTransformer
     {
         $result = null;
         if (null !== $foreignAmount && '' !== $foreignAmount && bccomp('0', $foreignAmount) !== 0) {
-            $result = TransactionType::WITHDRAWAL !== $type ? app('steam')->negative($foreignAmount) : app('steam')->positive($foreignAmount);
+            $result = app('steam')->positive($foreignAmount);
         }
 
         return $result;
     }
 
     /**
-     * @param  NullArrayObject  $dates
+     * @param NullArrayObject $dates
      *
      * @return array
      */
@@ -580,7 +575,7 @@ class TransactionGroupTransformer extends AbstractTransformer
     }
 
     /**
-     * @param  TransactionCurrency|null  $currency
+     * @param TransactionCurrency|null $currency
      *
      * @return array
      */
@@ -604,7 +599,7 @@ class TransactionGroupTransformer extends AbstractTransformer
     }
 
     /**
-     * @param  Budget|null  $budget
+     * @param Budget|null $budget
      *
      * @return array
      */
@@ -624,7 +619,7 @@ class TransactionGroupTransformer extends AbstractTransformer
     }
 
     /**
-     * @param  Category|null  $category
+     * @param Category|null $category
      *
      * @return array
      */
@@ -644,7 +639,7 @@ class TransactionGroupTransformer extends AbstractTransformer
     }
 
     /**
-     * @param  Bill|null  $bill
+     * @param Bill|null $bill
      *
      * @return array
      */

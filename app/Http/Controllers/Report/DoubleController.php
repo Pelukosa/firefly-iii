@@ -32,8 +32,8 @@ use FireflyIII\Repositories\Account\OperationsRepositoryInterface;
 use FireflyIII\Support\Http\Controllers\AugumentData;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Support\Collection;
-use Illuminate\View\View;
 use Illuminate\Support\Facades\Log;
+use Illuminate\View\View;
 use Throwable;
 
 /**
@@ -71,10 +71,10 @@ class DoubleController extends Controller
     }
 
     /**
-     * @param  Collection  $accounts
-     * @param  Collection  $doubles
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Collection $doubles
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return string
      * @throws FireflyException
@@ -124,10 +124,10 @@ class DoubleController extends Controller
     }
 
     /**
-     * @param  Collection  $accounts
-     * @param  Collection  $doubles
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Collection $doubles
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return string
      * @throws FireflyException
@@ -177,10 +177,10 @@ class DoubleController extends Controller
     }
 
     /**
-     * @param  Collection  $accounts
-     * @param  Collection  $double
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Collection $double
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return Factory|View
      */
@@ -298,10 +298,10 @@ class DoubleController extends Controller
     /**
      * TODO this method is duplicated.
      *
-     * @param  Collection  $accounts
-     * @param  int  $id
-     * @param  string  $name
-     * @param  string|null  $iban
+     * @param Collection  $accounts
+     * @param int         $id
+     * @param string      $name
+     * @param string|null $iban
      *
      * @return string
      */
@@ -321,10 +321,10 @@ class DoubleController extends Controller
     }
 
     /**
-     * @param  Collection  $accounts
-     * @param  Collection  $double
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Collection $double
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return Factory|View
      */
@@ -421,10 +421,10 @@ class DoubleController extends Controller
     }
 
     /**
-     * @param  Collection  $accounts
-     * @param  Collection  $doubles
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Collection $doubles
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return string
      * @throws FireflyException
@@ -472,10 +472,10 @@ class DoubleController extends Controller
     }
 
     /**
-     * @param  Collection  $accounts
-     * @param  Collection  $doubles
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Collection $doubles
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return string
      * @throws FireflyException

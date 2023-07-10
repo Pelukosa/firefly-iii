@@ -52,7 +52,7 @@ class BillTransformer extends AbstractTransformer
     /**
      * Transform the bill.
      *
-     * @param  Bill  $bill
+     * @param Bill $bill
      *
      * @return array
      */
@@ -137,7 +137,7 @@ class BillTransformer extends AbstractTransformer
             'links'                    => [
                 [
                     'rel' => 'self',
-                    'uri' => '/bills/'.$bill->id,
+                    'uri' => '/bills/' . $bill->id,
                 ],
             ],
         ];
@@ -146,7 +146,7 @@ class BillTransformer extends AbstractTransformer
     /**
      * Get the data the bill was paid and predict the next expected match.
      *
-     * @param  Bill  $bill
+     * @param Bill $bill
      *
      * @return array
      */
@@ -220,8 +220,8 @@ class BillTransformer extends AbstractTransformer
     /**
      * Returns the latest date in the set, or start when set is empty.
      *
-     * @param  Collection  $dates
-     * @param  Carbon  $default
+     * @param Collection $dates
+     * @param Carbon     $default
      *
      * @return Carbon
      */
@@ -242,7 +242,7 @@ class BillTransformer extends AbstractTransformer
     }
 
     /**
-     * @param  Bill  $bill
+     * @param Bill $bill
      *
      * @return array
      */
@@ -256,6 +256,8 @@ class BillTransformer extends AbstractTransformer
         }
         $set          = new Collection();
         $currentStart = clone $this->parameters->get('start');
+        // 2023-06-23 subDay to fix 7655
+        $currentStart->subDay();
         $loop         = 0;
         while ($currentStart <= $this->parameters->get('end')) {
             $nextExpectedMatch = $this->nextDateMatch($bill, $currentStart);
@@ -285,8 +287,8 @@ class BillTransformer extends AbstractTransformer
      * Given a bill and a date, this method will tell you at which moment this bill expects its next
      * transaction. Whether or not it is there already, is not relevant.
      *
-     * @param  Bill  $bill
-     * @param  Carbon  $date
+     * @param Bill   $bill
+     * @param Carbon $date
      *
      * @return Carbon
      */

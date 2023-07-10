@@ -25,7 +25,6 @@ namespace FireflyIII\Helpers\Fiscal;
 
 use Carbon\Carbon;
 use FireflyIII\Exceptions\FireflyException;
-use Illuminate\Support\Facades\Log;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
@@ -46,7 +45,7 @@ class FiscalHelper implements FiscalHelperInterface
     }
 
     /**
-     * @param  Carbon  $date
+     * @param Carbon $date
      *
      * @return Carbon date object
      * @throws FireflyException
@@ -71,7 +70,7 @@ class FiscalHelper implements FiscalHelperInterface
     }
 
     /**
-     * @param  Carbon  $date
+     * @param Carbon $date
      *
      * @return Carbon date object
      * @throws ContainerExceptionInterface

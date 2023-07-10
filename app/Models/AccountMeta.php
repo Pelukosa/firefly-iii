@@ -28,17 +28,16 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
-use JsonException;
 
 /**
  * Class AccountMeta
  *
- * @property int $id
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property int $account_id
- * @property string $name
- * @property mixed $data
+ * @property int          $id
+ * @property Carbon|null  $created_at
+ * @property Carbon|null  $updated_at
+ * @property int          $account_id
+ * @property string       $name
+ * @property mixed        $data
  * @property-read Account $account
  * @method static Builder|AccountMeta newModelQuery()
  * @method static Builder|AccountMeta newQuery()
@@ -77,18 +76,17 @@ class AccountMeta extends Model
     }
 
     /**
-     * @param  mixed  $value
+     * @param mixed $value
      *
      * @return mixed
-     * @throws JsonException
      */
-    public function getDataAttribute($value)
+    public function getDataAttribute($value): string
     {
-        return json_decode($value, true, 512, JSON_THROW_ON_ERROR);
+        return (string)json_decode($value, true);
     }
 
     /**
-     * @param  mixed  $value
+     * @param mixed $value
      *
 
      */

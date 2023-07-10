@@ -70,7 +70,7 @@ class CategoryController extends Controller
      * Show an overview for a category for all time, per month/week/year.
      * TODO test method, for category refactor.
      *
-     * @param  Category  $category
+     * @param Category $category
      *
      * @return JsonResponse
      * @throws FireflyException
@@ -141,10 +141,10 @@ class CategoryController extends Controller
      * Chart report.
      * TODO test method for category refactor.
      *
-     * @param  Category  $category
-     * @param  Collection  $accounts
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Category   $category
+     * @param Collection $accounts
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return JsonResponse
      */
@@ -169,10 +169,10 @@ class CategoryController extends Controller
     /**
      * Generate report chart for either with or without category.
      *
-     * @param  Collection  $accounts
-     * @param  Carbon  $start
-     * @param  Carbon  $end
-     * @param  Category|null  $category
+     * @param Collection    $accounts
+     * @param Carbon        $start
+     * @param Carbon        $end
+     * @param Category|null $category
      *
      * @return array
      */
@@ -256,9 +256,9 @@ class CategoryController extends Controller
      * Chart for period for transactions without a category.
      * TODO test me.
      *
-     * @param  Collection  $accounts
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return JsonResponse
      */
@@ -283,8 +283,8 @@ class CategoryController extends Controller
      * Chart for a specific period.
      * TODO test me, for category refactor.
      *
-     * @param  Category  $category
-     * @param  Carbon  $date
+     * @param Category $category
+     * @param Carbon   $date
      *
      * @return JsonResponse
      * @throws FireflyException

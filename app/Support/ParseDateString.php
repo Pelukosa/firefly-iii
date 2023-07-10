@@ -49,7 +49,7 @@ class ParseDateString
         ];
 
     /**
-     * @param  string  $date
+     * @param string $date
      *
      * @return bool
      */
@@ -73,7 +73,7 @@ class ParseDateString
     }
 
     /**
-     * @param  string  $date
+     * @param string $date
      *
      * @return Carbon
      * @throws FireflyException
@@ -122,7 +122,7 @@ class ParseDateString
     }
 
     /**
-     * @param  string  $keyword
+     * @param string $keyword
      *
      * @return Carbon
      */
@@ -146,7 +146,7 @@ class ParseDateString
     }
 
     /**
-     * @param  string  $date
+     * @param string $date
      *
      * @return Carbon
      */
@@ -156,7 +156,7 @@ class ParseDateString
     }
 
     /**
-     * @param  string  $date
+     * @param string $date
      *
      * @return Carbon
      */
@@ -210,7 +210,7 @@ class ParseDateString
     }
 
     /**
-     * @param  string  $date
+     * @param string $date
      *
      * @return array
      */
@@ -247,7 +247,7 @@ class ParseDateString
     }
 
     /**
-     * @param  string  $date
+     * @param string $date
      *
      * @return bool
      */
@@ -268,7 +268,7 @@ class ParseDateString
     /**
      * format of string is xxxx-xx-DD
      *
-     * @param  string  $date
+     * @param string $date
      *
      * @return array
      */
@@ -282,7 +282,7 @@ class ParseDateString
     }
 
     /**
-     * @param  string  $date
+     * @param string $date
      *
      * @return bool
      */
@@ -303,7 +303,7 @@ class ParseDateString
     /**
      * format of string is xxxx-MM-xx
      *
-     * @param  string  $date
+     * @param string $date
      *
      * @return array
      */
@@ -318,7 +318,7 @@ class ParseDateString
     }
 
     /**
-     * @param  string  $date
+     * @param string $date
      *
      * @return bool
      */
@@ -339,7 +339,7 @@ class ParseDateString
     /**
      * format of string is YYYY-xx-xx
      *
-     * @param  string  $date
+     * @param string $date
      *
      * @return array
      */
@@ -354,7 +354,7 @@ class ParseDateString
     }
 
     /**
-     * @param  string  $date
+     * @param string $date
      *
      * @return bool
      */
@@ -375,7 +375,7 @@ class ParseDateString
     /**
      * format of string is xxxx-MM-DD
      *
-     * @param  string  $date
+     * @param string $date
      *
      * @return array
      */
@@ -391,7 +391,7 @@ class ParseDateString
     }
 
     /**
-     * @param  string  $date
+     * @param string $date
      *
      * @return bool
      */
@@ -412,7 +412,7 @@ class ParseDateString
     /**
      * format of string is YYYY-xx-DD
      *
-     * @param  string  $date
+     * @param string $date
      *
      * @return array
      */
@@ -428,7 +428,7 @@ class ParseDateString
     }
 
     /**
-     * @param  string  $date
+     * @param string $date
      *
      * @return bool
      */
@@ -449,7 +449,7 @@ class ParseDateString
     /**
      * format of string is YYYY-MM-xx
      *
-     * @param  string  $date
+     * @param string $date
      *
      * @return array
      */

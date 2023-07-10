@@ -31,8 +31,8 @@ use FireflyIII\Models\Location;
 use FireflyIII\Repositories\Account\AccountRepositoryInterface;
 use FireflyIII\Services\Internal\Support\AccountServiceTrait;
 use FireflyIII\User;
-use JsonException;
 use Illuminate\Support\Facades\Log;
+use JsonException;
 
 /**
  * Class AccountUpdateService
@@ -66,8 +66,8 @@ class AccountUpdateService
     /**
      * Update account data.
      *
-     * @param  Account  $account
-     * @param  array  $data
+     * @param Account $account
+     * @param array   $data
      *
      * @return Account
      * @throws FireflyException
@@ -114,7 +114,7 @@ class AccountUpdateService
     }
 
     /**
-     * @param  User  $user
+     * @param User $user
      */
     public function setUser(User $user): void
     {
@@ -122,8 +122,8 @@ class AccountUpdateService
     }
 
     /**
-     * @param  Account  $account
-     * @param  array  $data
+     * @param Account $account
+     * @param array   $data
      *
      * @return Account
      */
@@ -167,7 +167,7 @@ class AccountUpdateService
     }
 
     /**
-     * @param  Account  $account
+     * @param Account $account
      *
      * @return bool
      */
@@ -179,7 +179,7 @@ class AccountUpdateService
     }
 
     /**
-     * @param  string  $type
+     * @param string $type
      *
      * @return AccountType
      */
@@ -189,8 +189,8 @@ class AccountUpdateService
     }
 
     /**
-     * @param  Account  $account
-     * @param  array  $data
+     * @param Account $account
+     * @param array   $data
      *
      * @return Account
      */
@@ -255,8 +255,8 @@ class AccountUpdateService
     }
 
     /**
-     * @param  Account  $account
-     * @param  array  $data
+     * @param Account $account
+     * @param array   $data
      */
     private function updateLocation(Account $account, array $data): void
     {
@@ -285,8 +285,8 @@ class AccountUpdateService
     }
 
     /**
-     * @param  Account  $account
-     * @param  array  $data
+     * @param Account $account
+     * @param array   $data
      *
      * @throws FireflyException
      */
@@ -296,6 +296,7 @@ class AccountUpdateService
         $type = $account->accountType;
         if (in_array($type->type, $this->canHaveOpeningBalance, true)) {
             // check if is submitted as empty, that makes it valid:
+
             if ($this->validOBData($data) && !$this->isEmptyOBData($data)) {
                 $openingBalance     = $data['opening_balance'];
                 $openingBalanceDate = $data['opening_balance_date'];
@@ -306,7 +307,6 @@ class AccountUpdateService
                         $openingBalance
                     );
                 }
-
                 $this->updateOBGroupV2($account, $openingBalance, $openingBalanceDate);
             }
 
@@ -321,7 +321,7 @@ class AccountUpdateService
     }
 
     /**
-     * @param  Account  $account
+     * @param Account $account
      *
      * @throws FireflyException
      */
@@ -348,36 +348,5 @@ class AccountUpdateService
         }
         Log::debug('Final new array is', $new);
         app('preferences')->setForUser($account->user, 'frontpageAccounts', $new);
-    }
-
-    /**
-     * @param  Account  $account
-     * @param  array  $data
-     *
-     * @throws FireflyException
-     * @deprecated In Firefly III v5.8.0 and onwards, credit transactions for liabilities are no longer created.
-     */
-    private function updateCreditLiability(Account $account, array $data): void
-    {
-        $type  = $account->accountType;
-        $valid = config('firefly.valid_liabilities');
-        if (in_array($type->type, $valid, true)) {
-            $direction = array_key_exists('liability_direction', $data) ? $data['liability_direction'] : 'empty';
-            // check if is submitted as empty, that makes it valid:
-            if ($this->validOBData($data) && !$this->isEmptyOBData($data)) {
-                $openingBalance     = $data['opening_balance'];
-                $openingBalanceDate = $data['opening_balance_date'];
-                if ('credit' === $direction) {
-                    $this->updateCreditTransaction($account, $direction, $openingBalance, $openingBalanceDate);
-                }
-            }
-
-            if (!$this->validOBData($data) && $this->isEmptyOBData($data)) {
-                $this->deleteCreditTransaction($account);
-            }
-            if ($this->validOBData($data) && !$this->isEmptyOBData($data) && 'credit' !== $direction) {
-                $this->deleteCreditTransaction($account);
-            }
-        }
     }
 }

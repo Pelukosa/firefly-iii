@@ -1707,6 +1707,7 @@ return [
     'auto_budget_none'                          => 'No auto-budget',
     'auto_budget_reset'                         => 'Set a fixed amount every period',
     'auto_budget_rollover'                      => 'Add an amount every period',
+    'auto_budget_adjusted'                      => 'Add an amount every period and correct for overspending',
     'auto_budget_period_daily'                  => 'Günlük',
     'auto_budget_period_weekly'                 => 'Haftalık',
     'auto_budget_period_monthly'                => 'Aylık',
@@ -1716,6 +1717,7 @@ return [
     'auto_budget_help'                          => 'Bu özellik hakkında daha fazla bilgiyi yardım\'da okuyabilirsiniz. Sağ üst köşedeki sembolu (?) tıklayın.',
     'auto_budget_reset_icon'                    => 'Bu bütçe periyodik olarak belirlenecektir',
     'auto_budget_rollover_icon'                 => 'Bütçe tutarı periyodik olarak artacaktır',
+    'auto_budget_adjusted_icon'                 => 'The budget amount will increase periodically and will correct for overspending',
     'remove_budgeted_amount'                    => 'Bütçelenmiş tutarı kaldır :currency',
 
     // bills:
@@ -2293,6 +2295,7 @@ return [
     'budgeted'                                  => 'Bütçelenen',
     'period'                                    => 'Dönem',
     'balance'                                   => 'Denge',
+    'in_out_period'                             => 'In + out this period',
     'sum'                                       => 'Toplam',
     'summary'                                   => 'Summary',
     'average'                                   => 'Ortalama',
@@ -2693,6 +2696,9 @@ return [
     'ale_action_log_add'                 => 'Added :amount to piggy bank ":name"',
     'ale_action_log_remove'              => 'Removed :amount from piggy bank ":name"',
     'ale_action_clear_budget'            => 'Removed from budget',
+    'ale_action_update_group_title'      => 'Updated transaction group title',
+    'ale_action_update_date'             => 'Updated transaction date',
+    'ale_action_update_order'            => 'Updated transaction order',
     'ale_action_clear_category'          => 'Removed from category',
     'ale_action_clear_notes'             => 'Removed notes',
     'ale_action_clear_tag'               => 'Cleared tag',

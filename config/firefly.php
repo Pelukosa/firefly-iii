@@ -107,8 +107,8 @@ return [
         'webhooks'     => true,
         'handle_debts' => true,
     ],
-    'version'                      => '6.0.9',
-    'api_version'                  => '2.0.1',
+    'version'                      => '6.0.16',
+    'api_version'                  => '2.0.4',
     'db_version'                   => 19,
 
     // generic settings
@@ -118,7 +118,6 @@ return [
 
     // tokens and keys
     'fixer_api_key'                => env('FIXER_API_KEY', ''),
-    'mapbox_api_key'               => env('MAPBOX_API_KEY', ''),
     'ipinfo_token'                 => env('IPINFO_TOKEN', ''),
     'static_cron_token'            => envNonEmpty('STATIC_CRON_TOKEN'),
 
@@ -138,7 +137,6 @@ return [
     'tracker_url'                  => env('TRACKER_URL', ''),
 
     // authentication settings
-    'login_provider'               => envNonEmpty('LOGIN_PROVIDER', 'eloquent'),
     'authentication_guard'         => envNonEmpty('AUTHENTICATION_GUARD', 'web'),
     'custom_logout_url'            => envNonEmpty('CUSTOM_LOGOUT_URL', ''),
 
@@ -172,8 +170,11 @@ return [
         //        'is_IS' => ['name_locale' => 'Icelandic', 'name_english' => 'Icelandic'],
         'it_IT' => ['name_locale' => 'Italiano', 'name_english' => 'Italian'],
         'ja_JP' => ['name_locale' => 'Japanese', 'name_english' => 'Japanese'],
+        'ko_KR' => ['name_locale' => 'Korean', 'name_english' => 'Korean'],
         //        'lt_LT' => ['name_locale' => 'Lietuvių', 'name_english' => 'Lithuanian'],
-        'nb_NO' => ['name_locale' => 'Norsk', 'name_english' => 'Norwegian'],
+
+        'nb_NO' => ['name_locale' => 'Norsk Bokmål', 'name_english' => 'Norwegian Bokmål'],
+        'nn_NO' => ['name_locale' => 'Norsk Nynorsk', 'name_english' => 'Norwegian Nynorsk'],
         'nl_NL' => ['name_locale' => 'Nederlands', 'name_english' => 'Dutch'],
         'pl_PL' => ['name_locale' => 'Polski', 'name_english' => 'Polish'],
         'pt_BR' => ['name_locale' => 'Português do Brasil', 'name_english' => 'Portuguese (Brazil)'],
@@ -879,7 +880,13 @@ return [
     ],
     'can_have_virtual_amounts'  => [AccountType::ASSET],
     'can_have_opening_balance'  => [AccountType::ASSET, AccountType::LOAN, AccountType::DEBT, AccountType::MORTGAGE],
-    'dynamic_creation_allowed'  => [AccountType::EXPENSE, AccountType::REVENUE, AccountType::INITIAL_BALANCE, AccountType::RECONCILIATION, AccountType::LIABILITY_CREDIT],
+    'dynamic_creation_allowed'  => [
+        AccountType::EXPENSE,
+        AccountType::REVENUE,
+        AccountType::INITIAL_BALANCE,
+        AccountType::RECONCILIATION,
+        AccountType::LIABILITY_CREDIT,
+    ],
     'valid_asset_fields'        => ['account_role', 'account_number', 'currency_id', 'BIC', 'include_net_worth'],
     'valid_cc_fields'           => ['account_role', 'cc_monthly_payment_date', 'cc_type', 'account_number', 'currency_id', 'BIC', 'include_net_worth'],
     'valid_account_fields'      => ['account_number', 'currency_id', 'BIC', 'interest', 'interest_period', 'include_net_worth', 'liability_direction'],

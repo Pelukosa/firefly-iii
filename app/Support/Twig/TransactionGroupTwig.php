@@ -79,7 +79,7 @@ class TransactionGroupTwig extends AbstractExtension
     /**
      * Generate normal amount for transaction from a transaction group.
      *
-     * @param  array  $array
+     * @param array $array
      *
      * @return string
      */
@@ -104,9 +104,9 @@ class TransactionGroupTwig extends AbstractExtension
     }
 
     /**
-     * @param  string  $amount
-     * @param  string  $transactionType
-     * @param  string  $sourceType
+     * @param string $amount
+     * @param string $transactionType
+     * @param string $sourceType
      *
      * @return string
      */
@@ -133,7 +133,7 @@ class TransactionGroupTwig extends AbstractExtension
     /**
      * Generate foreign amount for transaction from a transaction group.
      *
-     * @param  array  $array
+     * @param array $array
      *
      * @return string
      */
@@ -183,7 +183,7 @@ class TransactionGroupTwig extends AbstractExtension
     /**
      * Generate normal amount for transaction from a transaction group.
      *
-     * @param  TransactionJournal  $journal
+     * @param TransactionJournal $journal
      *
      * @return string
      */
@@ -210,7 +210,7 @@ class TransactionGroupTwig extends AbstractExtension
     }
 
     /**
-     * @param  TransactionJournal  $journal
+     * @param TransactionJournal $journal
      *
      * @return bool
      */
@@ -225,7 +225,7 @@ class TransactionGroupTwig extends AbstractExtension
     /**
      * Generate foreign amount for journal from a transaction group.
      *
-     * @param  TransactionJournal  $journal
+     * @param TransactionJournal $journal
      *
      * @return string
      */

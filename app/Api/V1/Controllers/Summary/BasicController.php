@@ -90,7 +90,7 @@ class BasicController extends Controller
      * This endpoint is documented at:
      * https://api-docs.firefly-iii.org/?urls.primaryName=2.0.0%20(v1)#/summary/getBasicSummary
      *
-     * @param  DateRequest  $request
+     * @param DateRequest $request
      *
      * @return JsonResponse
      * @throws Exception
@@ -122,8 +122,8 @@ class BasicController extends Controller
     }
 
     /**
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Carbon $start
+     * @param Carbon $end
      *
      * @return array
      */
@@ -196,8 +196,8 @@ class BasicController extends Controller
                 'currency_decimal_places' => $currency->decimal_places,
                 'value_parsed'            => app('amount')->formatAnything($currency, $sums[$currencyId] ?? '0', false),
                 'local_icon'              => 'balance-scale',
-                'sub_title'               => app('amount')->formatAnything($currency, $expenses[$currencyId] ?? '0', false).
-                                             ' + '.app('amount')->formatAnything($currency, $incomes[$currencyId] ?? '0', false),
+                'sub_title'               => app('amount')->formatAnything($currency, $expenses[$currencyId] ?? '0', false) .
+                                             ' + ' . app('amount')->formatAnything($currency, $incomes[$currencyId] ?? '0', false),
             ];
             $return[] = [
                 'key'                     => sprintf('spent-in-%s', $currency->code),
@@ -229,8 +229,8 @@ class BasicController extends Controller
     }
 
     /**
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Carbon $start
+     * @param Carbon $end
      *
      * @return array
      */
@@ -240,44 +240,43 @@ class BasicController extends Controller
          * Since both this method and the chart use the exact same data, we can suffice
          * with calling the one method in the bill repository that will get this amount.
          */
-        $paidAmount   = $this->billRepository->getBillsPaidInRangePerCurrency($start, $end);
-        $unpaidAmount = $this->billRepository->getBillsUnpaidInRangePerCurrency($start, $end);
-        $return       = [];
-        foreach ($paidAmount as $currencyId => $amount) {
-            $amount   = bcmul($amount, '-1');
-            $currency = $this->currencyRepos->find((int)$currencyId);
-            if (null === $currency) {
-                continue;
-            }
+        $paidAmount   = $this->billRepository->sumPaidInRange($start, $end);
+        $unpaidAmount = $this->billRepository->sumUnpaidInRange($start, $end);
+
+        $return = [];
+        /**
+         * @var array $info
+         */
+        foreach ($paidAmount as $info) {
+            $amount   = bcmul($info['sum'], '-1');
             $return[] = [
-                'key'                     => sprintf('bills-paid-in-%s', $currency->code),
-                'title'                   => trans('firefly.box_bill_paid_in_currency', ['currency' => $currency->symbol]),
+                'key'                     => sprintf('bills-paid-in-%s', $info['code']),
+                'title'                   => trans('firefly.box_bill_paid_in_currency', ['currency' => $info['symbol']]),
                 'monetary_value'          => $amount,
-                'currency_id'             => $currency->id,
-                'currency_code'           => $currency->code,
-                'currency_symbol'         => $currency->symbol,
-                'currency_decimal_places' => $currency->decimal_places,
-                'value_parsed'            => app('amount')->formatAnything($currency, $amount, false),
+                'currency_id'             => $info['id'],
+                'currency_code'           => $info['code'],
+                'currency_symbol'         => $info['symbol'],
+                'currency_decimal_places' => $info['decimal_places'],
+                'value_parsed'            => app('amount')->formatFlat($info['symbol'], $info['decimal_places'], $amount, false),
                 'local_icon'              => 'check',
                 'sub_title'               => '',
             ];
         }
 
-        foreach ($unpaidAmount as $currencyId => $amount) {
-            $amount   = bcmul($amount, '-1');
-            $currency = $this->currencyRepos->find((int)$currencyId);
-            if (null === $currency) {
-                continue;
-            }
+        /**
+         * @var array $info
+         */
+        foreach ($unpaidAmount as $info) {
+            $amount   = bcmul($info['sum'], '-1');
             $return[] = [
-                'key'                     => sprintf('bills-unpaid-in-%s', $currency->code),
-                'title'                   => trans('firefly.box_bill_unpaid_in_currency', ['currency' => $currency->symbol]),
+                'key'                     => sprintf('bills-unpaid-in-%s', $info['code']),
+                'title'                   => trans('firefly.box_bill_unpaid_in_currency', ['currency' => $info['symbol']]),
                 'monetary_value'          => $amount,
-                'currency_id'             => $currency->id,
-                'currency_code'           => $currency->code,
-                'currency_symbol'         => $currency->symbol,
-                'currency_decimal_places' => $currency->decimal_places,
-                'value_parsed'            => app('amount')->formatAnything($currency, $amount, false),
+                'currency_id'             => $info['id'],
+                'currency_code'           => $info['code'],
+                'currency_symbol'         => $info['symbol'],
+                'currency_decimal_places' => $info['decimal_places'],
+                'value_parsed'            => app('amount')->formatFlat($info['symbol'], $info['decimal_places'], $amount, false),
                 'local_icon'              => 'calendar-o',
                 'sub_title'               => '',
             ];
@@ -287,8 +286,8 @@ class BasicController extends Controller
     }
 
     /**
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Carbon $start
+     * @param Carbon $end
      *
      * @return array
      * @throws Exception
@@ -341,8 +340,8 @@ class BasicController extends Controller
     }
 
     /**
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Carbon $start
+     * @param Carbon $end
      *
      * @return array
      */
@@ -403,10 +402,10 @@ class BasicController extends Controller
     /**
      * Check if date is outside session range.
      *
-     * @param  Carbon  $date
+     * @param Carbon $date
      *
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Carbon $start
+     * @param Carbon $end
      *
      * @return bool
      */

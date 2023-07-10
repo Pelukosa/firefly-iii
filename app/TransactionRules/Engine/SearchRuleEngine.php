@@ -44,10 +44,10 @@ class SearchRuleEngine implements RuleEngineInterface
 {
     private Collection $groups;
     private array      $operators;
+    private bool       $refreshTriggers;
     private array      $resultCount;
     private Collection $rules;
     private User       $user;
-    private bool       $refreshTriggers;
 
     public function __construct()
     {
@@ -93,7 +93,7 @@ class SearchRuleEngine implements RuleEngineInterface
     /**
      * Finds the transactions a strict rule will execute on.
      *
-     * @param  Rule  $rule
+     * @param Rule $rule
      *
      * @return Collection
      */
@@ -160,7 +160,7 @@ class SearchRuleEngine implements RuleEngineInterface
      * one search operator for "journal_id" it means the date ranges
      * in the search may need to be updated.
      *
-     * @param  array  $array
+     * @param array $array
      *
      * @return bool
      */
@@ -186,7 +186,7 @@ class SearchRuleEngine implements RuleEngineInterface
     }
 
     /**
-     * @param  array  $array
+     * @param array $array
      *
      * @return Carbon
      */
@@ -226,7 +226,7 @@ class SearchRuleEngine implements RuleEngineInterface
     }
 
     /**
-     * @param  Rule  $rule
+     * @param Rule $rule
      *
      * @return Collection
      */
@@ -297,7 +297,7 @@ class SearchRuleEngine implements RuleEngineInterface
                     $str = sprintf('%s%d', $str, $transaction['transaction_journal_id']);
                 }
                 $key = sprintf('%d%s', $group['id'], $str);
-                Log::debug(sprintf('Return key: %s ', $key));
+                //Log::debug(sprintf('Return key: %s ', $key));
 
                 return $key;
             }
@@ -341,7 +341,7 @@ class SearchRuleEngine implements RuleEngineInterface
     /**
      * Returns true if the rule has been triggered.
      *
-     * @param  Rule  $rule
+     * @param Rule $rule
      *
      * @return bool
      * @throws FireflyException
@@ -367,7 +367,7 @@ class SearchRuleEngine implements RuleEngineInterface
     /**
      * Return true if the rule is fired (the collection is larger than zero).
      *
-     * @param  Rule  $rule
+     * @param Rule $rule
      *
      * @return bool
      * @throws FireflyException
@@ -392,8 +392,8 @@ class SearchRuleEngine implements RuleEngineInterface
     }
 
     /**
-     * @param  Rule  $rule
-     * @param  Collection  $collection
+     * @param Rule       $rule
+     * @param Collection $collection
      *
      * @throws FireflyException
      */
@@ -407,8 +407,8 @@ class SearchRuleEngine implements RuleEngineInterface
     }
 
     /**
-     * @param  Rule  $rule
-     * @param  array  $group
+     * @param Rule  $rule
+     * @param array $group
      *
      * @throws FireflyException
      */
@@ -422,8 +422,8 @@ class SearchRuleEngine implements RuleEngineInterface
     }
 
     /**
-     * @param  Rule  $rule
-     * @param  array  $transaction
+     * @param Rule  $rule
+     * @param array $transaction
      *
      * @throws FireflyException
      */
@@ -444,8 +444,8 @@ class SearchRuleEngine implements RuleEngineInterface
     }
 
     /**
-     * @param  RuleAction  $ruleAction
-     * @param  array  $transaction
+     * @param RuleAction $ruleAction
+     * @param array      $transaction
      *
      * @return bool
      * @throws FireflyException
@@ -484,7 +484,7 @@ class SearchRuleEngine implements RuleEngineInterface
     /**
      * Return true if the rule is fired (the collection is larger than zero).
      *
-     * @param  Rule  $rule
+     * @param Rule $rule
      *
      * @return bool
      * @throws FireflyException
@@ -501,7 +501,7 @@ class SearchRuleEngine implements RuleEngineInterface
     }
 
     /**
-     * @param  RuleGroup  $group
+     * @param RuleGroup $group
      *
      * @return void
      * @throws FireflyException
@@ -536,6 +536,14 @@ class SearchRuleEngine implements RuleEngineInterface
     }
 
     /**
+     * @param bool $refreshTriggers
+     */
+    public function setRefreshTriggers(bool $refreshTriggers): void
+    {
+        $this->refreshTriggers = $refreshTriggers;
+    }
+
+    /**
      * @inheritDoc
      */
     public function setRuleGroups(Collection $ruleGroups): void
@@ -561,13 +569,5 @@ class SearchRuleEngine implements RuleEngineInterface
                 $this->rules->push($rule);
             }
         }
-    }
-
-    /**
-     * @param  bool  $refreshTriggers
-     */
-    public function setRefreshTriggers(bool $refreshTriggers): void
-    {
-        $this->refreshTriggers = $refreshTriggers;
     }
 }

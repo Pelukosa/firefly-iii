@@ -35,9 +35,9 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
-use Illuminate\Support\Facades\Log;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
@@ -70,10 +70,7 @@ class RegisterController extends Controller
         parent::__construct();
         $this->middleware('guest');
 
-        $loginProvider = config('firefly.login_provider');
-        $authGuard     = config('firefly.authentication_guard');
-
-        if ('eloquent' !== $loginProvider || 'web' !== $authGuard) {
+        if ('web' !== config('firefly.authentication_guard')) {
             throw new FireflyException('Using external identity provider. Cannot continue.');
         }
     }
@@ -81,7 +78,7 @@ class RegisterController extends Controller
     /**
      * Handle a registration request for the application.
      *
-     * @param  Request  $request
+     * @param Request $request
      *
      * @return Application|Redirector|RedirectResponse
      * @throws FireflyException
@@ -127,7 +124,7 @@ class RegisterController extends Controller
         $allowRegistration = true;
         try {
             $singleUserMode = app('fireflyconfig')->get('single_user_mode', config('firefly.configuration.single_user_mode'))->data;
-        } catch (ContainerExceptionInterface|NotFoundExceptionInterface $e) {
+        } catch (ContainerExceptionInterface | NotFoundExceptionInterface $e) {
             $singleUserMode = true;
         }
         $userCount = User::count();
@@ -178,7 +175,7 @@ class RegisterController extends Controller
     /**
      * Show the application registration form.
      *
-     * @param  Request  $request
+     * @param Request $request
      *
      * @return Factory|View
      * @throws ContainerExceptionInterface

@@ -27,8 +27,8 @@ use FireflyIII\Exceptions\DuplicateTransactionException;
 use FireflyIII\Exceptions\FireflyException;
 use FireflyIII\Models\TransactionGroup;
 use FireflyIII\User;
-use JsonException;
 use Illuminate\Support\Facades\Log;
+use JsonException;
 
 /**
  * Class TransactionGroupFactory
@@ -51,7 +51,7 @@ class TransactionGroupFactory
     /**
      * Store a new transaction journal.
      *
-     * @param  array  $data
+     * @param array $data
      *
      * @return TransactionGroup
      * @throws DuplicateTransactionException
@@ -92,7 +92,7 @@ class TransactionGroupFactory
     /**
      * Set the user.
      *
-     * @param  User  $user
+     * @param User $user
      */
     public function setUser(User $user): void
     {

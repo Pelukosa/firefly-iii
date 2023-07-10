@@ -41,7 +41,7 @@ use Symfony\Component\HttpFoundation\ParameterBag;
  */
 class ShowController extends Controller
 {
-    private ALERepositoryInterface              $ALERepository;
+    private ALERepositoryInterface              $aleRepository;
     private TransactionGroupRepositoryInterface $repository;
 
     /**
@@ -55,7 +55,7 @@ class ShowController extends Controller
         $this->middleware(
             function ($request, $next) {
                 $this->repository    = app(TransactionGroupRepositoryInterface::class);
-                $this->ALERepository = app(ALERepositoryInterface::class);
+                $this->aleRepository = app(ALERepositoryInterface::class);
 
                 app('view')->share('title', (string)trans('firefly.transactions'));
                 app('view')->share('mainTitleIcon', 'fa-exchange');
@@ -66,7 +66,7 @@ class ShowController extends Controller
     }
 
     /**
-     * @param  TransactionGroup  $transactionGroup
+     * @param TransactionGroup $transactionGroup
      *
      * @return JsonResponse
      */
@@ -76,8 +76,8 @@ class ShowController extends Controller
     }
 
     /**
-     * @param  Request  $request
-     * @param  TransactionGroup  $transactionGroup
+     * @param Request          $request
+     * @param TransactionGroup $transactionGroup
      *
      * @return Factory|View
      * @throws FireflyException
@@ -106,13 +106,16 @@ class ShowController extends Controller
         $accounts = $this->getAccounts($groupArray);
 
         foreach ($groupArray['transactions'] as $index => $transaction) {
-            $groupArray['transactions'][$index]['tags'] = $this->repository->getTagObjects($groupArray['transactions'][$index]['transaction_journal_id']);
+            $groupArray['transactions'][$index]['tags'] = $this->repository->getTagObjects(
+                $groupArray['transactions'][$index]['transaction_journal_id']
+            );
         }
 
         // get audit log entries:
-        $logEntries = [];
+        $groupLogEntries = $this->aleRepository->getForObject($transactionGroup);
+        $logEntries      = [];
         foreach ($transactionGroup->transactionJournals as $journal) {
-            $logEntries[$journal->id] = $this->ALERepository->getForObject($journal);
+            $logEntries[$journal->id] = $this->aleRepository->getForObject($journal);
         }
 
         $events      = $this->repository->getPiggyEvents($transactionGroup);
@@ -128,6 +131,7 @@ class ShowController extends Controller
                 'first',
                 'type',
                 'logEntries',
+                'groupLogEntries',
                 'subTitle',
                 'splits',
                 'groupArray',
@@ -140,7 +144,7 @@ class ShowController extends Controller
     }
 
     /**
-     * @param  array  $group
+     * @param array $group
      *
      * @return array
      */
@@ -157,7 +161,11 @@ class ShowController extends Controller
                 ];
             }
             $amounts[$symbol]['amount'] = bcadd($amounts[$symbol]['amount'], $transaction['amount']);
-            if (null !== $transaction['foreign_amount'] && '' !== $transaction['foreign_amount'] && bccomp('0', $transaction['foreign_amount']) !== 0) {
+            if (null !== $transaction['foreign_amount'] && '' !== $transaction['foreign_amount']
+                && bccomp(
+                    '0',
+                    $transaction['foreign_amount']
+                ) !== 0) {
                 // same for foreign currency:
                 $foreignSymbol = $transaction['foreign_currency_symbol'];
                 if (!array_key_exists($foreignSymbol, $amounts)) {
@@ -167,7 +175,10 @@ class ShowController extends Controller
                         'decimal_places' => $transaction['foreign_currency_decimal_places'],
                     ];
                 }
-                $amounts[$foreignSymbol]['amount'] = bcadd($amounts[$foreignSymbol]['amount'], $transaction['foreign_amount']);
+                $amounts[$foreignSymbol]['amount'] = bcadd(
+                    $amounts[$foreignSymbol]['amount'],
+                    $transaction['foreign_amount']
+                );
             }
         }
 
@@ -175,7 +186,7 @@ class ShowController extends Controller
     }
 
     /**
-     * @param  array  $group
+     * @param array $group
      *
      * @return array
      */

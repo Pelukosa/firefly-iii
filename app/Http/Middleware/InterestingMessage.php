@@ -40,8 +40,8 @@ class InterestingMessage
     /**
      * Flashes the user an interesting message if the URL parameters warrant it.
      *
-     * @param  Request  $request
-     * @param  Closure  $next
+     * @param Request $request
+     * @param Closure $next
      *
      * @return mixed
      *
@@ -82,7 +82,7 @@ class InterestingMessage
     }
 
     /**
-     * @param  Request  $request
+     * @param Request $request
      *
      * @return bool
      */
@@ -96,7 +96,7 @@ class InterestingMessage
     }
 
     /**
-     * @param  Request  $request
+     * @param Request $request
      */
     private function handleGroupMessage(Request $request): void
     {
@@ -137,7 +137,7 @@ class InterestingMessage
     }
 
     /**
-     * @param  Request  $request
+     * @param Request $request
      *
      * @return bool
      */
@@ -151,7 +151,7 @@ class InterestingMessage
     }
 
     /**
-     * @param  Request  $request
+     * @param Request $request
      */
     private function handleAccountMessage(Request $request): void
     {
@@ -177,7 +177,7 @@ class InterestingMessage
     }
 
     /**
-     * @param  Request  $request
+     * @param Request $request
      *
      * @return bool
      */
@@ -191,7 +191,7 @@ class InterestingMessage
     }
 
     /**
-     * @param  Request  $request
+     * @param Request $request
      */
     private function handleBillMessage(Request $request): void
     {
@@ -214,7 +214,7 @@ class InterestingMessage
     }
 
     /**
-     * @param  Request  $request
+     * @param Request $request
      *
      * @return bool
      */
@@ -228,7 +228,7 @@ class InterestingMessage
     }
 
     /**
-     * @param  Request  $request
+     * @param Request $request
      */
     private function handleWebhookMessage(Request $request): void
     {

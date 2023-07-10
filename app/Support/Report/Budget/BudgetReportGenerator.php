@@ -94,7 +94,7 @@ class BudgetReportGenerator
     /**
      * Process each row of expenses collected for the "Account per budget" partial
      *
-     * @param  array  $expenses
+     * @param array $expenses
      */
     private function processExpenses(array $expenses): void
     {
@@ -106,8 +106,8 @@ class BudgetReportGenerator
     /**
      * Process each set of transactions for each row of expenses.
      *
-     * @param  array  $expenses
-     * @param  array  $budget
+     * @param array $expenses
+     * @param array $budget
      */
     private function processBudgetExpenses(array $expenses, array $budget): void
     {
@@ -164,7 +164,7 @@ class BudgetReportGenerator
     /**
      * Process expenses etc. for a single budget for the budgets block on the default report.
      *
-     * @param  Budget  $budget
+     * @param Budget $budget
      */
     private function processBudget(Budget $budget): void
     {
@@ -187,8 +187,8 @@ class BudgetReportGenerator
     /**
      * Process a single budget limit for the budgets block on the default report.
      *
-     * @param  Budget  $budget
-     * @param  BudgetLimit  $limit
+     * @param Budget      $budget
+     * @param BudgetLimit $limit
      */
     private function processLimit(Budget $budget, BudgetLimit $limit): void
     {
@@ -330,7 +330,7 @@ class BudgetReportGenerator
     }
 
     /**
-     * @param  Collection  $accounts
+     * @param Collection $accounts
      */
     public function setAccounts(Collection $accounts): void
     {
@@ -338,7 +338,7 @@ class BudgetReportGenerator
     }
 
     /**
-     * @param  Collection  $budgets
+     * @param Collection $budgets
      */
     public function setBudgets(Collection $budgets): void
     {
@@ -346,7 +346,7 @@ class BudgetReportGenerator
     }
 
     /**
-     * @param  Carbon  $end
+     * @param Carbon $end
      */
     public function setEnd(Carbon $end): void
     {
@@ -354,7 +354,7 @@ class BudgetReportGenerator
     }
 
     /**
-     * @param  Carbon  $start
+     * @param Carbon $start
      */
     public function setStart(Carbon $start): void
     {
@@ -362,7 +362,7 @@ class BudgetReportGenerator
     }
 
     /**
-     * @param  User  $user
+     * @param User $user
      * @throws FireflyException
      * @throws JsonException
      */

@@ -28,8 +28,8 @@ use Carbon\Carbon;
 use FireflyIII\Events\NewVersionAvailable;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use JsonException;
 use Illuminate\Support\Facades\Log;
+use JsonException;
 
 /**
  * Class UpdateRequest
@@ -37,7 +37,7 @@ use Illuminate\Support\Facades\Log;
 class UpdateRequest implements UpdateRequestInterface
 {
     /**
-     * @param  string  $channel
+     * @param string $channel
      *
      * @return array
      */
@@ -64,7 +64,7 @@ class UpdateRequest implements UpdateRequestInterface
     }
 
     /**
-     * @param  string  $channel
+     * @param string $channel
      *
      * @return array
      */
@@ -134,7 +134,7 @@ class UpdateRequest implements UpdateRequestInterface
     }
 
     /**
-     * @param  array  $information
+     * @param array $information
      *
      * @return array
      */

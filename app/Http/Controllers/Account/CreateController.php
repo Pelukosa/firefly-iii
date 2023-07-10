@@ -34,8 +34,8 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
-use Illuminate\View\View;
 use Illuminate\Support\Facades\Log;
+use Illuminate\View\View;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
@@ -76,8 +76,8 @@ class CreateController extends Controller
     /**
      * Create a new account.
      *
-     * @param  Request  $request
-     * @param  string  $objectType
+     * @param Request $request
+     * @param string  $objectType
      *
      * @return Factory|View
      */
@@ -134,7 +134,7 @@ class CreateController extends Controller
     /**
      * Store the new account.
      *
-     * @param  AccountFormRequest  $request
+     * @param AccountFormRequest $request
      *
      * @return RedirectResponse|Redirector
      * @throws FireflyException

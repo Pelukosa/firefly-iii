@@ -52,8 +52,8 @@ class Preferences
     }
 
     /**
-     * @param  string  $name
-     * @param  mixed  $default
+     * @param string $name
+     * @param mixed  $default
      *
      * @return Preference|null
      * @throws FireflyException
@@ -73,9 +73,9 @@ class Preferences
     }
 
     /**
-     * @param  User  $user
-     * @param  string  $name
-     * @param  null|string|int  $default
+     * @param User            $user
+     * @param string          $name
+     * @param null|string|int $default
      *
      * @return Preference|null
      * @throws FireflyException
@@ -101,7 +101,7 @@ class Preferences
     }
 
     /**
-     * @param  string  $name
+     * @param string $name
      *
      * @return bool
      * @throws FireflyException
@@ -118,8 +118,8 @@ class Preferences
     }
 
     /**
-     * @param  User  $user
-     * @param  string  $name
+     * @param User   $user
+     * @param string $name
      */
     public function forget(User $user, string $name): void
     {
@@ -129,9 +129,9 @@ class Preferences
     }
 
     /**
-     * @param  User  $user
-     * @param  string  $name
-     * @param  mixed  $value
+     * @param User   $user
+     * @param string $name
+     * @param mixed  $value
      *
      * @return Preference
      * @throws FireflyException
@@ -168,18 +168,18 @@ class Preferences
     }
 
     /**
-     * @param  User  $user
-     * @param  string  $search
+     * @param User   $user
+     * @param string $search
      *
      * @return Collection
      */
     public function beginsWith(User $user, string $search): Collection
     {
-        return Preference::where('user_id', $user->id)->where('name', 'LIKE', $search.'%')->get();
+        return Preference::where('user_id', $user->id)->where('name', 'LIKE', $search . '%')->get();
     }
 
     /**
-     * @param  string  $name
+     * @param string $name
      *
      * @return Collection
      */
@@ -189,8 +189,8 @@ class Preferences
     }
 
     /**
-     * @param  User  $user
-     * @param  array  $list
+     * @param User  $user
+     * @param array $list
      *
      * @return array
      */
@@ -212,8 +212,8 @@ class Preferences
     }
 
     /**
-     * @param  string  $name
-     * @param  mixed  $default
+     * @param string $name
+     * @param mixed  $default
      *
      * @return Preference|null
      * @throws FireflyException
@@ -233,9 +233,9 @@ class Preferences
     }
 
     /**
-     * @param  User  $user
-     * @param  string  $name
-     * @param  null  $default
+     * @param User   $user
+     * @param string $name
+     * @param null   $default
      *
      * @return Preference|null
      * TODO remove me.
@@ -275,8 +275,8 @@ class Preferences
     }
 
     /**
-     * @param  string  $name
-     * @param  mixed  $value
+     * @param string $name
+     * @param mixed  $value
      *
      * @return Preference
      * @throws FireflyException

@@ -29,8 +29,8 @@ use FireflyIII\Support\Search\SearchInterface;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 use Illuminate\Support\Facades\Log;
+use Illuminate\View\View;
 use Throwable;
 
 /**
@@ -58,8 +58,8 @@ class SearchController extends Controller
     /**
      * Do the search.
      *
-     * @param  Request  $request
-     * @param  SearchInterface  $searcher
+     * @param Request         $request
+     * @param SearchInterface $searcher
      *
      * @return Factory|View
      */
@@ -99,8 +99,8 @@ class SearchController extends Controller
     /**
      * JSON request that does the work.
      *
-     * @param  Request  $request
-     * @param  SearchInterface  $searcher
+     * @param Request         $request
+     * @param SearchInterface $searcher
      *
      * @return JsonResponse
      * @throws FireflyException
@@ -121,7 +121,7 @@ class SearchController extends Controller
         $hasPages   = $groups->hasPages();
         $searchTime = round($searcher->searchTime(), 3); // in seconds
         $parameters = ['search' => $fullQuery];
-        $url        = route('search.index').'?'.http_build_query($parameters);
+        $url        = route('search.index') . '?' . http_build_query($parameters);
         $groups->setPath($url);
 
         try {

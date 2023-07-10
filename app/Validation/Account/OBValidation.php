@@ -34,7 +34,7 @@ use Illuminate\Support\Facades\Log;
 trait OBValidation
 {
     /**
-     * @param  array  $array
+     * @param array $array
      *
      * @return bool
      */
@@ -71,7 +71,7 @@ trait OBValidation
             if (null !== $search) {
                 Log::debug(sprintf('findExistingAccount() returned #%d ("%s"), so the result is true.', $search->id, $search->name));
                 $this->setDestination($search);
-                $result            = true;
+                $result = true;
             }
         }
         Log::debug(sprintf('validateOBDestination(%d, "%s") will return %s', $accountId, $accountName, var_export($result, true)));
@@ -80,7 +80,7 @@ trait OBValidation
     }
 
     /**
-     * @param  array  $accountTypes
+     * @param array $accountTypes
      *
      * @return bool
      */
@@ -90,7 +90,7 @@ trait OBValidation
      * Source of an opening balance can either be an asset account
      * or an "initial balance account". The latter can be created.
      *
-     * @param  array  $array
+     * @param array $array
      *
      * @return bool
      */
@@ -128,7 +128,7 @@ trait OBValidation
             if (null !== $search && in_array($search->accountType->type, $validTypes, true)) {
                 Log::debug(sprintf('Found account of correct type: #%d, "%s"', $search->id, $search->name));
                 $this->setSource($search);
-                $result       = true;
+                $result = true;
             }
         }
 

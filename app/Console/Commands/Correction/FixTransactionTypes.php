@@ -24,6 +24,7 @@ declare(strict_types=1);
 
 namespace FireflyIII\Console\Commands\Correction;
 
+use FireflyIII\Console\Commands\ShowsFriendlyMessages;
 use FireflyIII\Exceptions\FireflyException;
 use FireflyIII\Models\Account;
 use FireflyIII\Models\Transaction;
@@ -37,18 +38,10 @@ use Illuminate\Support\Collection;
  */
 class FixTransactionTypes extends Command
 {
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
+    use ShowsFriendlyMessages;
+
     protected $description = 'Make sure all transactions are of the correct type, based on source + dest.';
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'firefly-iii:fix-transaction-types';
+    protected $signature   = 'firefly-iii:fix-transaction-types';
 
     /**
      * Execute the console command.
@@ -57,7 +50,6 @@ class FixTransactionTypes extends Command
      */
     public function handle(): int
     {
-        $start    = microtime(true);
         $count    = 0;
         $journals = $this->collectJournals();
         /** @var TransactionJournal $journal */
@@ -67,13 +59,12 @@ class FixTransactionTypes extends Command
                 $count++;
             }
         }
-        $end = round(microtime(true) - $start, 2);
         if ($count > 0) {
-            $this->info(sprintf('Corrected transaction type of %d transaction journals in %s seconds.', $count, $end));
+            $this->friendlyInfo('Corrected transaction type of %d transaction journals.', $count);
 
             return 0;
         }
-        $this->line(sprintf('All transaction journals are of the correct transaction type (in %s seconds).', $end));
+        $this->friendlyPositive('All transaction journals are of the correct transaction type');
 
         return 0;
     }
@@ -90,7 +81,7 @@ class FixTransactionTypes extends Command
     }
 
     /**
-     * @param  TransactionJournal  $journal
+     * @param TransactionJournal $journal
      *
      * @return bool
      */
@@ -101,13 +92,13 @@ class FixTransactionTypes extends Command
             $source      = $this->getSourceAccount($journal);
             $destination = $this->getDestinationAccount($journal);
         } catch (FireflyException $e) {
-            $this->error($e->getMessage());
+            $this->friendlyError($e->getMessage());
 
             return false;
         }
         $expectedType = (string)config(sprintf('firefly.account_to_transaction.%s.%s', $source->accountType->type, $destination->accountType->type));
         if ($expectedType !== $type) {
-            $this->line(
+            $this->friendlyWarning(
                 sprintf(
                     'Transaction journal #%d was of type "%s" but is corrected to "%s" (%s -> %s)',
                     $journal->id,
@@ -126,7 +117,7 @@ class FixTransactionTypes extends Command
     }
 
     /**
-     * @param  TransactionJournal  $journal
+     * @param TransactionJournal $journal
      *
      * @return Account
      * @throws FireflyException
@@ -156,7 +147,7 @@ class FixTransactionTypes extends Command
     }
 
     /**
-     * @param  TransactionJournal  $journal
+     * @param TransactionJournal $journal
      *
      * @return Account
      * @throws FireflyException
@@ -186,8 +177,8 @@ class FixTransactionTypes extends Command
     }
 
     /**
-     * @param  TransactionJournal  $journal
-     * @param  string  $expectedType
+     * @param TransactionJournal $journal
+     * @param string             $expectedType
      */
     private function changeJournal(TransactionJournal $journal, string $expectedType): void
     {

@@ -40,8 +40,8 @@ use FireflyIII\Support\Http\Controllers\ChartGeneration;
 use FireflyIII\Support\Http\Controllers\DateCalculation;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
-use JsonException;
 use Illuminate\Support\Facades\Log;
+use JsonException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
@@ -145,7 +145,7 @@ class AccountController extends Controller
 
         // loop all found currencies and build the data array for the chart.
         /**
-         * @var int $currencyId
+         * @var int                 $currencyId
          * @var TransactionCurrency $currency
          */
         foreach ($currencies as $currencyId => $currency) {
@@ -176,8 +176,8 @@ class AccountController extends Controller
     /**
      * Expenses per budget for all time, as shown on account overview.
      *
-     * @param  AccountRepositoryInterface  $repository
-     * @param  Account  $account
+     * @param AccountRepositoryInterface $repository
+     * @param Account                    $account
      *
      * @return JsonResponse
      */
@@ -192,9 +192,9 @@ class AccountController extends Controller
     /**
      * Expenses per budget, as shown on account overview.
      *
-     * @param  Account  $account
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Account $account
+     * @param Carbon  $start
+     * @param Carbon  $end
      *
      * @return JsonResponse
      */
@@ -250,8 +250,8 @@ class AccountController extends Controller
     /**
      * Expenses grouped by category for account.
      *
-     * @param  AccountRepositoryInterface  $repository
-     * @param  Account  $account
+     * @param AccountRepositoryInterface $repository
+     * @param Account                    $account
      *
      * @return JsonResponse
      */
@@ -266,9 +266,9 @@ class AccountController extends Controller
     /**
      * Expenses per category for one single account.
      *
-     * @param  Account  $account
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Account $account
+     * @param Carbon  $start
+     * @param Carbon  $end
      *
      * @return JsonResponse
      */
@@ -322,7 +322,7 @@ class AccountController extends Controller
     /**
      * Shows the balances for all the user's frontpage accounts.
      *
-     * @param  AccountRepositoryInterface  $repository
+     * @param AccountRepositoryInterface $repository
      *
      * @return JsonResponse
      * @throws FireflyException
@@ -350,8 +350,8 @@ class AccountController extends Controller
     /**
      * Shows the income grouped by category for an account, in all time.
      *
-     * @param  AccountRepositoryInterface  $repository
-     * @param  Account  $account
+     * @param AccountRepositoryInterface $repository
+     * @param Account                    $account
      *
      * @return JsonResponse
      */
@@ -366,9 +366,9 @@ class AccountController extends Controller
     /**
      * Shows all income per account for each category.
      *
-     * @param  Account  $account
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Account $account
+     * @param Carbon  $start
+     * @param Carbon  $end
      *
      * @return JsonResponse
      */
@@ -422,10 +422,10 @@ class AccountController extends Controller
     /**
      * Shows overview of account during a single period.
      *
-     * @param  Account  $account
-     * @param  Carbon  $start
+     * @param Account $account
+     * @param Carbon  $start
      *
-     * @param  Carbon  $end
+     * @param Carbon  $end
      *
      * @return JsonResponse
      * @throws FireflyException
@@ -461,10 +461,10 @@ class AccountController extends Controller
     }
 
     /**
-     * @param  Carbon  $start
-     * @param  Carbon  $end
-     * @param  Account  $account
-     * @param  TransactionCurrency  $currency
+     * @param Carbon              $start
+     * @param Carbon              $end
+     * @param Account             $account
+     * @param TransactionCurrency $currency
      *
      * @return array
      * @throws FireflyException
@@ -513,10 +513,10 @@ class AccountController extends Controller
      *
      * TODO this chart is not multi currency aware.
      *
-     * @param  Collection  $accounts
+     * @param Collection $accounts
      *
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Carbon     $start
+     * @param Carbon     $end
      * @return JsonResponse
      * @throws FireflyException
      * @throws JsonException
@@ -592,7 +592,7 @@ class AccountController extends Controller
 
         // loop all found currencies and build the data array for the chart.
         /**
-         * @var int $currencyId
+         * @var int                 $currencyId
          * @var TransactionCurrency $currency
          */
         foreach ($currencies as $currencyId => $currency) {

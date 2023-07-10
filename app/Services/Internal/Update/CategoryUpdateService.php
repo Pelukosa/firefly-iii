@@ -51,7 +51,7 @@ class CategoryUpdateService
     }
 
     /**
-     * @param  mixed  $user
+     * @param mixed $user
      */
     public function setUser($user): void
     {
@@ -59,8 +59,8 @@ class CategoryUpdateService
     }
 
     /**
-     * @param  Category  $category
-     * @param  array  $data
+     * @param Category $category
+     * @param array    $data
      *
      * @return Category
      * @throws Exception
@@ -83,8 +83,8 @@ class CategoryUpdateService
     }
 
     /**
-     * @param  string  $oldName
-     * @param  string  $newName
+     * @param string $oldName
+     * @param string $newName
      */
     private function updateRuleTriggers(string $oldName, string $newName): void
     {
@@ -104,8 +104,8 @@ class CategoryUpdateService
     }
 
     /**
-     * @param  string  $oldName
-     * @param  string  $newName
+     * @param string $oldName
+     * @param string $newName
      */
     private function updateRuleActions(string $oldName, string $newName): void
     {
@@ -125,8 +125,8 @@ class CategoryUpdateService
     }
 
     /**
-     * @param  string  $oldName
-     * @param  string  $newName
+     * @param string $oldName
+     * @param string $newName
      */
     private function updateRecurrences(string $oldName, string $newName): void
     {
@@ -139,8 +139,8 @@ class CategoryUpdateService
     }
 
     /**
-     * @param  Category  $category
-     * @param  array  $data
+     * @param Category $category
+     * @param array    $data
      *
      * @throws Exception
      */

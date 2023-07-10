@@ -61,6 +61,10 @@ return [
     'invalid_selection'              => 'La tua selezione non è valida.',
     'belongs_user'                   => 'Questo valore non è valido per questo campo.',
     'at_least_one_transaction'       => 'Hai bisogno di almeno una transazione.',
+    'recurring_transaction_id'       => 'Need at least one transaction.',
+    'need_id_to_match'               => 'You need to submit this entry with an ID for the API to be able to match it.',
+    'too_many_unmatched'             => 'Too many submitted transactions cannot be matched to their respective database entries. Make sure existing entries have a valid ID.',
+    'id_does_not_match'              => 'Submitted ID #:id does not match expected ID. Make sure it matches or omit the field.',
     'at_least_one_repetition'        => 'È necessaria almeno una ripetizione.',
     'require_repeat_until'           => 'Richiede un numero di ripetizioni o una data di fine (ripeti fino al), non entrambi.',
     'require_currency_info'          => 'Il contenuto di questo campo non è valido senza informazioni sulla valuta.',
@@ -230,17 +234,20 @@ return [
 
     // validation of accounts:
     'withdrawal_source_need_data' => 'È necessario ottenere un ID e/o un nome del conto di origine validi per continuare.',
-    'withdrawal_source_bad_data'  => 'Non è stato possibile trovare un conto d\'origine valido effettuando la ricerca con l\'ID ":id" o il nome ":name".',
-    'withdrawal_dest_need_data'   => 'È necessario ottenere un ID e/o un nome del conto di destinazione validi per continuare.',
+    'withdrawal_source_bad_data'  => '[a] Could not find a valid source account when searching for ID ":id" or name ":name".',
+    'withdrawal_dest_need_data'   => '[a] Need to get a valid destination account ID and/or valid destination account name to continue.',
     'withdrawal_dest_bad_data'    => 'Non è stato possibile trovare un conto di destinazione valido effettuando la ricerca con l\'ID ":id" o il nome ":name".',
+
+    'withdrawal_dest_iban_exists' => 'This destination account IBAN is already in use by an asset account or a liability and cannot be used as a withdrawal destination.',
+    'deposit_src_iban_exists'     => 'This source account IBAN is already in use by an asset account or a liability and cannot be used as a deposit source.',
 
     'reconciliation_source_bad_data' => 'Non è stato possibile trovare un conto valido effettuando la ricerca con l\'ID ":id" o il nome ":name".',
 
-    'generic_source_bad_data' => 'Non è stato possibile trovare un conto d\'origine valido effettuando la ricerca con l\'ID ":id" o il nome ":name".',
+    'generic_source_bad_data' => '[e] Could not find a valid source account when searching for ID ":id" or name ":name".',
 
     'deposit_source_need_data' => 'È necessario ottenere un ID e/o un nome del conto di origine validi per continuare.',
-    'deposit_source_bad_data'  => 'Non è stato possibile trovare un conto d\'origine valido effettuando la ricerca con l\'ID ":id" o il nome ":name".',
-    'deposit_dest_need_data'   => 'È necessario ottenere un ID e/o un nome del conto di destinazione validi per continuare.',
+    'deposit_source_bad_data'  => '[b] Could not find a valid source account when searching for ID ":id" or name ":name".',
+    'deposit_dest_need_data'   => '[b] Need to get a valid destination account ID and/or valid destination account name to continue.',
     'deposit_dest_bad_data'    => 'Non è stato possibile trovare un conto di destinazione valido effettuando la ricerca con l\'ID ":id" o il nome ":name".',
     'deposit_dest_wrong_type'  => 'Il conto di destinazione inviato non è di tipo corretto.',
 
@@ -257,14 +264,14 @@ return [
 
 
     'transfer_source_need_data' => 'È necessario ottenere un ID e/o un nome del conto di origine validi per continuare.',
-    'transfer_source_bad_data'  => 'Non è stato possibile trovare un conto d\'origine valido effettuando la ricerca con l\'ID ":id" o il nome ":name".',
-    'transfer_dest_need_data'   => 'È necessario ottenere un ID e/o un nome del conto di destinazione validi per continuare.',
+    'transfer_source_bad_data'  => '[c] Could not find a valid source account when searching for ID ":id" or name ":name".',
+    'transfer_dest_need_data'   => '[c] Need to get a valid destination account ID and/or valid destination account name to continue.',
     'transfer_dest_bad_data'    => 'Non è stato possibile trovare un conto di destinazione valido effettuando la ricerca con l\'ID ":id" o il nome ":name".',
     'need_id_in_edit'           => 'Ogni suddivisione deve avere un "transaction_journal_id" (un ID valido oppure 0).',
 
     'ob_source_need_data'           => 'È necessario ottenere un ID e/o un nome del conto di origine validi per continuare.',
     'lc_source_need_data'           => 'È necessario ottenere un ID del conto sorgente valido per continuare.',
-    'ob_dest_need_data'             => 'È necessario ottenere un ID e/o un nome del conto di destinazione validi per continuare.',
+    'ob_dest_need_data'             => '[d] Need to get a valid destination account ID and/or valid destination account name to continue.',
     'ob_dest_bad_data'              => 'Non è stato possibile trovare un conto di destinazione valido effettuando la ricerca con l\'ID ":id" o il nome ":name".',
     'reconciliation_either_account' => 'Per inviare una riconciliazione devi inserire un conto sorgente o di destinazione, non entrambi o nessuno dei due.',
 

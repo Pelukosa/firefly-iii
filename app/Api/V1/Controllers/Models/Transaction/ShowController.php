@@ -51,7 +51,7 @@ class ShowController extends Controller
      *
      * Show all transactions.
      *
-     * @param  Request  $request
+     * @param Request $request
      *
      * @return JsonResponse
      * @throws FireflyException
@@ -84,7 +84,7 @@ class ShowController extends Controller
             $collector->setRange($this->parameters->get('start'), $this->parameters->get('end'));
         }
         $paginator = $collector->getPaginatedGroups();
-        $paginator->setPath(route('api.v1.transactions.index').$this->buildParams());
+        $paginator->setPath(route('api.v1.transactions.index') . $this->buildParams());
         $transactions = $paginator->getCollection();
 
         /** @var TransactionGroupTransformer $transformer */
@@ -103,7 +103,7 @@ class ShowController extends Controller
      *
      * Show a single transaction, by transaction journal.
      *
-     * @param  TransactionJournal  $transactionJournal
+     * @param TransactionJournal $transactionJournal
      *
      * @return JsonResponse
      */
@@ -118,7 +118,7 @@ class ShowController extends Controller
      *
      * Show a single transaction.
      *
-     * @param  TransactionGroup  $transactionGroup
+     * @param TransactionGroup $transactionGroup
      *
      * @return JsonResponse
      */

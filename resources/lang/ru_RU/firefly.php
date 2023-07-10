@@ -1706,6 +1706,7 @@ return [
     'auto_budget_none'                          => 'Без автобюджета',
     'auto_budget_reset'                         => 'Задать фиксированную сумму на каждый период',
     'auto_budget_rollover'                      => 'Добавить сумму на каждый период',
+    'auto_budget_adjusted'                      => 'Add an amount every period and correct for overspending',
     'auto_budget_period_daily'                  => 'Ежедневно',
     'auto_budget_period_weekly'                 => 'Еженедельно',
     'auto_budget_period_monthly'                => 'Ежемесячно',
@@ -1715,6 +1716,7 @@ return [
     'auto_budget_help'                          => 'Подробнее об этой функции можно прочитать в справке. Щёлкните по значку (?) в правом верхнем углу.',
     'auto_budget_reset_icon'                    => 'Этот бюджет будет устанавливаться периодически',
     'auto_budget_rollover_icon'                 => 'Доступная в бюджете сумма будет периодически увеличиваться',
+    'auto_budget_adjusted_icon'                 => 'The budget amount will increase periodically and will correct for overspending',
     'remove_budgeted_amount'                    => 'Удалить запланированную в бюджете сумму в :currency',
 
     // bills:
@@ -2292,6 +2294,7 @@ return [
     'budgeted'                                  => 'Запланировано в бюджете',
     'period'                                    => 'Период',
     'balance'                                   => 'Бaлaнc',
+    'in_out_period'                             => 'In + out this period',
     'sum'                                       => 'Сумма',
     'summary'                                   => 'Сводка',
     'average'                                   => 'Среднее значение',
@@ -2692,6 +2695,9 @@ return [
     'ale_action_log_add'                 => 'Added :amount to piggy bank ":name"',
     'ale_action_log_remove'              => 'Removed :amount from piggy bank ":name"',
     'ale_action_clear_budget'            => 'Removed from budget',
+    'ale_action_update_group_title'      => 'Обновлены название группы транзакций',
+    'ale_action_update_date'             => 'Обновлена дата транзакции',
+    'ale_action_update_order'            => 'Обновлён порядок транзакций',
     'ale_action_clear_category'          => 'Removed from category',
     'ale_action_clear_notes'             => 'Removed notes',
     'ale_action_clear_tag'               => 'Cleared tag',

@@ -61,6 +61,10 @@ return [
     'invalid_selection'              => 'La selecció és invàlida.',
     'belongs_user'                   => 'Aquest valor no és vàlid per aquest camp.',
     'at_least_one_transaction'       => 'Necessites almenys una transacció.',
+    'recurring_transaction_id'       => 'Necessites almenys una transacció.',
+    'need_id_to_match'               => 'Has d\'enviar aquesta entrada amb un ID perquè l\'API sigui capaç de comparar-lo.',
+    'too_many_unmatched'             => 'No s\'han pogut relacionar massa transaccions a les seves entrades respectives de la base de dades. Assegura\'t que les entrades existents tenen un ID vàlid.',
+    'id_does_not_match'              => 'L\'ID enviat #:id no coincideix amb l\'ID esperat. Assegura\'t que encaixa, o omet el camp.',
     'at_least_one_repetition'        => 'Necessites almenys una repetició.',
     'require_repeat_until'           => 'Fa falta un nombre de repeticions, o una data de finalització (repeat_until). No ambdues.',
     'require_currency_info'          => 'El contingut d\'aquest camp no és vàlid sense informació de la moneda.',
@@ -230,17 +234,20 @@ return [
 
     // validation of accounts:
     'withdrawal_source_need_data' => 'Necessites obtenir un ID de compte d\'origen vàlid i/o un nom de compte d\'origen vàlid per continuar.',
-    'withdrawal_source_bad_data'  => 'No s\'ha pogut trobar un compte d\'origen vàlid buscant l\'ID ":id" o el nom ":name".',
-    'withdrawal_dest_need_data'   => 'Necessites obtenir un ID de compte de destí vàlid i/o un nom de compte de destí vàlid per continuar.',
+    'withdrawal_source_bad_data'  => '[a] No s\'ha pogut trobar un compte font vàlid en cercar per l\'ID ":id" o el nom ":name".',
+    'withdrawal_dest_need_data'   => '[a] Cal obtenir un identificador o nom del compte destí per a continuar.',
     'withdrawal_dest_bad_data'    => 'No s\'ha pogut trobar un compte de destí vàlid buscant l\'ID ":id" o el nom ":name".',
+
+    'withdrawal_dest_iban_exists' => 'This destination account IBAN is already in use by an asset account or a liability and cannot be used as a withdrawal destination.',
+    'deposit_src_iban_exists'     => 'This source account IBAN is already in use by an asset account or a liability and cannot be used as a deposit source.',
 
     'reconciliation_source_bad_data' => 'No s\'ha pogut trobar un compte de consolidació vàlid al cercar per la ID ":id" o el nom ":name".',
 
-    'generic_source_bad_data' => 'No s\'ha pogut trobar un compte d\'origen vàlid buscant l\'ID ":id" o el nom ":name".',
+    'generic_source_bad_data' => '[e] No s\'ha pogut trobar un compte font vàlid en cercar per l\'identificador ":id" o el nom ":name".',
 
     'deposit_source_need_data' => 'Necessites obtenir un ID de compte d\'origen vàlid i/o un nom de compte d\'origen vàlid per continuar.',
-    'deposit_source_bad_data'  => 'No s\'ha pogut trobar un compte d\'origen vàlid buscant l\'ID ":id" o el nom ":name".',
-    'deposit_dest_need_data'   => 'Necessites obtenir un ID de compte de destí vàlid i/o un nom de compte de destí vàlid per continuar.',
+    'deposit_source_bad_data'  => '[b] No s\'ha pogut trobar un compte font vàlid en cercar per l\'identificador ":id" o el nom ":name".',
+    'deposit_dest_need_data'   => '[b] Cal obtenir un identificador i/o nom vàlid d\'un compte destí per a continuar.',
     'deposit_dest_bad_data'    => 'No s\'ha pogut trobar un compte de destí vàlid buscant l\'ID ":id" o el nom ":name".',
     'deposit_dest_wrong_type'  => 'El compte de destí enviat no és del tipus correcte.',
 
@@ -257,22 +264,22 @@ return [
 
 
     'transfer_source_need_data' => 'Necessites obtenir un ID de compte d\'origen vàlid i/o un nom de compte d\'origen vàlid per continuar.',
-    'transfer_source_bad_data'  => 'No s\'ha pogut trobar un compte d\'origen vàlid buscant l\'ID ":id" o el nom ":name".',
-    'transfer_dest_need_data'   => 'Necessites obtenir un ID de compte de destí vàlid i/o un nom de compte de destí vàlid per continuar.',
+    'transfer_source_bad_data'  => '[c] No s\'ha pogut trobar un compte font vàlid en cercar per l\'identificador ":id" o el nom ":name".',
+    'transfer_dest_need_data'   => '[c] Cal obtenir un identificador i/o nom vàlid d\'un compte destí per a continuar.',
     'transfer_dest_bad_data'    => 'No s\'ha pogut trobar un compte de destí vàlid buscant l\'ID ":id" o el nom ":name".',
     'need_id_in_edit'           => 'Cada divisió ha de tenir transaction_journal_id (ID vàlid o 0).',
 
     'ob_source_need_data'           => 'Necessites obtenir un ID de compte d\'origen vàlid i/o un nom de compte d\'origen vàlid per continuar.',
     'lc_source_need_data'           => 'Necessites obtenir un ID de compte d\'origen vàlid per continuar.',
-    'ob_dest_need_data'             => 'Necessites obtenir un ID de compte de destí vàlid i/o un nom de compte de destí vàlid per continuar.',
+    'ob_dest_need_data'             => '[d] Cal obtenir un identificador i/o nom vàlid d\'un compte destí per a continuar.',
     'ob_dest_bad_data'              => 'No s\'ha pogut trobar un compte de destí vàlid buscant l\'ID ":id" o el nom ":name".',
     'reconciliation_either_account' => 'Per enviar una consolidació, has d\'enviar un compte d\'origen o de destí. Ni ambdós, ni cap.',
 
     'generic_invalid_source'      => 'No pots fer servir aquest compte com a compte d\'origen.',
     'generic_invalid_destination' => 'No pots fer servir aquest compte com a compte de destí.',
 
-    'generic_no_source'      => 'You must submit source account information or submit a transaction journal ID.',
-    'generic_no_destination' => 'You must submit destination account information or submit a transaction journal ID.',
+    'generic_no_source'      => 'Has de confirmar l\'informació del compte font, o afegir un identificador de transacció.',
+    'generic_no_destination' => 'Has de confirmar la informació del compte de destinació, o introduïr un identificador de transacció.',
 
     'gte.numeric' => 'El camp :attribute ha de ser més gran o igual que :value.',
     'gt.numeric'  => 'El camp :attribute ha de ser més gran que :value.',

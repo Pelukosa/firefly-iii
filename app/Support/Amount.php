@@ -44,9 +44,9 @@ class Amount
      * This method will properly format the given number, in color or "black and white",
      * as a currency, given two things: the currency required and the current locale.
      *
-     * @param  TransactionCurrency  $format
-     * @param  string  $amount
-     * @param  bool  $coloured
+     * @param TransactionCurrency $format
+     * @param string              $amount
+     * @param bool                $coloured
      *
      * @return string
      * @throws FireflyException
@@ -60,10 +60,10 @@ class Amount
      * This method will properly format the given number, in color or "black and white",
      * as a currency, given two things: the currency required and the current locale.
      *
-     * @param  string  $symbol
-     * @param  int  $decimalPlaces
-     * @param  string  $amount
-     * @param  bool  $coloured
+     * @param string $symbol
+     * @param int    $decimalPlaces
+     * @param string $amount
+     * @param bool   $coloured
      *
      * @return string
      *
@@ -150,7 +150,7 @@ class Amount
     }
 
     /**
-     * @param  User  $user
+     * @param User $user
      *
      * @return TransactionCurrency
      * @throws FireflyException
@@ -182,7 +182,7 @@ class Amount
     }
 
     /**
-     * @param  string  $value
+     * @param string $value
      *
      * @return string
      */
@@ -252,8 +252,8 @@ class Amount
     }
 
     /**
-     * @param  array  $info
-     * @param  string  $field
+     * @param array  $info
+     * @param string $field
      *
      * @return bool
      */
@@ -269,10 +269,10 @@ class Amount
      * string $sign = $localeconv['negative_sign']
      * bool $csPrecedes = $localeconv['n_cs_precedes'].
      *
-     * @param  bool  $sepBySpace
-     * @param  int  $signPosn
-     * @param  string  $sign
-     * @param  bool  $csPrecedes
+     * @param bool   $sepBySpace
+     * @param int    $signPosn
+     * @param string $sign
+     * @param bool   $csPrecedes
      *
      * @return string
      *
@@ -327,11 +327,11 @@ class Amount
         }
 
         // default is amount before currency
-        $format = $posA.$posD.'%v'.$space.$posB.'%s'.$posC.$posE;
+        $format = $posA . $posD . '%v' . $space . $posB . '%s' . $posC . $posE;
 
         if ($csPrecedes) {
             // alternative is currency before amount
-            $format = $posA.$posB.'%s'.$posC.$space.$posD.'%v'.$posE;
+            $format = $posA . $posB . '%s' . $posC . $space . $posD . '%v' . $posE;
         }
 
         return $format;

@@ -74,9 +74,9 @@ trait PeriodOverview
      * and for each period, the amount of money spent and earned. This is a complex operation which is cached for
      * performance reasons.
      *
-     * @param  Account  $account
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Account $account
+     * @param Carbon  $start
+     * @param Carbon  $end
      *
      * @return array
      * @throws FireflyException
@@ -153,9 +153,9 @@ trait PeriodOverview
     /**
      * Filter a list of journals by a set of dates, and then group them by currency.
      *
-     * @param  array  $array
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param array  $array
+     * @param Carbon $start
+     * @param Carbon $end
      *
      * @return array
      */
@@ -175,8 +175,8 @@ trait PeriodOverview
     /**
      * Return only transactions where $account is the source.
      *
-     * @param  Account  $account
-     * @param  array  $journals
+     * @param Account $account
+     * @param array   $journals
      *
      * @return array
      */
@@ -196,8 +196,8 @@ trait PeriodOverview
     /**
      * Return only transactions where $account is the source.
      *
-     * @param  Account  $account
-     * @param  array  $journals
+     * @param Account $account
+     * @param array   $journals
      *
      * @return array
      */
@@ -215,7 +215,7 @@ trait PeriodOverview
     }
 
     /**
-     * @param  array  $journals
+     * @param array $journals
      *
      * @return array
      */
@@ -263,9 +263,9 @@ trait PeriodOverview
     /**
      * Overview for single category. Has been refactored recently.
      *
-     * @param  Category  $category
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Category $category
+     * @param Carbon   $start
+     * @param Carbon   $end
      *
      * @return array
      * @throws FireflyException
@@ -344,8 +344,8 @@ trait PeriodOverview
      *
      * This method has been refactored recently.
      *
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Carbon $start
+     * @param Carbon $end
      *
      * @return array
      * @throws FireflyException
@@ -400,7 +400,7 @@ trait PeriodOverview
      *
      * Show period overview for no category view.
      *
-     * @param  Carbon  $theDate
+     * @param Carbon $theDate
      *
      * @return array
      * @throws FireflyException
@@ -470,9 +470,9 @@ trait PeriodOverview
     /**
      * This shows a period overview for a tag. It goes back in time and lists all relevant transactions and sums.
      *
-     * @param  Tag  $tag
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Tag    $tag
+     * @param Carbon $start
+     * @param Carbon $end
      *
      * @return array
      * @throws FireflyException
@@ -545,9 +545,9 @@ trait PeriodOverview
     }
 
     /**
-     * @param  string  $transactionType
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param string $transactionType
+     * @param Carbon $start
+     * @param Carbon $end
      *
      * @return array
      * @throws FireflyException

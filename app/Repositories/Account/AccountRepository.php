@@ -42,8 +42,8 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
-use JsonException;
 use Illuminate\Support\Facades\Log;
+use JsonException;
 use Storage;
 
 /**
@@ -57,8 +57,8 @@ class AccountRepository implements AccountRepositoryInterface
     /**
      * Moved here from account CRUD.
      *
-     * @param  Account  $account
-     * @param  Account|null  $moveTo
+     * @param Account      $account
+     * @param Account|null $moveTo
      *
      * @return bool
      *
@@ -76,7 +76,7 @@ class AccountRepository implements AccountRepositoryInterface
     /**
      * Find account with same name OR same IBAN or both, but not the same type or ID.
      *
-     * @param  Collection  $accounts
+     * @param Collection $accounts
      *
      * @return Collection
      */
@@ -133,8 +133,8 @@ class AccountRepository implements AccountRepositoryInterface
     }
 
     /**
-     * @param  string  $iban
-     * @param  array  $types
+     * @param string $iban
+     * @param array  $types
      *
      * @return Account|null
      */
@@ -152,8 +152,8 @@ class AccountRepository implements AccountRepositoryInterface
     }
 
     /**
-     * @param  string  $name
-     * @param  array  $types
+     * @param string $name
+     * @param array  $types
      *
      * @return Account|null
      */
@@ -183,7 +183,7 @@ class AccountRepository implements AccountRepositoryInterface
     /**
      * Return account type or null if not found.
      *
-     * @param  string  $type
+     * @param string $type
      *
      * @return AccountType|null
      */
@@ -193,7 +193,7 @@ class AccountRepository implements AccountRepositoryInterface
     }
 
     /**
-     * @param  array  $accountIds
+     * @param array $accountIds
      *
      * @return Collection
      */
@@ -212,7 +212,7 @@ class AccountRepository implements AccountRepositoryInterface
     }
 
     /**
-     * @param  array  $types
+     * @param array $types
      *
      * @return Collection
      */
@@ -276,9 +276,9 @@ class AccountRepository implements AccountRepositoryInterface
     }
 
     /**
-     * @param  User|Authenticatable|null  $user
+     * @param User|Authenticatable|null $user
      */
-    public function setUser(User|Authenticatable|null $user): void
+    public function setUser(User | Authenticatable | null $user): void
     {
         if (null !== $user) {
             $this->user = $user;
@@ -294,15 +294,11 @@ class AccountRepository implements AccountRepositoryInterface
                                      ->where('transactions.account_id', $account->id)
                                      ->transactionTypes([TransactionType::LIABILITY_CREDIT])
                                      ->first(['transaction_journals.*']);
-        if (null === $journal) {
-            return null;
-        }
-
-        return $journal->transactionGroup;
+        return $journal?->transactionGroup;
     }
 
     /**
-     * @param  array  $types
+     * @param array $types
      *
      * @return Collection
      */
@@ -338,25 +334,19 @@ class AccountRepository implements AccountRepositoryInterface
     /**
      * Get note text or null.
      *
-     * @param  Account  $account
+     * @param Account $account
      *
      * @return null|string
      */
     public function getNoteText(Account $account): ?string
     {
-        $note = $account->notes()->first();
-
-        if (null === $note) {
-            return null;
-        }
-
-        return $note->text;
+        return $account->notes()->first()?->text;
     }
 
     /**
      * Returns the amount of the opening balance for this account.
      *
-     * @param  Account  $account
+     * @param Account $account
      *
      * @return string|null
      */
@@ -380,25 +370,20 @@ class AccountRepository implements AccountRepositoryInterface
     /**
      * Return date of opening balance as string or null.
      *
-     * @param  Account  $account
+     * @param Account $account
      *
      * @return null|string
      */
     public function getOpeningBalanceDate(Account $account): ?string
     {
-        $journal = TransactionJournal::leftJoin('transactions', 'transactions.transaction_journal_id', '=', 'transaction_journals.id')
-                                     ->where('transactions.account_id', $account->id)
-                                     ->transactionTypes([TransactionType::OPENING_BALANCE, TransactionType::LIABILITY_CREDIT])
-                                     ->first(['transaction_journals.*']);
-        if (null === $journal) {
-            return null;
-        }
-
-        return $journal->date->format('Y-m-d');
+        return TransactionJournal::leftJoin('transactions', 'transactions.transaction_journal_id', '=', 'transaction_journals.id')
+                                 ->where('transactions.account_id', $account->id)
+                                 ->transactionTypes([TransactionType::OPENING_BALANCE, TransactionType::LIABILITY_CREDIT])
+                                 ->first(['transaction_journals.*'])?->date->format('Y-m-d H:i:s');
     }
 
     /**
-     * @param  Account  $account
+     * @param Account $account
      *
      * @return TransactionGroup|null
      */
@@ -410,7 +395,7 @@ class AccountRepository implements AccountRepositoryInterface
     }
 
     /**
-     * @param  Account  $account
+     * @param Account $account
      *
      * @return TransactionJournal|null
      */
@@ -423,7 +408,7 @@ class AccountRepository implements AccountRepositoryInterface
     }
 
     /**
-     * @param  Account  $account
+     * @param Account $account
      *
      * @return Collection
      */
@@ -433,7 +418,7 @@ class AccountRepository implements AccountRepositoryInterface
     }
 
     /**
-     * @param  Account  $account
+     * @param Account $account
      *
      * @return Account|null
      *
@@ -476,7 +461,7 @@ class AccountRepository implements AccountRepositoryInterface
     }
 
     /**
-     * @param  Account  $account
+     * @param Account $account
      *
      * @return TransactionCurrency|null
      */
@@ -500,8 +485,8 @@ class AccountRepository implements AccountRepositoryInterface
     /**
      * Return meta value for account. Null if not found.
      *
-     * @param  Account  $account
-     * @param  string  $field
+     * @param Account $account
+     * @param string  $field
      *
      * @return null|string
      */
@@ -523,7 +508,7 @@ class AccountRepository implements AccountRepositoryInterface
     }
 
     /**
-     * @param  array  $types
+     * @param array $types
      *
      * @return int
      */
@@ -533,7 +518,7 @@ class AccountRepository implements AccountRepositoryInterface
     }
 
     /**
-     * @param  int  $accountId
+     * @param int $accountId
      *
      * @return Account|null
      */
@@ -559,7 +544,7 @@ class AccountRepository implements AccountRepositoryInterface
     }
 
     /**
-     * @param  Account  $account
+     * @param Account $account
      *
      * @return bool
      */
@@ -596,8 +581,8 @@ class AccountRepository implements AccountRepositoryInterface
     }
 
     /**
-     * @param  array  $types
-     * @param  array|null  $sort
+     * @param array      $types
+     * @param array|null $sort
      *
      * @return Collection
      */
@@ -630,7 +615,7 @@ class AccountRepository implements AccountRepositoryInterface
     /**
      * Returns the date of the very first transaction in this account.
      *
-     * @param  Account  $account
+     * @param Account $account
      *
      * @return Carbon|null
      */
@@ -644,7 +629,7 @@ class AccountRepository implements AccountRepositoryInterface
     /**
      * Returns the date of the very first transaction in this account.
      *
-     * @param  Account  $account
+     * @param Account $account
      *
      * @return TransactionJournal|null
      */
@@ -677,7 +662,6 @@ class AccountRepository implements AccountRepositoryInterface
             //[AccountType::CASH, AccountType::INITIAL_BALANCE, AccountType::IMPORT, AccountType::RECONCILIATION],
         ];
         foreach ($sets as $set) {
-            Log::debug('Now in resetAccountOrder', $set);
             $list  = $this->getAccountsByType($set);
             $index = 1;
             foreach ($list as $account) {
@@ -696,9 +680,9 @@ class AccountRepository implements AccountRepositoryInterface
     }
 
     /**
-     * @param  string  $query
-     * @param  array  $types
-     * @param  int  $limit
+     * @param string $query
+     * @param array  $types
+     * @param int    $limit
      *
      * @return Collection
      */
@@ -765,7 +749,7 @@ class AccountRepository implements AccountRepositoryInterface
     }
 
     /**
-     * @param  array  $data
+     * @param array $data
      *
      * @return Account
      * @throws FireflyException
@@ -781,8 +765,8 @@ class AccountRepository implements AccountRepositoryInterface
     }
 
     /**
-     * @param  Account  $account
-     * @param  array  $data
+     * @param Account $account
+     * @param array   $data
      *
      * @return Account
      * @throws FireflyException

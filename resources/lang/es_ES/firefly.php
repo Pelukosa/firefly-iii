@@ -1706,6 +1706,7 @@ return [
     'auto_budget_none'                          => 'Sin autopresupuesto',
     'auto_budget_reset'                         => 'Establecer una cantidad fija cada periodo',
     'auto_budget_rollover'                      => 'Añadir una cantidad cada período',
+    'auto_budget_adjusted'                      => 'Añadir una cantidad cada periodo y corregir el sobregasto',
     'auto_budget_period_daily'                  => 'Diario',
     'auto_budget_period_weekly'                 => 'Semanal',
     'auto_budget_period_monthly'                => 'Mensual',
@@ -1715,6 +1716,7 @@ return [
     'auto_budget_help'                          => 'Puedes leer más sobre esta función en la ayuda. Haz clic en el icono de la parte superior derecha (?).',
     'auto_budget_reset_icon'                    => 'Este presupuesto se establecerá periódicamente',
     'auto_budget_rollover_icon'                 => 'La cantidad del presupuesto aumentará periódicamente',
+    'auto_budget_adjusted_icon'                 => 'La cantidad del presupuesto aumentará de forma periódica y se corregirá el sobregasto',
     'remove_budgeted_amount'                    => 'Eliminar la cantidad presupuestada en :currency',
 
     // bills:
@@ -2292,6 +2294,7 @@ return [
     'budgeted'                                  => 'Presupuestado',
     'period'                                    => 'Período',
     'balance'                                   => 'Balance',
+    'in_out_period'                             => 'Entrada y salida este periodo',
     'sum'                                       => 'Suma',
     'summary'                                   => 'Resumen',
     'average'                                   => 'Promedio',
@@ -2692,6 +2695,9 @@ return [
     'ale_action_log_add'                 => 'Añadido :amount a la hucha ":name"',
     'ale_action_log_remove'              => 'Eliminado :amount de la hucha ":name"',
     'ale_action_clear_budget'            => 'Eliminado del presupuesto',
+    'ale_action_update_group_title'      => 'Título del grupo de transacciones actualizado',
+    'ale_action_update_date'             => 'Fecha de transacción actualizada',
+    'ale_action_update_order'            => 'Orden de transacción actualizado',
     'ale_action_clear_category'          => 'Eliminado de la categoría',
     'ale_action_clear_notes'             => 'Notas eliminadas',
     'ale_action_clear_tag'               => 'Etiqueta limpiada',

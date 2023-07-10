@@ -131,8 +131,8 @@ class ObjectGroupRepository implements ObjectGroupRepositoryInterface
     }
 
     /**
-     * @param  string  $query
-     * @param  int  $limit
+     * @param string $query
+     * @param int    $limit
      *
      * @return Collection
      */
@@ -152,9 +152,9 @@ class ObjectGroupRepository implements ObjectGroupRepositoryInterface
     }
 
     /**
-     * @param  User|Authenticatable|null  $user
+     * @param User|Authenticatable|null $user
      */
-    public function setUser(User|Authenticatable|null $user): void
+    public function setUser(User | Authenticatable | null $user): void
     {
         if (null !== $user) {
             $this->user = $user;

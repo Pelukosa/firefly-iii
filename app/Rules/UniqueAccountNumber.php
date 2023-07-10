@@ -41,8 +41,8 @@ class UniqueAccountNumber implements Rule
      * Create a new rule instance.
      *
      *
-     * @param  Account|null  $account
-     * @param  string|null  $expectedType
+     * @param Account|null $account
+     * @param string|null  $expectedType
      */
     public function __construct(?Account $account, ?string $expectedType)
     {
@@ -76,8 +76,8 @@ class UniqueAccountNumber implements Rule
     /**
      * Determine if the validation rule passes.
      *
-     * @param  string  $attribute
-     * @param  mixed  $value
+     * @param string $attribute
+     * @param mixed  $value
      *
      * @return bool
      *
@@ -141,8 +141,8 @@ class UniqueAccountNumber implements Rule
     }
 
     /**
-     * @param  string  $type
-     * @param  string  $accountNumber
+     * @param string $type
+     * @param string $accountNumber
      *
      * @return int
      */

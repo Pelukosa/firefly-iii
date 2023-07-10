@@ -35,8 +35,8 @@ use FireflyIII\Validation\CurrencyValidation;
 use FireflyIII\Validation\GroupValidation;
 use FireflyIII\Validation\TransactionValidation;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Validator;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\Validator;
 
 /**
  * Class StoreRequest
@@ -258,7 +258,7 @@ class StoreRequest extends FormRequest
     /**
      * Configure the validator instance.
      *
-     * @param  Validator  $validator
+     * @param Validator $validator
      *
      * @return void
      */

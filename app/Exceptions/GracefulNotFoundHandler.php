@@ -48,8 +48,8 @@ class GracefulNotFoundHandler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  Request  $request
-     * @param  Throwable  $e
+     * @param Request   $request
+     * @param Throwable $e
      *
      * @return Application|JsonResponse|\Illuminate\Http\Response|Redirector|RedirectResponse|Response
      * @throws Throwable
@@ -135,8 +135,8 @@ class GracefulNotFoundHandler extends ExceptionHandler
     }
 
     /**
-     * @param  Request  $request
-     * @param  Throwable  $exception
+     * @param Request   $request
+     * @param Throwable $exception
      *
      * @return Response
      * @throws Throwable
@@ -169,8 +169,8 @@ class GracefulNotFoundHandler extends ExceptionHandler
     }
 
     /**
-     * @param  Request  $request
-     * @param  Throwable  $exception
+     * @param Request   $request
+     * @param Throwable $exception
      *
      * @return Response
      * @throws Throwable
@@ -208,8 +208,8 @@ class GracefulNotFoundHandler extends ExceptionHandler
     }
 
     /**
-     * @param  Request  $request
-     * @param  Throwable  $exception
+     * @param Request   $request
+     * @param Throwable $exception
      *
      * @return Response
      * @throws Throwable

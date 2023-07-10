@@ -41,7 +41,7 @@ class ChangesForV472 extends Migration
      */
     public function down(): void
     {
-        if(!Schema::hasColumn('attachments', 'notes')) {
+        if (!Schema::hasColumn('attachments', 'notes')) {
             try {
                 Schema::table(
                     'attachments',
@@ -55,7 +55,7 @@ class ChangesForV472 extends Migration
             }
         }
 
-        if(Schema::hasColumn('transactions', 'order')) {
+        if (Schema::hasColumn('transactions', 'order')) {
             try {
                 Schema::table(
                     'budgets',
@@ -63,7 +63,7 @@ class ChangesForV472 extends Migration
                         $table->dropColumn('order');
                     }
                 );
-            } catch (QueryException|ColumnDoesNotExist $e) {
+            } catch (QueryException | ColumnDoesNotExist $e) {
                 Log::error(sprintf('Could not execute query: %s', $e->getMessage()));
                 Log::error('If the column or index already exists (see error), this is not an problem. Otherwise, please open a GitHub discussion.');
             }
@@ -77,7 +77,7 @@ class ChangesForV472 extends Migration
      */
     public function up(): void
     {
-        if(Schema::hasColumn('attachments', 'notes')) {
+        if (Schema::hasColumn('attachments', 'notes')) {
             try {
                 Schema::table(
                     'attachments',
@@ -85,13 +85,13 @@ class ChangesForV472 extends Migration
                         $table->dropColumn('notes');
                     }
                 );
-            } catch (QueryException|ColumnDoesNotExist $e) {
+            } catch (QueryException | ColumnDoesNotExist $e) {
                 Log::error(sprintf('Could not execute query: %s', $e->getMessage()));
                 Log::error('If the column or index already exists (see error), this is not an problem. Otherwise, please open a GitHub discussion.');
             }
         }
 
-        if(!Schema::hasColumn('budgets', 'order')) {
+        if (!Schema::hasColumn('budgets', 'order')) {
             try {
                 Schema::table(
                     'budgets',

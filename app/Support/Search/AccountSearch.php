@@ -25,6 +25,7 @@ declare(strict_types=1);
 namespace FireflyIII\Support\Search;
 
 use FireflyIII\User;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
@@ -108,7 +109,7 @@ class AccountSearch implements GenericSearchInterface
     }
 
     /**
-     * @param  string  $field
+     * @param string $field
      */
     public function setField(string $field): void
     {
@@ -116,7 +117,7 @@ class AccountSearch implements GenericSearchInterface
     }
 
     /**
-     * @param  string  $query
+     * @param string $query
      */
     public function setQuery(string $query): void
     {
@@ -124,7 +125,7 @@ class AccountSearch implements GenericSearchInterface
     }
 
     /**
-     * @param  array  $types
+     * @param array $types
      */
     public function setTypes(array $types): void
     {
@@ -132,10 +133,13 @@ class AccountSearch implements GenericSearchInterface
     }
 
     /**
-     * @param  User  $user
+     * @param User|Authenticatable|null $user
+     * @return void
      */
-    public function setUser(User $user): void
+    public function setUser(User | Authenticatable | null $user): void
     {
-        $this->user = $user;
+        if (null !== $user) {
+            $this->user = $user;
+        }
     }
 }

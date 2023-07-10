@@ -39,9 +39,9 @@ use FireflyIII\Services\Internal\Update\JournalUpdateService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View as IlluminateView;
 use InvalidArgumentException;
-use Illuminate\Support\Facades\Log;
 
 /**
  * Class MassController.
@@ -74,7 +74,7 @@ class MassController extends Controller
     /**
      * Mass delete transactions.
      *
-     * @param  array  $journals
+     * @param array $journals
      *
      * @return IlluminateView
      */
@@ -91,7 +91,7 @@ class MassController extends Controller
     /**
      * Do the mass delete.
      *
-     * @param  MassDeleteJournalRequest  $request
+     * @param MassDeleteJournalRequest $request
      *
      * @return Application|Redirector|RedirectResponse
      *
@@ -127,7 +127,7 @@ class MassController extends Controller
     /**
      * Mass edit of journals.
      *
-     * @param  array  $journals
+     * @param array $journals
      *
      * @return IlluminateView
      */
@@ -165,7 +165,7 @@ class MassController extends Controller
     /**
      * Mass update of journals.
      *
-     * @param  MassEditJournalRequest  $request
+     * @param MassEditJournalRequest $request
      *
      * @return RedirectResponse|Redirector
      * @throws FireflyException
@@ -197,8 +197,8 @@ class MassController extends Controller
     }
 
     /**
-     * @param  int  $journalId
-     * @param  MassEditJournalRequest  $request
+     * @param int                    $journalId
+     * @param MassEditJournalRequest $request
      *
      * @throws FireflyException
      */
@@ -234,9 +234,9 @@ class MassController extends Controller
     }
 
     /**
-     * @param  MassEditJournalRequest  $request
-     * @param  int  $journalId
-     * @param  string  $key
+     * @param MassEditJournalRequest $request
+     * @param int                    $journalId
+     * @param string                 $key
      *
      * @return Carbon|null
      */
@@ -261,9 +261,9 @@ class MassController extends Controller
     }
 
     /**
-     * @param  MassEditJournalRequest  $request
-     * @param  int  $journalId
-     * @param  string  $string
+     * @param MassEditJournalRequest $request
+     * @param int                    $journalId
+     * @param string                 $string
      *
      * @return string|null
      */
@@ -281,9 +281,9 @@ class MassController extends Controller
     }
 
     /**
-     * @param  MassEditJournalRequest  $request
-     * @param  int  $journalId
-     * @param  string  $string
+     * @param MassEditJournalRequest $request
+     * @param int                    $journalId
+     * @param string                 $string
      *
      * @return int|null
      */

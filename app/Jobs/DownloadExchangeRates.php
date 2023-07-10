@@ -58,7 +58,7 @@ class DownloadExchangeRates implements ShouldQueue
      * Create a new job instance.
      *
      *
-     * @param  Carbon|null  $date
+     * @param Carbon|null $date
      */
     public function __construct(?Carbon $date)
     {
@@ -93,19 +93,19 @@ class DownloadExchangeRates implements ShouldQueue
     }
 
     /**
-     * @param  TransactionCurrency  $currency
+     * @param TransactionCurrency $currency
      * @return void
      * @throws GuzzleException
      */
     private function downloadRates(TransactionCurrency $currency): void
     {
         Log::debug(sprintf('Now downloading new exchange rates for currency %s.', $currency->code));
-        $base       = sprintf('%s/%s/%s', (string)config('cer.url'), $this->date->year, $this->date->isoWeek);
-        $client     = new Client();
-        $url        = sprintf('%s/%s.json', $base, $currency->code);
+        $base   = sprintf('%s/%s/%s', (string)config('cer.url'), $this->date->year, $this->date->isoWeek);
+        $client = new Client();
+        $url    = sprintf('%s/%s.json', $base, $currency->code);
         try {
             $res = $client->get($url);
-        } catch(RequestException $e) {
+        } catch (RequestException $e) {
             app('log')->warning(sprintf('Trying to grab "%s" resulted in error "%d".', $url, $e->getMessage()));
             return;
         }
@@ -138,7 +138,7 @@ class DownloadExchangeRates implements ShouldQueue
     }
 
     /**
-     * @param  string  $code
+     * @param string $code
      * @return TransactionCurrency|null
      */
     private function getCurrency(string $code): ?TransactionCurrency
@@ -179,7 +179,7 @@ class DownloadExchangeRates implements ShouldQueue
     }
 
     /**
-     * @param  Carbon  $date
+     * @param Carbon $date
      */
     public function setDate(Carbon $date): void
     {

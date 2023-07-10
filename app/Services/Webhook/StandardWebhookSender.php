@@ -30,8 +30,8 @@ use FireflyIII\Models\WebhookMessage;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\RequestException;
-use JsonException;
 use Illuminate\Support\Facades\Log;
+use JsonException;
 
 /**
  * Class StandardWebhookSender
@@ -110,7 +110,7 @@ class StandardWebhookSender implements WebhookSenderInterface
         $client  = new Client();
         try {
             $res = $client->request('POST', $this->message->webhook->url, $options);
-        } catch (RequestException|ConnectException $e) {
+        } catch (RequestException | ConnectException $e) {
             Log::error($e->getMessage());
             Log::error($e->getTraceAsString());
 

@@ -24,6 +24,7 @@ declare(strict_types=1);
 namespace FireflyIII\Console\Commands\Correction;
 
 use DB;
+use FireflyIII\Console\Commands\ShowsFriendlyMessages;
 use FireflyIII\Models\Transaction;
 use FireflyIII\Models\TransactionJournal;
 use Illuminate\Console\Command;
@@ -35,6 +36,8 @@ use Illuminate\Support\Facades\Log;
  */
 class DeleteEmptyJournals extends Command
 {
+    use ShowsFriendlyMessages;
+
     /**
      * The console command description.
      *
@@ -83,18 +86,19 @@ class DeleteEmptyJournals extends Command
 
 
                 Transaction::where('transaction_journal_id', (int)$row->transaction_journal_id)->delete();
-                $this->info(sprintf('Deleted transaction journal #%d because it had an uneven number of transactions.', $row->transaction_journal_id));
+                $this->friendlyWarning(
+                    sprintf('Deleted transaction journal #%d because it had an uneven number of transactions.', $row->transaction_journal_id)
+                );
                 $total++;
             }
         }
         if (0 === $total) {
-            $this->info('No uneven transaction journals.');
+            $this->friendlyPositive('No uneven transaction journals.');
         }
     }
 
     private function deleteEmptyJournals(): void
     {
-        $start = microtime(true);
         $count = 0;
         $set   = TransactionJournal::leftJoin('transactions', 'transactions.transaction_journal_id', '=', 'transaction_journals.id')
                                    ->groupBy('transaction_journals.id')
@@ -109,13 +113,11 @@ class DeleteEmptyJournals extends Command
             }
 
 
-            $this->info(sprintf('Deleted empty transaction journal #%d', $entry->id));
+            $this->friendlyInfo(sprintf('Deleted empty transaction journal #%d', $entry->id));
             ++$count;
         }
         if (0 === $count) {
-            $this->info('No empty transaction journals.');
+            $this->friendlyPositive('No empty transaction journals.');
         }
-        $end = round(microtime(true) - $start, 2);
-        $this->info(sprintf('Verified empty journals in %s seconds', $end));
     }
 }

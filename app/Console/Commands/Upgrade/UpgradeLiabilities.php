@@ -24,6 +24,7 @@ declare(strict_types=1);
 
 namespace FireflyIII\Console\Commands\Upgrade;
 
+use FireflyIII\Console\Commands\ShowsFriendlyMessages;
 use FireflyIII\Exceptions\FireflyException;
 use FireflyIII\Factory\AccountMetaFactory;
 use FireflyIII\Models\Account;
@@ -33,7 +34,6 @@ use FireflyIII\Repositories\Account\AccountRepositoryInterface;
 use FireflyIII\Services\Internal\Support\CreditRecalculateService;
 use FireflyIII\User;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Log;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
@@ -42,19 +42,11 @@ use Psr\Container\NotFoundExceptionInterface;
  */
 class UpgradeLiabilities extends Command
 {
+    use ShowsFriendlyMessages;
+
     public const CONFIG_NAME = '560_upgrade_liabilities';
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Upgrade liabilities to new 5.6.0 structure.';
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'firefly-iii:upgrade-liabilities {--F|force : Force the execution of this command.}';
+    protected $signature   = 'firefly-iii:upgrade-liabilities {--F|force : Force the execution of this command.}';
 
     /**
      * Execute the console command.
@@ -66,19 +58,14 @@ class UpgradeLiabilities extends Command
      */
     public function handle(): int
     {
-        $start = microtime(true);
         if ($this->isExecuted() && true !== $this->option('force')) {
-            $this->warn('This command has already been executed.');
+            $this->friendlyInfo('This command has already been executed.');
 
             return 0;
         }
         $this->upgradeLiabilities();
 
         $this->markAsExecuted();
-
-        $end = round(microtime(true) - $start, 2);
-        $this->info(sprintf('Upgraded liabilities in %s seconds.', $end));
-
         return 0;
     }
 
@@ -102,7 +89,6 @@ class UpgradeLiabilities extends Command
      */
     private function upgradeLiabilities(): void
     {
-        Log::debug('Upgrading liabilities.');
         $users = User::get();
         /** @var User $user */
         foreach ($users as $user) {
@@ -111,11 +97,10 @@ class UpgradeLiabilities extends Command
     }
 
     /**
-     * @param  User  $user
+     * @param User $user
      */
     private function upgradeForUser(User $user): void
     {
-        Log::debug(sprintf('Upgrading liabilities for user #%d', $user->id));
         $accounts = $user->accounts()
                          ->leftJoin('account_types', 'account_types.id', '=', 'accounts.account_type_id')
                          ->whereIn('account_types.type', config('firefly.valid_liabilities'))
@@ -130,14 +115,13 @@ class UpgradeLiabilities extends Command
     }
 
     /**
-     * @param  Account  $account
+     * @param Account $account
      */
     private function upgradeLiability(Account $account): void
     {
         /** @var AccountRepositoryInterface $repository */
         $repository = app(AccountRepositoryInterface::class);
         $repository->setUser($account->user);
-        Log::debug(sprintf('Upgrade liability #%d', $account->id));
 
         // get opening balance, and correct if necessary.
         $openingBalance = $repository->getOpeningBalance($account);
@@ -156,8 +140,8 @@ class UpgradeLiabilities extends Command
     }
 
     /**
-     * @param  Account  $account
-     * @param  TransactionJournal  $openingBalance
+     * @param Account            $account
+     * @param TransactionJournal $openingBalance
      */
     private function correctOpeningBalance(Account $account, TransactionJournal $openingBalance): void
     {
@@ -168,20 +152,17 @@ class UpgradeLiabilities extends Command
         }
         // source MUST be the liability.
         if ((int)$destination->account_id === (int)$account->id) {
-            Log::debug(sprintf('Must switch around, because account #%d is the destination.', $destination->account_id));
             // so if not, switch things around:
             $sourceAccountId         = (int)$source->account_id;
             $source->account_id      = $destination->account_id;
             $destination->account_id = $sourceAccountId;
             $source->save();
             $destination->save();
-            Log::debug(sprintf('Source transaction #%d now has account #%d', $source->id, $source->account_id));
-            Log::debug(sprintf('Dest   transaction #%d now has account #%d', $destination->id, $destination->account_id));
         }
     }
 
     /**
-     * @param  TransactionJournal  $journal
+     * @param TransactionJournal $journal
      *
      * @return Transaction|null
      */
@@ -191,7 +172,7 @@ class UpgradeLiabilities extends Command
     }
 
     /**
-     * @param  TransactionJournal  $journal
+     * @param TransactionJournal $journal
      *
      * @return Transaction|null
      */

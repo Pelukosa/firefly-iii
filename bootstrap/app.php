@@ -36,8 +36,8 @@ bcscale(12);
 
 if (!function_exists('envNonEmpty')) {
     /**
-     * @param  string  $key
-     * @param  null  $default
+     * @param string $key
+     * @param null   $default
      *
      * @return mixed|null
      */
@@ -52,21 +52,21 @@ if (!function_exists('envNonEmpty')) {
     }
 }
 
-if (!function_exists('str_is_equal')) {
+if (!function_exists('stringIsEqual')) {
     /**
-     * @param  string  $left
-     * @param  string  $right
+     * @param string $left
+     * @param string $right
      *
      * @return bool
      */
-    function str_is_equal(string $left, string $right): bool
+    function stringIsEqual(string $left, string $right): bool
     {
         return $left === $right;
     }
 }
 
 $app = new Illuminate\Foundation\Application(
-    realpath(__DIR__.'/../')
+    realpath(__DIR__ . '/../')
 );
 
 /*

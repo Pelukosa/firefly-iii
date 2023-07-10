@@ -83,8 +83,8 @@ class FrontpageChartGenerator
      * When no limits are present, the time range is used to collect information on money spent.
      * If limits are present, each limit is processed individually.
      *
-     * @param  array  $data
-     * @param  Budget  $budget
+     * @param array  $data
+     * @param Budget $budget
      *
      * @return array
      */
@@ -105,8 +105,8 @@ class FrontpageChartGenerator
      * When no limits are present, the expenses of the whole period are collected and grouped.
      * This is grouped per currency. Because there is no limit set, "left to spend" and "overspent" are empty.
      *
-     * @param  array  $data
-     * @param  Budget  $budget
+     * @param array  $data
+     * @param Budget $budget
      *
      * @return array
      */
@@ -127,9 +127,9 @@ class FrontpageChartGenerator
     /**
      * If a budget has budget limit, each limit is processed individually.
      *
-     * @param  array  $data
-     * @param  Budget  $budget
-     * @param  Collection  $limits
+     * @param array      $data
+     * @param Budget     $budget
+     * @param Collection $limits
      *
      * @return array
      */
@@ -144,11 +144,12 @@ class FrontpageChartGenerator
     }
 
     /**
-     * For each limit, the expenses from the time range of the limit are collected. Each row from the result is processed individually.
+     * For each limit, the expenses from the time range of the limit are collected. Each row from the result is
+     * processed individually.
      *
-     * @param  array  $data
-     * @param  Budget  $budget
-     * @param  BudgetLimit  $limit
+     * @param array       $data
+     * @param Budget      $budget
+     * @param BudgetLimit $limit
      *
      * @return array
      */
@@ -169,13 +170,13 @@ class FrontpageChartGenerator
     /**
      * Each row of expenses from a budget limit is in another currency (note $entry['currency_name']).
      *
-     * Each one is added to the $data array. If the limit's date range is different from the global $start and $end dates,
-     * for example when a limit only partially falls into this month, the title is expanded to clarify.
+     * Each one is added to the $data array. If the limit's date range is different from the global $start and $end
+     * dates, for example when a limit only partially falls into this month, the title is expanded to clarify.
      *
-     * @param  array  $data
-     * @param  Budget  $budget
-     * @param  BudgetLimit  $limit
-     * @param  array  $entry
+     * @param array       $data
+     * @param Budget      $budget
+     * @param BudgetLimit $limit
+     * @param array       $entry
      *
      * @return array
      */
@@ -201,7 +202,7 @@ class FrontpageChartGenerator
     }
 
     /**
-     * @param  Carbon  $end
+     * @param Carbon $end
      */
     public function setEnd(Carbon $end): void
     {
@@ -209,7 +210,7 @@ class FrontpageChartGenerator
     }
 
     /**
-     * @param  Carbon  $start
+     * @param Carbon $start
      */
     public function setStart(Carbon $start): void
     {
@@ -219,7 +220,7 @@ class FrontpageChartGenerator
     /**
      * A basic setter for the user. Also updates the repositories with the right user.
      *
-     * @param  User  $user
+     * @param User $user
      */
     public function setUser(User $user): void
     {

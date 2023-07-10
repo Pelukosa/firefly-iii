@@ -23,6 +23,7 @@ declare(strict_types=1);
 
 namespace FireflyIII\Console\Commands\Upgrade;
 
+use FireflyIII\Console\Commands\ShowsFriendlyMessages;
 use FireflyIII\Exceptions\FireflyException;
 use FireflyIII\Models\Account;
 use FireflyIII\Models\AccountType;
@@ -43,19 +44,11 @@ use Psr\Container\NotFoundExceptionInterface;
  */
 class OtherCurrenciesCorrections extends Command
 {
+    use ShowsFriendlyMessages;
+
     public const CONFIG_NAME = '480_other_currencies';
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Update all journal currency information.';
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'firefly-iii:other-currencies {--F|force : Force the execution of this command.}';
+    protected $signature   = 'firefly-iii:other-currencies {--F|force : Force the execution of this command.}';
     private array                         $accountCurrencies;
     private AccountRepositoryInterface    $accountRepos;
     private JournalCLIRepositoryInterface $cliRepos;
@@ -74,10 +67,9 @@ class OtherCurrenciesCorrections extends Command
     public function handle(): int
     {
         $this->stupidLaravel();
-        $start = microtime(true);
 
         if ($this->isExecuted() && true !== $this->option('force')) {
-            $this->warn('This command has already been executed.');
+            $this->friendlyInfo('This command has already been executed.');
 
             return 0;
         }
@@ -86,9 +78,7 @@ class OtherCurrenciesCorrections extends Command
         $this->updateOtherJournalsCurrencies();
         $this->markAsExecuted();
 
-        $this->line(sprintf('Verified %d transaction(s) and journal(s).', $this->count));
-        $end = round(microtime(true) - $start, 2);
-        $this->info(sprintf('Verified and fixed transaction currencies in %s seconds.', $end));
+        $this->friendlyPositive('Verified and fixed transaction currencies.');
 
         return 0;
     }
@@ -144,7 +134,7 @@ class OtherCurrenciesCorrections extends Command
     }
 
     /**
-     * @param  TransactionJournal  $journal
+     * @param TransactionJournal $journal
      */
     private function updateJournalCurrency(TransactionJournal $journal): void
     {
@@ -156,7 +146,7 @@ class OtherCurrenciesCorrections extends Command
         $leadTransaction = $this->getLeadTransaction($journal);
 
         if (null === $leadTransaction) {
-            $this->error(sprintf('Could not reliably determine which transaction is in the lead for transaction journal #%d.', $journal->id));
+            $this->friendlyError(sprintf('Could not reliably determine which transaction is in the lead for transaction journal #%d.', $journal->id));
 
             return;
         }
@@ -164,7 +154,7 @@ class OtherCurrenciesCorrections extends Command
         $account  = $leadTransaction->account;
         $currency = $this->getCurrency($account);
         if (null === $currency) {
-            $this->error(
+            $this->friendlyError(
                 sprintf(
                     'Account #%d ("%s") has no currency preference, so transaction journal #%d can\'t be corrected',
                     $account->id,
@@ -203,7 +193,7 @@ class OtherCurrenciesCorrections extends Command
      * Gets the transaction that determines the transaction that "leads" and will determine
      * the currency to be used by all transactions, and the journal itself.
      *
-     * @param  TransactionJournal  $journal
+     * @param TransactionJournal $journal
      *
      * @return Transaction|null
      */
@@ -244,7 +234,7 @@ class OtherCurrenciesCorrections extends Command
     }
 
     /**
-     * @param  Account  $account
+     * @param Account $account
      *
      * @return TransactionCurrency|null
      */

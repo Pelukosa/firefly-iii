@@ -47,8 +47,8 @@ class UserRepository implements UserRepositoryInterface
      * This updates the users email address and records some things so it can be confirmed or undone later.
      * The user is blocked until the change is confirmed.
      *
-     * @param  User  $user
-     * @param  string  $newEmail
+     * @param User   $user
+     * @param string $newEmail
      *
      * @return bool
      * @throws Exception
@@ -61,7 +61,7 @@ class UserRepository implements UserRepositoryInterface
 
         // save old email as pref
         app('preferences')->setForUser($user, 'previous_email_latest', $oldEmail);
-        app('preferences')->setForUser($user, 'previous_email_'.date('Y-m-d-H-i-s'), $oldEmail);
+        app('preferences')->setForUser($user, 'previous_email_' . date('Y-m-d-H-i-s'), $oldEmail);
 
         // set undo and confirm token:
         app('preferences')->setForUser($user, 'email_change_undo_token', bin2hex(random_bytes(16)));
@@ -77,8 +77,8 @@ class UserRepository implements UserRepositoryInterface
     }
 
     /**
-     * @param  User  $user
-     * @param  string  $password
+     * @param User   $user
+     * @param string $password
      *
      * @return bool
      */
@@ -91,9 +91,9 @@ class UserRepository implements UserRepositoryInterface
     }
 
     /**
-     * @param  User  $user
-     * @param  bool  $isBlocked
-     * @param  string  $code
+     * @param User   $user
+     * @param bool   $isBlocked
+     * @param string $code
      *
      * @return bool
      */
@@ -108,9 +108,9 @@ class UserRepository implements UserRepositoryInterface
     }
 
     /**
-     * @param  string  $name
-     * @param  string  $displayName
-     * @param  string  $description
+     * @param string $name
+     * @param string $displayName
+     * @param string $description
      *
      * @return Role
      */
@@ -129,7 +129,7 @@ class UserRepository implements UserRepositoryInterface
     }
 
     /**
-     * @param  User  $user
+     * @param User $user
      *
      * @return bool
      * @throws Exception
@@ -178,7 +178,7 @@ class UserRepository implements UserRepositoryInterface
     }
 
     /**
-     * @param  string  $email
+     * @param string $email
      *
      * @return User|null
      */
@@ -206,7 +206,7 @@ class UserRepository implements UserRepositoryInterface
     }
 
     /**
-     * @param  User  $user
+     * @param User $user
      *
      * @return string|null
      */
@@ -243,7 +243,7 @@ class UserRepository implements UserRepositoryInterface
     }
 
     /**
-     * @param  int  $userId
+     * @param int $userId
      *
      * @return User|null
      */
@@ -255,7 +255,7 @@ class UserRepository implements UserRepositoryInterface
     /**
      * Return basic user information.
      *
-     * @param  User  $user
+     * @param User $user
      *
      * @return array
      */
@@ -290,12 +290,12 @@ class UserRepository implements UserRepositoryInterface
     }
 
     /**
-     * @param  User|Authenticatable|null  $user
-     * @param  string  $role
+     * @param User|Authenticatable|null $user
+     * @param string                    $role
      *
      * @return bool
      */
-    public function hasRole(User|Authenticatable|null $user, string $role): bool
+    public function hasRole(User | Authenticatable | null $user, string $role): bool
     {
         if (null === $user) {
             return false;
@@ -313,7 +313,7 @@ class UserRepository implements UserRepositoryInterface
     /**
      * @inheritDoc
      */
-    public function inviteUser(User|Authenticatable|null $user, string $email): InvitedUser
+    public function inviteUser(User | Authenticatable | null $user, string $email): InvitedUser
     {
         $now = today(config('app.timezone'));
         $now->addDays(2);
@@ -343,8 +343,8 @@ class UserRepository implements UserRepositoryInterface
     /**
      * Set MFA code.
      *
-     * @param  User  $user
-     * @param  string|null  $code
+     * @param User        $user
+     * @param string|null $code
      */
     public function setMFACode(User $user, ?string $code): void
     {
@@ -353,7 +353,7 @@ class UserRepository implements UserRepositoryInterface
     }
 
     /**
-     * @param  array  $data
+     * @param array $data
      *
      * @return User
      */
@@ -376,8 +376,8 @@ class UserRepository implements UserRepositoryInterface
     }
 
     /**
-     * @param  User  $user
-     * @param  string  $role
+     * @param User   $user
+     * @param string $role
      *
      * @return bool
      */
@@ -401,7 +401,7 @@ class UserRepository implements UserRepositoryInterface
     }
 
     /**
-     * @param  User  $user
+     * @param User $user
      */
     public function unblockUser(User $user): void
     {
@@ -413,8 +413,8 @@ class UserRepository implements UserRepositoryInterface
     /**
      * Update user info.
      *
-     * @param  User  $user
-     * @param  array  $data
+     * @param User  $user
+     * @param array $data
      *
      * @return User
      * @throws FireflyException
@@ -439,11 +439,11 @@ class UserRepository implements UserRepositoryInterface
     }
 
     /**
-     * This updates the users email address. Same as changeEmail just without most logging. This makes sure that the undo/confirm routine can't catch this one.
-     * The user is NOT blocked.
+     * This updates the users email address. Same as changeEmail just without most logging. This makes sure that the
+     * undo/confirm routine can't catch this one. The user is NOT blocked.
      *
-     * @param  User  $user
-     * @param  string  $newEmail
+     * @param User   $user
+     * @param string $newEmail
      *
      * @return bool
      * @throws FireflyException
@@ -458,7 +458,7 @@ class UserRepository implements UserRepositoryInterface
 
         // save old email as pref
         app('preferences')->setForUser($user, 'admin_previous_email_latest', $oldEmail);
-        app('preferences')->setForUser($user, 'admin_previous_email_'.date('Y-m-d-H-i-s'), $oldEmail);
+        app('preferences')->setForUser($user, 'admin_previous_email_' . date('Y-m-d-H-i-s'), $oldEmail);
 
         $user->email = $newEmail;
         $user->save();
@@ -469,8 +469,8 @@ class UserRepository implements UserRepositoryInterface
     /**
      * Remove any role the user has.
      *
-     * @param  User  $user
-     * @param  string  $role
+     * @param User   $user
+     * @param string $role
      */
     public function removeRole(User $user, string $role): void
     {
@@ -482,7 +482,7 @@ class UserRepository implements UserRepositoryInterface
     }
 
     /**
-     * @param  string  $role
+     * @param string $role
      *
      * @return Role|null
      */

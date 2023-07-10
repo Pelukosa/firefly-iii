@@ -1706,6 +1706,7 @@ return [
     'auto_budget_none'                          => 'Cap auto-pressupost',
     'auto_budget_reset'                         => 'Estableix una quantitat fixa cada període',
     'auto_budget_rollover'                      => 'Afegeix una quantitat cada periode',
+    'auto_budget_adjusted'                      => 'Afegeix una quantitat cada període i corregeix per a sobredespeses',
     'auto_budget_period_daily'                  => 'Diàriament',
     'auto_budget_period_weekly'                 => 'Setmanalment',
     'auto_budget_period_monthly'                => 'Mensualment',
@@ -1715,6 +1716,7 @@ return [
     'auto_budget_help'                          => 'Pots llegir més sobre aquesta funció en l\'ajuda. Fes clic a la icona superior dreta (?).',
     'auto_budget_reset_icon'                    => 'El pressupost s\'establirà periòdicament',
     'auto_budget_rollover_icon'                 => 'La quantitat pressupostada s\'incrementarà periòdicament',
+    'auto_budget_adjusted_icon'                 => 'La quantitat del pressupost augmentarà periòdicament i es corregirà per a sobredespeses',
     'remove_budgeted_amount'                    => 'S\'ha eliminat la quantitat pressupostada en :currency',
 
     // bills:
@@ -2292,6 +2294,7 @@ return [
     'budgeted'                                  => 'Pressupostat',
     'period'                                    => 'Període',
     'balance'                                   => 'Saldo',
+    'in_out_period'                             => 'Entrades + Sortides aquest període',
     'sum'                                       => 'Suma',
     'summary'                                   => 'Resum',
     'average'                                   => 'Mitjana',
@@ -2692,6 +2695,9 @@ return [
     'ale_action_log_add'                 => 'S\'ha afegit :amount a la guardiola ":name"',
     'ale_action_log_remove'              => 'S\'ha eliminat :amount de la guardiola ":name"',
     'ale_action_clear_budget'            => 'Eliminat del pressupost',
+    'ale_action_update_group_title'      => 'S\'ha actualitzat el títol del grup de transaccions',
+    'ale_action_update_date'             => 'S\'ha actualitzat la data de transacció',
+    'ale_action_update_order'            => 'S\'ha actualitzat l\'ordre de transaccions',
     'ale_action_clear_category'          => 'Eliminat de la categoria',
     'ale_action_clear_notes'             => 'Notes eliminades',
     'ale_action_clear_tag'               => 'Etiqueta buidada',

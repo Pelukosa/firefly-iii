@@ -41,8 +41,8 @@ use FireflyIII\Services\Internal\Update\CurrencyUpdateService;
 use FireflyIII\User;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Collection;
-use JsonException;
 use Illuminate\Support\Facades\Log;
+use JsonException;
 
 /**
  * Class CurrencyRepository.
@@ -52,7 +52,7 @@ class CurrencyRepository implements CurrencyRepositoryInterface
     private User $user;
 
     /**
-     * @param  TransactionCurrency  $currency
+     * @param TransactionCurrency $currency
      *
      * @return bool
      * @throws FireflyException
@@ -65,7 +65,7 @@ class CurrencyRepository implements CurrencyRepositoryInterface
     }
 
     /**
-     * @param  TransactionCurrency  $currency
+     * @param TransactionCurrency $currency
      *
      * @return string|null
      * @throws FireflyException
@@ -153,7 +153,7 @@ class CurrencyRepository implements CurrencyRepositoryInterface
     }
 
     /**
-     * @param  TransactionCurrency  $currency
+     * @param TransactionCurrency $currency
      *
      * @return int
      */
@@ -182,7 +182,7 @@ class CurrencyRepository implements CurrencyRepositoryInterface
     }
 
     /**
-     * @param  TransactionCurrency  $currency
+     * @param TransactionCurrency $currency
      *
      * @return bool
      */
@@ -202,7 +202,7 @@ class CurrencyRepository implements CurrencyRepositoryInterface
     /**
      * Disables a currency
      *
-     * @param  TransactionCurrency  $currency
+     * @param TransactionCurrency $currency
      */
     public function disable(TransactionCurrency $currency): void
     {
@@ -230,7 +230,7 @@ class CurrencyRepository implements CurrencyRepositoryInterface
     }
 
     /**
-     * @param  TransactionCurrency  $currency
+     * @param TransactionCurrency $currency
      * Enables a currency
      */
     public function enable(TransactionCurrency $currency): void
@@ -243,7 +243,7 @@ class CurrencyRepository implements CurrencyRepositoryInterface
      * Find by currency code, return NULL if unfound.
      * Used in Import Currency!
      *
-     * @param  string  $currencyCode
+     * @param string $currencyCode
      *
      * @return TransactionCurrency|null
      * @deprecated
@@ -256,7 +256,7 @@ class CurrencyRepository implements CurrencyRepositoryInterface
     /**
      * Find by currency name.
      *
-     * @param  string  $currencyName
+     * @param string $currencyName
      *
      * @return TransactionCurrency|null
      */
@@ -269,7 +269,7 @@ class CurrencyRepository implements CurrencyRepositoryInterface
      * Find by currency name or return null.
      * Used in Import Currency!
      *
-     * @param  string  $currencyName
+     * @param string $currencyName
      *
      * @return TransactionCurrency|null
      * @deprecated
@@ -282,7 +282,7 @@ class CurrencyRepository implements CurrencyRepositoryInterface
     /**
      * Find by currency symbol.
      *
-     * @param  string  $currencySymbol
+     * @param string $currencySymbol
      *
      * @return TransactionCurrency|null
      */
@@ -295,7 +295,7 @@ class CurrencyRepository implements CurrencyRepositoryInterface
      * Find by currency symbol or return NULL
      * Used in Import Currency!
      *
-     * @param  string  $currencySymbol
+     * @param string $currencySymbol
      *
      * @return TransactionCurrency|null
      * @deprecated
@@ -308,8 +308,8 @@ class CurrencyRepository implements CurrencyRepositoryInterface
     /**
      * Find by object, ID or code. Returns user default or system default.
      *
-     * @param  int|null  $currencyId
-     * @param  string|null  $currencyCode
+     * @param int|null    $currencyId
+     * @param string|null $currencyCode
      *
      * @return TransactionCurrency
      * @throws FireflyException
@@ -340,8 +340,8 @@ class CurrencyRepository implements CurrencyRepositoryInterface
     /**
      * Find by object, ID or code. Returns NULL if nothing found.
      *
-     * @param  int|null  $currencyId
-     * @param  string|null  $currencyCode
+     * @param int|null    $currencyId
+     * @param string|null $currencyCode
      *
      * @return TransactionCurrency|null
      */
@@ -364,7 +364,7 @@ class CurrencyRepository implements CurrencyRepositoryInterface
     /**
      * Find by ID, return NULL if not found.
      *
-     * @param  int  $currencyId
+     * @param int $currencyId
      *
      * @return TransactionCurrency|null
      */
@@ -376,7 +376,7 @@ class CurrencyRepository implements CurrencyRepositoryInterface
     /**
      * Find by currency code, return NULL if unfound.
      *
-     * @param  string  $currencyCode
+     * @param string $currencyCode
      *
      * @return TransactionCurrency|null
      */
@@ -386,7 +386,7 @@ class CurrencyRepository implements CurrencyRepositoryInterface
     }
 
     /**
-     * @param  array  $ids
+     * @param array $ids
      *
      * @return Collection
      */
@@ -396,7 +396,7 @@ class CurrencyRepository implements CurrencyRepositoryInterface
     }
 
     /**
-     * @param  Preference  $preference
+     * @param Preference $preference
      *
      * @return TransactionCurrency
      */
@@ -413,9 +413,9 @@ class CurrencyRepository implements CurrencyRepositoryInterface
     /**
      * Get currency exchange rate.
      *
-     * @param  TransactionCurrency  $fromCurrency
-     * @param  TransactionCurrency  $toCurrency
-     * @param  Carbon  $date
+     * @param TransactionCurrency $fromCurrency
+     * @param TransactionCurrency $toCurrency
+     * @param Carbon              $date
      *
      * @return CurrencyExchangeRate|null
      */
@@ -451,8 +451,8 @@ class CurrencyRepository implements CurrencyRepositoryInterface
     }
 
     /**
-     * @param  string  $search
-     * @param  int  $limit
+     * @param string $search
+     * @param int    $limit
      *
      * @return Collection
      */
@@ -468,10 +468,11 @@ class CurrencyRepository implements CurrencyRepositoryInterface
 
     /**
      * TODO must be a factory
-     * @param  TransactionCurrency  $fromCurrency
-     * @param  TransactionCurrency  $toCurrency
-     * @param  Carbon  $date
-     * @param  float  $rate
+     *
+     * @param TransactionCurrency $fromCurrency
+     * @param TransactionCurrency $toCurrency
+     * @param Carbon              $date
+     * @param float               $rate
      * @return CurrencyExchangeRate
      */
     public function setExchangeRate(TransactionCurrency $fromCurrency, TransactionCurrency $toCurrency, Carbon $date, float $rate): CurrencyExchangeRate
@@ -488,9 +489,9 @@ class CurrencyRepository implements CurrencyRepositoryInterface
     }
 
     /**
-     * @param  User|Authenticatable|null  $user
+     * @param User|Authenticatable|null $user
      */
-    public function setUser(User|Authenticatable|null $user): void
+    public function setUser(User | Authenticatable | null $user): void
     {
         if (null !== $user) {
             $this->user = $user;
@@ -498,7 +499,7 @@ class CurrencyRepository implements CurrencyRepositoryInterface
     }
 
     /**
-     * @param  array  $data
+     * @param array $data
      *
      * @return TransactionCurrency
      * @throws FireflyException
@@ -517,8 +518,8 @@ class CurrencyRepository implements CurrencyRepositoryInterface
     }
 
     /**
-     * @param  TransactionCurrency  $currency
-     * @param  array  $data
+     * @param TransactionCurrency $currency
+     * @param array               $data
      *
      * @return TransactionCurrency
      */

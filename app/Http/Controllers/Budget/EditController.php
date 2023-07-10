@@ -67,8 +67,8 @@ class EditController extends Controller
     /**
      * Budget edit form.
      *
-     * @param  Request  $request
-     * @param  Budget  $budget
+     * @param Request $request
+     * @param Budget  $budget
      *
      * @return Factory|View
      */
@@ -82,6 +82,7 @@ class EditController extends Controller
             0                                => (string)trans('firefly.auto_budget_none'),
             AutoBudget::AUTO_BUDGET_RESET    => (string)trans('firefly.auto_budget_reset'),
             AutoBudget::AUTO_BUDGET_ROLLOVER => (string)trans('firefly.auto_budget_rollover'),
+            AutoBudget::AUTO_BUDGET_ADJUSTED => (string)trans('firefly.auto_budget_adjusted'),
         ];
         $autoBudgetPeriods = [
             'daily'     => (string)trans('firefly.auto_budget_period_daily'),
@@ -117,8 +118,8 @@ class EditController extends Controller
     /**
      * Budget update routine.
      *
-     * @param  BudgetFormUpdateRequest  $request
-     * @param  Budget  $budget
+     * @param BudgetFormUpdateRequest $request
+     * @param Budget                  $budget
      *
      * @return RedirectResponse
      */

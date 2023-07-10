@@ -31,6 +31,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use Mail;
+use Symfony\Component\Mailer\Exception\TransportException;
 
 /**
  * Class MailError.
@@ -50,10 +51,10 @@ class MailError extends Job implements ShouldQueue
     /**
      * MailError constructor.
      *
-     * @param  array  $userData
-     * @param  string  $destination
-     * @param  string  $ipAddress
-     * @param  array  $exceptionData
+     * @param array  $userData
+     * @param string $destination
+     * @param string $ipAddress
+     * @param array  $exceptionData
      */
     public function __construct(array $userData, string $destination, string $ipAddress, array $exceptionData)
     {
@@ -69,6 +70,7 @@ class MailError extends Job implements ShouldQueue
 
     /**
      * Execute the job.
+     *
      * @throws FireflyException
      */
     public function handle()
@@ -90,7 +92,7 @@ class MailError extends Job implements ShouldQueue
                         }
                     }
                 );
-            } catch (Exception $e) { // intentional generic exception
+            } catch (Exception | TransportException $e) { // intentional generic exception
                 $message = $e->getMessage();
                 if (str_contains($message, 'Bcc')) {
                     Log::warning('[Bcc] Could not email or log the error. Please validate your email settings, use the .env.example file as a guide.');

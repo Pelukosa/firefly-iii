@@ -24,6 +24,7 @@ declare(strict_types=1);
 
 namespace FireflyIII\Console\Commands\Correction;
 
+use FireflyIII\Console\Commands\ShowsFriendlyMessages;
 use FireflyIII\Models\Account;
 use FireflyIII\Models\AccountType;
 use Illuminate\Console\Command;
@@ -34,18 +35,11 @@ use Illuminate\Support\Collection;
  */
 class FixIbans extends Command
 {
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
+    use ShowsFriendlyMessages;
+
     protected $description = 'Removes spaces from IBANs';
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'firefly-iii:fix-ibans';
+    protected $signature   = 'firefly-iii:fix-ibans';
+    private int $count       = 0;
 
     /**
      * Execute the console command.
@@ -57,46 +51,16 @@ class FixIbans extends Command
         $accounts = Account::whereNotNull('iban')->get();
         $this->filterIbans($accounts);
         $this->countAndCorrectIbans($accounts);
+        if (0 === $this->count) {
+            $this->friendlyPositive('All IBANs are valid.');
+        }
 
         return 0;
     }
 
     /**
-     * @param  Collection  $accounts
-     * @return void
-     */
-    private function countAndCorrectIbans(Collection $accounts): void
-    {
-        $set = [];
-        /** @var Account $account */
-        foreach($accounts as $account) {
-            $userId = (int)$account->user_id;
-            $set[$userId] = $set[$userId] ?? [];
-            $iban = (string)$account->iban;
-            $type = $account->accountType->type;
-            if(in_array($type, [AccountType::LOAN, AccountType::DEBT, AccountType::MORTGAGE], true)) {
-                $type = 'liabilities';
-            }
-            if(array_key_exists($iban, $set[$userId])) {
-                // iban already in use! two exceptions exist:
-                if(
-                    !(AccountType::EXPENSE === $set[$userId][$iban] && AccountType::REVENUE === $type) && // allowed combination
-                    !(AccountType::REVENUE === $set[$userId][$iban] && AccountType::EXPENSE === $type) // also allowed combination.
-                ) {
-                    $this->line(sprintf('IBAN "%s" is used more than once and will be removed from %s #%d ("%s")', $iban, $account->accountType->type, $account->id, $account->name));
-                    $account->iban = null;
-                    $account->save();
-                }
-            }
-
-            if(!array_key_exists($iban, $set[$userId])) {
-                $set[$userId][$iban] = $type;
-            }
-        }
-    }
-
-    /**
-     * @param  Collection  $accounts
+     * @param Collection $accounts
+     *
      * @return void
      */
     private function filterIbans(Collection $accounts): void
@@ -109,8 +73,57 @@ class FixIbans extends Command
                 if ('' !== $iban) {
                     $account->iban = $iban;
                     $account->save();
-                    $this->line(sprintf('Removed spaces from IBAN of account #%d', $account->id));
+                    $this->friendlyInfo(sprintf('Removed spaces from IBAN of account #%d', $account->id));
+                    $this->count++;
                 }
+            }
+        }
+    }
+
+    /**
+     * @param Collection $accounts
+     *
+     * @return void
+     */
+    private function countAndCorrectIbans(Collection $accounts): void
+    {
+        $set = [];
+        /** @var Account $account */
+        foreach ($accounts as $account) {
+            $userId       = (int)$account->user_id;
+            $set[$userId] = $set[$userId] ?? [];
+            $iban         = (string)$account->iban;
+            if ('' === $iban) {
+                continue;
+            }
+            $type = $account->accountType->type;
+            if (in_array($type, [AccountType::LOAN, AccountType::DEBT, AccountType::MORTGAGE], true)) {
+                $type = 'liabilities';
+            }
+            if (array_key_exists($iban, $set[$userId])) {
+                // iban already in use! two exceptions exist:
+                if (
+                    !(AccountType::EXPENSE === $set[$userId][$iban] && AccountType::REVENUE === $type)
+                    && // allowed combination
+                    !(AccountType::REVENUE === $set[$userId][$iban] && AccountType::EXPENSE === $type) // also allowed combination.
+                ) {
+                    $this->friendlyWarning(
+                        sprintf(
+                            'IBAN "%s" is used more than once and will be removed from %s #%d ("%s")',
+                            $iban,
+                            $account->accountType->type,
+                            $account->id,
+                            $account->name
+                        )
+                    );
+                    $account->iban = null;
+                    $account->save();
+                    $this->count++;
+                }
+            }
+
+            if (!array_key_exists($iban, $set[$userId])) {
+                $set[$userId][$iban] = $type;
             }
         }
     }

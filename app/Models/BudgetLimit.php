@@ -37,18 +37,18 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 /**
  * FireflyIII\Models\BudgetLimit
  *
- * @property int $id
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property int $budget_id
- * @property int|null $transaction_currency_id
- * @property Carbon $start_date
- * @property Carbon|null $end_date
- * @property string $amount
- * @property string $spent
- * @property string|null $period
- * @property int $generated
- * @property-read Budget $budget
+ * @property int                           $id
+ * @property Carbon|null                   $created_at
+ * @property Carbon|null                   $updated_at
+ * @property int                           $budget_id
+ * @property int|null                      $transaction_currency_id
+ * @property Carbon                        $start_date
+ * @property Carbon|null                   $end_date
+ * @property string                        $amount
+ * @property string                        $spent
+ * @property string|null                   $period
+ * @property int                           $generated
+ * @property-read Budget                   $budget
  * @property-read TransactionCurrency|null $transactionCurrency
  * @method static Builder|BudgetLimit newModelQuery()
  * @method static Builder|BudgetLimit newQuery()
@@ -80,20 +80,19 @@ class BudgetLimit extends Model
             'end_date'    => 'date',
             'auto_budget' => 'boolean',
         ];
-
+    protected $dispatchesEvents
+        = [
+            'created' => Created::class,
+            'updated' => Updated::class,
+            'deleted' => Deleted::class,
+        ];
     /** @var array Fields that can be filled */
     protected $fillable = ['budget_id', 'start_date', 'end_date', 'amount', 'transaction_currency_id'];
-
-    protected $dispatchesEvents = [
-        'created' => Created::class,
-        'updated' => Updated::class,
-        'deleted' => Deleted::class,
-    ];
 
     /**
      * Route binder. Converts the key in the URL to the specified object (or throw 404).
      *
-     * @param  string  $value
+     * @param string $value
      *
      * @return BudgetLimit
      * @throws NotFoundHttpException

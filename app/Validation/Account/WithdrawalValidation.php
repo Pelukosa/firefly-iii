@@ -33,7 +33,7 @@ use Illuminate\Support\Facades\Log;
 trait WithdrawalValidation
 {
     /**
-     * @param  array  $array
+     * @param array $array
      *
      * @return bool
      */
@@ -41,12 +41,13 @@ trait WithdrawalValidation
     {
         $accountId   = array_key_exists('id', $array) ? $array['id'] : null;
         $accountName = array_key_exists('name', $array) ? $array['name'] : null;
+        $accountIban = array_key_exists('iban', $array) ? $array['iban'] : null;
         Log::debug('Now in validateGenericSource', $array);
         // source can be any of the following types.
         $validTypes = [AccountType::ASSET, AccountType::REVENUE, AccountType::LOAN, AccountType::DEBT, AccountType::MORTGAGE];
-        if (null === $accountId && null === $accountName && false === $this->canCreateTypes($validTypes)) {
+        if (null === $accountId && null === $accountName && null === $accountIban && false === $this->canCreateTypes($validTypes)) {
             // if both values are NULL we return TRUE
-            // because we assume the user doesnt want to submit / change anything.
+            // because we assume the user doesn't want to submit / change anything.
             $this->sourceError = (string)trans('validation.withdrawal_source_need_data');
             app('log')->warning('[a] Not a valid source. Need more data.');
 
@@ -68,22 +69,22 @@ trait WithdrawalValidation
     }
 
     /**
-     * @param  array  $accountTypes
+     * @param array $accountTypes
      *
      * @return bool
      */
     abstract protected function canCreateTypes(array $accountTypes): bool;
 
     /**
-     * @param  array  $validTypes
-     * @param  array  $data
+     * @param array $validTypes
+     * @param array $data
      *
      * @return Account|null
      */
     abstract protected function findExistingAccount(array $validTypes, array $data): ?Account;
 
     /**
-     * @param  array  $array
+     * @param array $array
      *
      * @return bool
      */
@@ -91,10 +92,11 @@ trait WithdrawalValidation
     {
         $accountId   = array_key_exists('id', $array) ? $array['id'] : null;
         $accountName = array_key_exists('name', $array) ? $array['name'] : null;
+        $accountIban = array_key_exists('iban', $array) ? $array['iban'] : null;
         Log::debug('Now in validateWithdrawalDestination()', $array);
         // source can be any of the following types.
         $validTypes = $this->combinations[$this->transactionType][$this->source->accountType->type] ?? [];
-        if (null === $accountId && null === $accountName && false === $this->canCreateTypes($validTypes)) {
+        if (null === $accountId && null === $accountName && null === $accountIban && false === $this->canCreateTypes($validTypes)) {
             // if both values are NULL return false,
             // because the destination of a withdrawal can never be created automatically.
             $this->destError = (string)trans('validation.withdrawal_dest_need_data');
@@ -116,25 +118,36 @@ trait WithdrawalValidation
                 return false;
             }
         }
+        // if there is an iban, it can only be in use by a revenue account or we will fail.
+        if(null !== $accountIban && '' !== $accountIban) {
+            app('log')->debug('Check if there is not already an account with this IBAN');
+            $existing = $this->findExistingAccount([AccountType::ASSET, AccountType::LOAN, AccountType::DEBT, AccountType::MORTGAGE], ['iban' => $accountIban]);
+            if(null !== $existing) {
+                $this->destError = (string)trans('validation.withdrawal_dest_iban_exists');
+                return false;
+            }
+        }
 
         // if the account can be created anyway don't need to search.
         return true === $this->canCreateTypes($validTypes);
     }
 
     /**
-     * @param  array  $array
+     * @param array $array
      *
      * @return bool
      */
     protected function validateWithdrawalSource(array $array): bool
     {
-        $accountId   = array_key_exists('id', $array) ? $array['id'] : null;
-        $accountName = array_key_exists('name', $array) ? $array['name'] : null;
+        $accountId     = array_key_exists('id', $array) ? $array['id'] : null;
+        $accountName   = array_key_exists('name', $array) ? $array['name'] : null;
+        $accountIban   = array_key_exists('iban', $array) ? $array['iban'] : null;
+        $accountNumber = array_key_exists('number', $array) ? $array['number'] : null;
 
         Log::debug('Now in validateWithdrawalSource', $array);
         // source can be any of the following types.
         $validTypes = array_keys($this->combinations[$this->transactionType]);
-        if (null === $accountId && null === $accountName && false === $this->canCreateTypes($validTypes)) {
+        if (null === $accountId && null === $accountName && null === $accountNumber && null === $accountIban && false === $this->canCreateTypes($validTypes)) {
             // if both values are NULL we return false,
             // because the source of a withdrawal can't be created.
             $this->sourceError = (string)trans('validation.withdrawal_source_need_data');

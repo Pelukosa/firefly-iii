@@ -68,10 +68,10 @@ class TagReportController extends Controller
     }
 
     /**
-     * @param  Collection  $accounts
-     * @param  Collection  $tags
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Collection $tags
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return JsonResponse
      */
@@ -104,10 +104,10 @@ class TagReportController extends Controller
     }
 
     /**
-     * @param  Collection  $accounts
-     * @param  Collection  $tags
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Collection $tags
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return JsonResponse
      */
@@ -140,10 +140,10 @@ class TagReportController extends Controller
     }
 
     /**
-     * @param  Collection  $accounts
-     * @param  Collection  $tags
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Collection $tags
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return JsonResponse
      */
@@ -176,10 +176,10 @@ class TagReportController extends Controller
     }
 
     /**
-     * @param  Collection  $accounts
-     * @param  Collection  $tags
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Collection $tags
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return JsonResponse
      */
@@ -212,10 +212,10 @@ class TagReportController extends Controller
     }
 
     /**
-     * @param  Collection  $accounts
-     * @param  Collection  $tags
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Collection $tags
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return JsonResponse
      */
@@ -250,10 +250,10 @@ class TagReportController extends Controller
     /**
      * Generate main tag overview chart.
      *
-     * @param  Collection  $accounts
-     * @param  Tag  $tag
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Tag        $tag
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return JsonResponse
      *
@@ -327,8 +327,8 @@ class TagReportController extends Controller
     /**
      * TODO duplicate function
      *
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Carbon $start
+     * @param Carbon $end
      *
      * @return array
      */
@@ -350,10 +350,10 @@ class TagReportController extends Controller
     }
 
     /**
-     * @param  Collection  $accounts
-     * @param  Collection  $tags
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Collection $tags
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return JsonResponse
      */
@@ -386,10 +386,10 @@ class TagReportController extends Controller
     }
 
     /**
-     * @param  Collection  $accounts
-     * @param  Collection  $tags
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Collection $tags
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return JsonResponse
      */
@@ -422,10 +422,10 @@ class TagReportController extends Controller
     }
 
     /**
-     * @param  Collection  $accounts
-     * @param  Collection  $tags
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Collection $tags
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return JsonResponse
      */
@@ -456,10 +456,10 @@ class TagReportController extends Controller
     }
 
     /**
-     * @param  Collection  $accounts
-     * @param  Collection  $tags
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Collection $tags
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return JsonResponse
      */

@@ -34,9 +34,9 @@ use FireflyIII\User;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use League\Flysystem\UnableToDeleteFile;
-use Illuminate\Support\Facades\Log;
 use LogicException;
 
 /**
@@ -49,7 +49,7 @@ class AttachmentRepository implements AttachmentRepositoryInterface
     private $user;
 
     /**
-     * @param  Attachment  $attachment
+     * @param Attachment $attachment
      *
      * @return bool
      * @throws Exception
@@ -71,7 +71,7 @@ class AttachmentRepository implements AttachmentRepositoryInterface
     }
 
     /**
-     * @param  Attachment  $attachment
+     * @param Attachment $attachment
      *
      * @return string
      */
@@ -96,7 +96,7 @@ class AttachmentRepository implements AttachmentRepositoryInterface
     }
 
     /**
-     * @param  Attachment  $attachment
+     * @param Attachment $attachment
      *
      * @return bool
      */
@@ -119,7 +119,7 @@ class AttachmentRepository implements AttachmentRepositoryInterface
     /**
      * Get attachment note text or empty string.
      *
-     * @param  Attachment  $attachment
+     * @param Attachment $attachment
      *
      * @return string|null
      */
@@ -134,7 +134,7 @@ class AttachmentRepository implements AttachmentRepositoryInterface
     }
 
     /**
-     * @param  array  $data
+     * @param array $data
      *
      * @return Attachment
      * @throws FireflyException
@@ -153,9 +153,9 @@ class AttachmentRepository implements AttachmentRepositoryInterface
     }
 
     /**
-     * @param  User|Authenticatable|null  $user
+     * @param User|Authenticatable|null $user
      */
-    public function setUser(User|Authenticatable|null $user): void
+    public function setUser(User | Authenticatable | null $user): void
     {
         if (null !== $user) {
             $this->user = $user;
@@ -163,8 +163,8 @@ class AttachmentRepository implements AttachmentRepositoryInterface
     }
 
     /**
-     * @param  Attachment  $attachment
-     * @param  array  $data
+     * @param Attachment $attachment
+     * @param array      $data
      *
      * @return Attachment
      */
@@ -194,8 +194,8 @@ class AttachmentRepository implements AttachmentRepositoryInterface
     }
 
     /**
-     * @param  Attachment  $attachment
-     * @param  string  $note
+     * @param Attachment $attachment
+     * @param string     $note
      *
      * @return bool
      */

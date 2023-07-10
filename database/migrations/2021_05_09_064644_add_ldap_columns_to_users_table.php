@@ -35,7 +35,7 @@ class AddLdapColumnsToUsersTable extends Migration
      */
     public function down(): void
     {
-        if(Schema::hasColumn('users', 'domain')) {
+        if (Schema::hasColumn('users', 'domain')) {
             try {
                 Schema::table(
                     'users',
@@ -43,7 +43,7 @@ class AddLdapColumnsToUsersTable extends Migration
                         $table->dropColumn(['domain']);
                     }
                 );
-            } catch (QueryException|ColumnDoesNotExist $e) {
+            } catch (QueryException | ColumnDoesNotExist $e) {
                 Log::error(sprintf('Could not execute query: %s', $e->getMessage()));
                 Log::error('If the column or index already exists (see error), this is not an problem. Otherwise, please open a GitHub discussion.');
             }
@@ -55,7 +55,7 @@ class AddLdapColumnsToUsersTable extends Migration
      */
     public function up(): void
     {
-        if(!Schema::hasColumn('users', 'domain')) {
+        if (!Schema::hasColumn('users', 'domain')) {
             try {
                 Schema::table(
                     'users',

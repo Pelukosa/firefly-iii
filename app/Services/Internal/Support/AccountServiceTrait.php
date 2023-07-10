@@ -38,8 +38,8 @@ use FireflyIII\Models\TransactionGroup;
 use FireflyIII\Models\TransactionJournal;
 use FireflyIII\Repositories\Account\AccountRepositoryInterface;
 use FireflyIII\Services\Internal\Destroy\TransactionGroupDestroyService;
-use JsonException;
 use Illuminate\Support\Facades\Log;
+use JsonException;
 use Validator;
 
 /**
@@ -51,7 +51,7 @@ trait AccountServiceTrait
     protected AccountRepositoryInterface $accountRepository;
 
     /**
-     * @param  null|string  $iban
+     * @param null|string $iban
      *
      * @return null|string
      */
@@ -76,7 +76,7 @@ trait AccountServiceTrait
     /**
      * Returns true if the data in the array is submitted but empty.
      *
-     * @param  array  $data
+     * @param array $data
      *
      * @return bool
      */
@@ -104,8 +104,8 @@ trait AccountServiceTrait
      *
      * TODO this method treats expense accounts and liabilities the same way (tries to save interest)
      *
-     * @param  Account  $account
-     * @param  array  $data
+     * @param Account $account
+     * @param array   $data
      *
      */
     public function updateMetaData(Account $account, array $data): void
@@ -151,8 +151,11 @@ trait AccountServiceTrait
                 if (is_bool($data[$field]) && false === $data[$field]) {
                     $data[$field] = 0;
                 }
-                if (is_bool($data[$field]) && true === $data[$field]) {
+                if (true === $data[$field]) {
                     $data[$field] = 1;
+                }
+                if ($data[$field] instanceof Carbon) {
+                    $data[$field] = $data[$field]->toAtomString();
                 }
 
                 $factory->crud($account, $field, (string)$data[$field]);
@@ -161,22 +164,21 @@ trait AccountServiceTrait
     }
 
     /**
-     * @param  Account  $account
-     * @param  string  $note
+     * @param Account $account
+     * @param string  $note
      *
      * @return bool
      */
     public function updateNote(Account $account, string $note): bool
     {
+        $dbNote = $account->notes()->first();
         if ('' === $note) {
-            $dbNote = $account->notes()->first();
             if (null !== $dbNote) {
                 $dbNote->delete();
             }
 
             return true;
         }
-        $dbNote = $account->notes()->first();
         if (null === $dbNote) {
             $dbNote = new Note();
             $dbNote->noteable()->associate($account);
@@ -190,7 +192,7 @@ trait AccountServiceTrait
     /**
      * Verify if array contains valid data to possibly store or update the opening balance.
      *
-     * @param  array  $data
+     * @param array $data
      *
      * @return bool
      */
@@ -212,8 +214,8 @@ trait AccountServiceTrait
     }
 
     /**
-     * @param  Account  $account
-     * @param  array  $data
+     * @param Account $account
+     * @param array   $data
      *
      * @return TransactionGroup
      * @throws FireflyException
@@ -307,7 +309,7 @@ trait AccountServiceTrait
     /**
      * Delete TransactionGroup with liability credit in it.
      *
-     * @param  Account  $account
+     * @param Account $account
      */
     protected function deleteCreditTransaction(Account $account): void
     {
@@ -325,7 +327,7 @@ trait AccountServiceTrait
     /**
      * Returns the credit transaction group, or NULL if it does not exist.
      *
-     * @param  Account  $account
+     * @param Account $account
      *
      * @return TransactionGroup|null
      */
@@ -339,7 +341,7 @@ trait AccountServiceTrait
     /**
      * Delete TransactionGroup with opening balance in it.
      *
-     * @param  Account  $account
+     * @param Account $account
      */
     protected function deleteOBGroup(Account $account): void
     {
@@ -358,7 +360,7 @@ trait AccountServiceTrait
     /**
      * Returns the opening balance group, or NULL if it does not exist.
      *
-     * @param  Account  $account
+     * @param Account $account
      *
      * @return TransactionGroup|null
      */
@@ -368,8 +370,8 @@ trait AccountServiceTrait
     }
 
     /**
-     * @param  int  $currencyId
-     * @param  string  $currencyCode
+     * @param int    $currencyId
+     * @param string $currencyCode
      *
      * @return TransactionCurrency
      * @throws FireflyException
@@ -452,9 +454,9 @@ trait AccountServiceTrait
     }
 
     /**
-     * @param  Account  $account
-     * @param  string  $openingBalance
-     * @param  Carbon  $openingBalanceDate
+     * @param Account $account
+     * @param string  $openingBalance
+     * @param Carbon  $openingBalanceDate
      *
      * @return TransactionGroup
      * @throws FireflyException
@@ -545,7 +547,7 @@ trait AccountServiceTrait
     /**
      * TODO refactor to "getfirstjournal"
      *
-     * @param  TransactionGroup  $group
+     * @param TransactionGroup $group
      *
      * @return TransactionJournal
      * @throws FireflyException
@@ -564,8 +566,8 @@ trait AccountServiceTrait
     /**
      * TODO Rename to getOpposingTransaction
      *
-     * @param  TransactionJournal  $journal
-     * @param  Account  $account
+     * @param TransactionJournal $journal
+     * @param Account            $account
      *
      * @return Transaction
      * @throws FireflyException
@@ -582,8 +584,8 @@ trait AccountServiceTrait
     }
 
     /**
-     * @param  TransactionJournal  $journal
-     * @param  Account  $account
+     * @param TransactionJournal $journal
+     * @param Account            $account
      *
      * @return Transaction
      * @throws FireflyException
@@ -603,9 +605,9 @@ trait AccountServiceTrait
      * Update or create the opening balance group.
      * Since opening balance and date can still be empty strings, it may fail.
      *
-     * @param  Account  $account
-     * @param  string  $openingBalance
-     * @param  Carbon  $openingBalanceDate
+     * @param Account $account
+     * @param string  $openingBalance
+     * @param Carbon  $openingBalanceDate
      *
      * @return TransactionGroup
      * @throws FireflyException
@@ -665,9 +667,9 @@ trait AccountServiceTrait
     }
 
     /**
-     * @param  Account  $account
-     * @param  string  $openingBalance
-     * @param  Carbon  $openingBalanceDate
+     * @param Account $account
+     * @param string  $openingBalance
+     * @param Carbon  $openingBalanceDate
      *
      * @return TransactionGroup
      * @throws FireflyException

@@ -33,8 +33,8 @@ use FireflyIII\User;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
-use JsonException;
 use Illuminate\Support\Facades\Log;
+use JsonException;
 
 /**
  *
@@ -48,10 +48,10 @@ class BudgetLimitRepository implements BudgetLimitRepositoryInterface
      * Tells you which amount has been budgeted (for the given budgets)
      * in the selected query. Returns a positive amount as a string.
      *
-     * @param  Carbon  $start
-     * @param  Carbon  $end
-     * @param  TransactionCurrency  $currency
-     * @param  Collection|null  $budgets
+     * @param Carbon              $start
+     * @param Carbon              $end
+     * @param TransactionCurrency $currency
+     * @param Collection|null     $budgets
      *
      * @return string
      */
@@ -120,7 +120,7 @@ class BudgetLimitRepository implements BudgetLimitRepositoryInterface
     /**
      * Destroy a budget limit.
      *
-     * @param  BudgetLimit  $budgetLimit
+     * @param BudgetLimit $budgetLimit
      */
     public function destroyBudgetLimit(BudgetLimit $budgetLimit): void
     {
@@ -128,9 +128,9 @@ class BudgetLimitRepository implements BudgetLimitRepositoryInterface
     }
 
     /**
-     * @param  TransactionCurrency  $currency
-     * @param  Carbon|null  $start
-     * @param  Carbon|null  $end
+     * @param TransactionCurrency $currency
+     * @param Carbon|null         $start
+     * @param Carbon|null         $end
      *
      * @return Collection
      */
@@ -144,8 +144,8 @@ class BudgetLimitRepository implements BudgetLimitRepositoryInterface
     }
 
     /**
-     * @param  Carbon|null  $start
-     * @param  Carbon|null  $end
+     * @param Carbon|null $start
+     * @param Carbon|null $end
      *
      * @return Collection
      */
@@ -212,9 +212,9 @@ class BudgetLimitRepository implements BudgetLimitRepositoryInterface
     }
 
     /**
-     * @param  Budget  $budget
-     * @param  Carbon|null  $start
-     * @param  Carbon|null  $end
+     * @param Budget      $budget
+     * @param Carbon|null $start
+     * @param Carbon|null $end
      *
      * @return Collection
      */
@@ -272,9 +272,9 @@ class BudgetLimitRepository implements BudgetLimitRepositoryInterface
     }
 
     /**
-     * @param  User|Authenticatable|null  $user
+     * @param User|Authenticatable|null $user
      */
-    public function setUser(User|Authenticatable|null $user): void
+    public function setUser(User | Authenticatable | null $user): void
     {
         if (null !== $user) {
             $this->user = $user;
@@ -282,7 +282,7 @@ class BudgetLimitRepository implements BudgetLimitRepositoryInterface
     }
 
     /**
-     * @param  array  $data
+     * @param array $data
      *
      * @return BudgetLimit
      * @throws FireflyException
@@ -331,10 +331,10 @@ class BudgetLimitRepository implements BudgetLimitRepositoryInterface
     }
 
     /**
-     * @param  Budget  $budget
-     * @param  TransactionCurrency  $currency
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Budget              $budget
+     * @param TransactionCurrency $currency
+     * @param Carbon              $start
+     * @param Carbon              $end
      *
      * @return BudgetLimit|null
      */
@@ -347,8 +347,8 @@ class BudgetLimitRepository implements BudgetLimitRepositoryInterface
     }
 
     /**
-     * @param  BudgetLimit  $budgetLimit
-     * @param  array  $data
+     * @param BudgetLimit $budgetLimit
+     * @param array       $data
      *
      * @return BudgetLimit
      * @throws FireflyException
@@ -384,10 +384,10 @@ class BudgetLimitRepository implements BudgetLimitRepositoryInterface
     }
 
     /**
-     * @param  Budget  $budget
-     * @param  Carbon  $start
-     * @param  Carbon  $end
-     * @param  string  $amount
+     * @param Budget $budget
+     * @param Carbon $start
+     * @param Carbon $end
+     * @param string $amount
      *
      * @return BudgetLimit|null
      *

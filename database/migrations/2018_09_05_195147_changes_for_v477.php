@@ -41,7 +41,7 @@ class ChangesForV477 extends Migration
      */
     public function down(): void
     {
-        if(Schema::hasColumn('budget_limits', 'transaction_currency_id')) {
+        if (Schema::hasColumn('budget_limits', 'transaction_currency_id')) {
             try {
                 Schema::table(
                     'budget_limits',
@@ -54,7 +54,7 @@ class ChangesForV477 extends Migration
                         $table->dropColumn(['transaction_currency_id']);
                     }
                 );
-            } catch (QueryException|ColumnDoesNotExist $e) {
+            } catch (QueryException | ColumnDoesNotExist $e) {
                 Log::error(sprintf('Could not execute query: %s', $e->getMessage()));
                 Log::error('If the column or index already exists (see error), this is not an problem. Otherwise, please open a GitHub discussion.');
             }
@@ -68,7 +68,7 @@ class ChangesForV477 extends Migration
      */
     public function up(): void
     {
-        if(!Schema::hasColumn('budget_limits', 'transaction_currency_id')) {
+        if (!Schema::hasColumn('budget_limits', 'transaction_currency_id')) {
             try {
                 Schema::table(
                     'budget_limits',

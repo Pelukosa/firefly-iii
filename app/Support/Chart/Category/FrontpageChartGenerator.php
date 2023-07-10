@@ -52,8 +52,8 @@ class FrontpageChartGenerator
     /**
      * FrontpageChartGenerator constructor.
      *
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Carbon $start
+     * @param Carbon $end
      */
     public function __construct(Carbon $start, Carbon $end)
     {
@@ -99,8 +99,8 @@ class FrontpageChartGenerator
     }
 
     /**
-     * @param  Category  $category
-     * @param  Collection  $accounts
+     * @param Category   $category
+     * @param Collection $accounts
      *
      * @return array
      */
@@ -122,7 +122,7 @@ class FrontpageChartGenerator
     }
 
     /**
-     * @param  array  $currency
+     * @param array $currency
      */
     private function addCurrency(array $currency): void
     {
@@ -138,7 +138,7 @@ class FrontpageChartGenerator
     }
 
     /**
-     * @param  Collection  $accounts
+     * @param Collection $accounts
      *
      * @return array
      */
@@ -160,7 +160,7 @@ class FrontpageChartGenerator
     }
 
     /**
-     * @param  array  $data
+     * @param array $data
      *
      * @return array
      */
@@ -185,8 +185,8 @@ class FrontpageChartGenerator
     }
 
     /**
-     * @param  array  $currencyData
-     * @param  array  $monetaryData
+     * @param array $currencyData
+     * @param array $monetaryData
      *
      * @return array
      */

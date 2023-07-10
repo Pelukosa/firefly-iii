@@ -41,9 +41,9 @@ class NoBudgetRepository implements NoBudgetRepositoryInterface
     private $user;
 
     /**
-     * @param  Collection  $accounts
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return array
      */
@@ -87,9 +87,9 @@ class NoBudgetRepository implements NoBudgetRepositoryInterface
     }
 
     /**
-     * @param  Collection  $accounts
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return array
      * @deprecated
@@ -139,9 +139,9 @@ class NoBudgetRepository implements NoBudgetRepositoryInterface
     }
 
     /**
-     * @param  User|Authenticatable|null  $user
+     * @param User|Authenticatable|null $user
      */
-    public function setUser(User|Authenticatable|null $user): void
+    public function setUser(User | Authenticatable | null $user): void
     {
         if (null !== $user) {
             $this->user = $user;
@@ -152,10 +152,10 @@ class NoBudgetRepository implements NoBudgetRepositoryInterface
      * TODO this method does not include multi currency. It just counts.
      * TODO this probably also applies to the other "sumExpenses" methods.
      *
-     * @param  Carbon  $start
-     * @param  Carbon  $end
-     * @param  Collection|null  $accounts
-     * @param  TransactionCurrency|null  $currency
+     * @param Carbon                   $start
+     * @param Carbon                   $end
+     * @param Collection|null          $accounts
+     * @param TransactionCurrency|null $currency
      *
      * @return array
      */

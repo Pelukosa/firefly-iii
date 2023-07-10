@@ -42,7 +42,7 @@ class ChangesForV530a extends Migration
      */
     public function down(): void
     {
-        if(Schema::hasColumn('bills', 'order')) {
+        if (Schema::hasColumn('bills', 'order')) {
             try {
                 Schema::table(
                     'bills',
@@ -50,7 +50,7 @@ class ChangesForV530a extends Migration
                         $table->dropColumn('order');
                     }
                 );
-            } catch (QueryException|ColumnDoesNotExist $e) {
+            } catch (QueryException | ColumnDoesNotExist $e) {
                 Log::error(sprintf('Could not execute query: %s', $e->getMessage()));
                 Log::error('If the column or index already exists (see error), this is not an problem. Otherwise, please open a GitHub discussion.');
             }
@@ -64,7 +64,7 @@ class ChangesForV530a extends Migration
      */
     public function up(): void
     {
-        if(!Schema::hasColumn('bills', 'order')) {
+        if (!Schema::hasColumn('bills', 'order')) {
             try {
                 Schema::table(
                     'bills',

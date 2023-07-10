@@ -33,8 +33,8 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
-use Illuminate\View\View;
 use Illuminate\Support\Facades\Log;
+use Illuminate\View\View;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
@@ -107,7 +107,7 @@ class HomeController extends Controller
     /**
      * Send a test message to the admin.
      *
-     * @param  Request  $request
+     * @param Request $request
      *
      * @return RedirectResponse|Redirector
      */

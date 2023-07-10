@@ -40,8 +40,8 @@ class CronController extends Controller
      * This endpoint is documented at:
      * https://api-docs.firefly-iii.org/?urls.primaryName=2.0.0%20(v1)#/about/getCron
      *
-     * @param  CronRequest  $request
-     * @param  string  $token
+     * @param CronRequest $request
+     * @param string      $token
      *
      * @return JsonResponse
      */
@@ -54,6 +54,10 @@ class CronController extends Controller
         $return                           = [];
         $return['recurring_transactions'] = $this->runRecurring($config['force'], $config['date']);
         $return['auto_budgets']           = $this->runAutoBudget($config['force'], $config['date']);
+        if (true === config('cer.enabled')) {
+            $return['exchange_rates'] = $this->exchangeRatesCronJob($config['force'], $config['date']);
+        }
+        $return['bill_warnings'] = $this->billWarningCronJob($config['force'], $config['date']);
 
         return response()->json($return);
     }

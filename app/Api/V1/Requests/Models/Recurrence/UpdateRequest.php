@@ -58,8 +58,8 @@ class UpdateRequest extends FormRequest
         $fields       = [
             'title'             => ['title', 'convertString'],
             'description'       => ['description', 'convertString'],
-            'first_date'        => ['first_date', 'date'],
-            'repeat_until'      => ['repeat_until', 'date'],
+            'first_date'        => ['first_date', 'convertDateTime'],
+            'repeat_until'      => ['repeat_until', 'convertDateTime'],
             'nr_of_repetitions' => ['nr_of_repetitions', 'convertInteger'],
             'apply_rules'       => ['apply_rules', 'boolean'],
             'active'            => ['active', 'boolean'],
@@ -195,7 +195,7 @@ class UpdateRequest extends FormRequest
     /**
      * Configure the validator instance.
      *
-     * @param  Validator  $validator
+     * @param Validator $validator
      *
      * @return void
      */
@@ -205,6 +205,11 @@ class UpdateRequest extends FormRequest
             function (Validator $validator) {
                 //$this->validateOneRecurrenceTransaction($validator);
                 //$this->validateOneRepetitionUpdate($validator);
+
+
+                /** @var Recurrence $recurrence */
+                $recurrence = $this->route()->parameter('recurrence');
+                $this->validateTransactionId($recurrence, $validator);
                 $this->validateRecurrenceRepetition($validator);
                 $this->validateRepetitionMoment($validator);
                 $this->validateForeignCurrencyInformation($validator);
@@ -212,4 +217,5 @@ class UpdateRequest extends FormRequest
             }
         );
     }
+
 }

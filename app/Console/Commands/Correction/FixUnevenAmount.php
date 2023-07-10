@@ -24,10 +24,10 @@ declare(strict_types=1);
 namespace FireflyIII\Console\Commands\Correction;
 
 use DB;
+use FireflyIII\Console\Commands\ShowsFriendlyMessages;
 use FireflyIII\Models\Transaction;
 use FireflyIII\Models\TransactionJournal;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Log;
 use stdClass;
 
 /**
@@ -35,18 +35,10 @@ use stdClass;
  */
 class FixUnevenAmount extends Command
 {
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
+    use ShowsFriendlyMessages;
+
     protected $description = 'Fix journals with uneven amounts.';
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'firefly-iii:fix-uneven-amount';
+    protected $signature   = 'firefly-iii:fix-uneven-amount';
 
     /**
      * Execute the console command.
@@ -55,36 +47,46 @@ class FixUnevenAmount extends Command
      */
     public function handle(): int
     {
-        Log::debug(sprintf('Now in %s', __METHOD__));
-        $start = microtime(true);
-        $count = 0;
-        // get invalid journals
+        $count    = 0;
         $journals = DB::table('transactions')
                       ->groupBy('transaction_journal_id')
                       ->whereNull('deleted_at')
                       ->get(['transaction_journal_id', DB::raw('SUM(amount) AS the_sum')]);
         /** @var stdClass $entry */
         foreach ($journals as $entry) {
+            $sum = (string)$entry->the_sum;
+            if (!is_numeric($sum) || '' === $sum || str_contains($sum, 'e') || str_contains($sum, ',')) {
+                $message = sprintf(
+                    'Journal #%d has an invalid sum ("%s"). No sure what to do.',
+                    $entry->transaction_journal_id,
+                    $entry->the_sum
+                );
+                $this->friendlyWarning($message);
+                app('log')->warning($message);
+                $count++;
+                continue;
+            }
             if (0 !== bccomp((string)$entry->the_sum, '0')) {
-                $message = sprintf('Sum of journal #%d is %s instead of zero.', $entry->transaction_journal_id, $entry->the_sum);
-                $this->warn($message);
+                $message = sprintf(
+                    'Sum of journal #%d is %s instead of zero.',
+                    $entry->transaction_journal_id,
+                    $entry->the_sum
+                );
+                $this->friendlyWarning($message);
                 app('log')->warning($message);
                 $this->fixJournal((int)$entry->transaction_journal_id);
                 $count++;
             }
         }
         if (0 === $count) {
-            $this->info('Amount integrity OK!');
+            $this->friendlyPositive('Database amount integrity is OK');
         }
-
-        $end = round(microtime(true) - $start, 2);
-        $this->info(sprintf('Verified amount integrity in %s seconds', $end));
 
         return 0;
     }
 
     /**
-     * @param  int  $param
+     * @param int $param
      */
     private function fixJournal(int $param): void
     {
@@ -97,7 +99,7 @@ class FixUnevenAmount extends Command
         $source = $journal->transactions()->where('amount', '<', 0)->first();
 
         if (null === $source) {
-            $this->error(
+            $this->friendlyError(
                 sprintf(
                     'Journal #%d ("%s") has no source transaction. It will be deleted to maintain database consistency.',
                     $journal->id ?? 0,
@@ -117,7 +119,7 @@ class FixUnevenAmount extends Command
         $destination = $journal->transactions()->where('amount', '>', 0)->first();
 
         if (null === $destination) {
-            $this->error(
+            $this->friendlyError(
                 sprintf(
                     'Journal #%d ("%s") has no destination transaction. It will be deleted to maintain database consistency.',
                     $journal->id ?? 0,
@@ -135,6 +137,6 @@ class FixUnevenAmount extends Command
         $destination->save();
 
         $message = sprintf('Corrected amount in transaction journal #%d', $param);
-        $this->line($message);
+        $this->friendlyInfo($message);
     }
 }

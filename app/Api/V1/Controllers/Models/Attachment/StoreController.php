@@ -34,8 +34,8 @@ use FireflyIII\Transformers\AttachmentTransformer;
 use FireflyIII\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use League\Fractal\Resource\Item;
 use Illuminate\Support\Facades\Log;
+use League\Fractal\Resource\Item;
 
 /**
  * Class StoreController
@@ -71,7 +71,7 @@ class StoreController extends Controller
      *
      * Store a newly created resource in storage.
      *
-     * @param  StoreRequest  $request
+     * @param StoreRequest $request
      *
      * @return JsonResponse
      * @throws FireflyException
@@ -96,8 +96,8 @@ class StoreController extends Controller
      * Upload an attachment.
      *
      *
-     * @param  Request  $request
-     * @param  Attachment  $attachment
+     * @param Request    $request
+     * @param Attachment $attachment
      *
      * @return JsonResponse
      */

@@ -43,7 +43,7 @@ class LinkTypeRepository implements LinkTypeRepositoryInterface
     private User $user;
 
     /**
-     * @param  LinkType  $linkType
+     * @param LinkType $linkType
      *
      * @return int
      */
@@ -53,8 +53,8 @@ class LinkTypeRepository implements LinkTypeRepositoryInterface
     }
 
     /**
-     * @param  LinkType  $linkType
-     * @param  LinkType|null  $moveTo
+     * @param LinkType      $linkType
+     * @param LinkType|null $moveTo
      *
      * @return bool
      */
@@ -69,8 +69,8 @@ class LinkTypeRepository implements LinkTypeRepositoryInterface
     }
 
     /**
-     * @param  LinkType  $linkType
-     * @param  array  $data
+     * @param LinkType $linkType
+     * @param array    $data
      *
      * @return LinkType
      */
@@ -91,7 +91,7 @@ class LinkTypeRepository implements LinkTypeRepositoryInterface
     }
 
     /**
-     * @param  TransactionJournalLink  $link
+     * @param TransactionJournalLink $link
      *
      * @return bool
      * @throws Exception
@@ -107,8 +107,8 @@ class LinkTypeRepository implements LinkTypeRepositoryInterface
     /**
      * Check if link exists between journals.
      *
-     * @param  TransactionJournal  $one
-     * @param  TransactionJournal  $two
+     * @param TransactionJournal $one
+     * @param TransactionJournal $two
      *
      * @return bool
      */
@@ -124,7 +124,7 @@ class LinkTypeRepository implements LinkTypeRepositoryInterface
     /**
      * Return array of all journal ID's for this type of link.
      *
-     * @param  LinkType  $linkType
+     * @param LinkType $linkType
      *
      * @return array
      */
@@ -148,7 +148,7 @@ class LinkTypeRepository implements LinkTypeRepositoryInterface
     /**
      * Returns all the journal links (of a specific type).
      *
-     * @param  LinkType|null  $linkType
+     * @param LinkType|null $linkType
      *
      * @return Collection
      */
@@ -182,7 +182,7 @@ class LinkTypeRepository implements LinkTypeRepositoryInterface
     /**
      * Return list of existing connections.
      *
-     * @param  TransactionJournal  $journal
+     * @param TransactionJournal $journal
      *
      * @return Collection
      */
@@ -194,15 +194,15 @@ class LinkTypeRepository implements LinkTypeRepositoryInterface
 
         return $merged->filter(
             function (TransactionJournalLink $link) {
-                return (null !== $link->source && null !== $link->destination);
+                return null !== $link->source && null !== $link->destination;
             }
         );
     }
 
     /**
-     * @param  User|Authenticatable|null  $user
+     * @param User|Authenticatable|null $user
      */
-    public function setUser(User|Authenticatable|null $user): void
+    public function setUser(User | Authenticatable | null $user): void
     {
         if (null !== $user) {
             $this->user = $user;
@@ -210,7 +210,7 @@ class LinkTypeRepository implements LinkTypeRepositoryInterface
     }
 
     /**
-     * @param  array  $data
+     * @param array $data
      *
      * @return LinkType
      */
@@ -229,9 +229,9 @@ class LinkTypeRepository implements LinkTypeRepositoryInterface
     /**
      * Store link between two journals.
      *
-     * @param  array  $information
-     * @param  TransactionJournal  $inward
-     * @param  TransactionJournal  $outward
+     * @param array              $information
+     * @param TransactionJournal $inward
+     * @param TransactionJournal $outward
      *
      * @return TransactionJournalLink|null
      * @throws Exception
@@ -276,7 +276,7 @@ class LinkTypeRepository implements LinkTypeRepositoryInterface
     }
 
     /**
-     * @param  int  $linkTypeId
+     * @param int $linkTypeId
      *
      * @return LinkType|null
      */
@@ -286,7 +286,7 @@ class LinkTypeRepository implements LinkTypeRepositoryInterface
     }
 
     /**
-     * @param  string|null  $name
+     * @param string|null $name
      *
      * @return LinkType|null
      */
@@ -302,9 +302,9 @@ class LinkTypeRepository implements LinkTypeRepositoryInterface
     /**
      * See if such a link already exists (and get it).
      *
-     * @param  LinkType  $linkType
-     * @param  TransactionJournal  $inward
-     * @param  TransactionJournal  $outward
+     * @param LinkType           $linkType
+     * @param TransactionJournal $inward
+     * @param TransactionJournal $outward
      *
      * @return TransactionJournalLink|null
      */
@@ -316,8 +316,8 @@ class LinkTypeRepository implements LinkTypeRepositoryInterface
     }
 
     /**
-     * @param  TransactionJournalLink  $link
-     * @param  string  $text
+     * @param TransactionJournalLink $link
+     * @param string                 $text
      *
      * @throws Exception
      */
@@ -352,7 +352,7 @@ class LinkTypeRepository implements LinkTypeRepositoryInterface
     }
 
     /**
-     * @param  TransactionJournalLink  $link
+     * @param TransactionJournalLink $link
      *
      * @return bool
      */
@@ -369,8 +369,8 @@ class LinkTypeRepository implements LinkTypeRepositoryInterface
     /**
      * Update an existing transaction journal link.
      *
-     * @param  TransactionJournalLink  $journalLink
-     * @param  array  $data
+     * @param TransactionJournalLink $journalLink
+     * @param array                  $data
      *
      * @return TransactionJournalLink
      * @throws Exception

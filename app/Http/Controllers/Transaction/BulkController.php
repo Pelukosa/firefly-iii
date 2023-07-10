@@ -34,8 +34,8 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Collection;
-use Illuminate\View\View;
 use Illuminate\Support\Facades\Log;
+use Illuminate\View\View;
 
 /**
  * Class BulkController
@@ -70,7 +70,7 @@ class BulkController extends Controller
      *
      * TODO user wont be able to tell if the journal is part of a split.
      *
-     * @param  array  $journals
+     * @param array $journals
      *
      * @return Factory|View
      */
@@ -93,7 +93,7 @@ class BulkController extends Controller
     /**
      * Update all journals.
      *
-     * @param  BulkEditJournalRequest  $request
+     * @param BulkEditJournalRequest $request
      *
      * @return Application|RedirectResponse|Redirector
      */
@@ -135,9 +135,9 @@ class BulkController extends Controller
     }
 
     /**
-     * @param  TransactionJournal  $journal
-     * @param  bool  $ignoreUpdate
-     * @param  int  $budgetId
+     * @param TransactionJournal $journal
+     * @param bool               $ignoreUpdate
+     * @param int                $budgetId
      *
      * @return bool
      */
@@ -153,9 +153,9 @@ class BulkController extends Controller
     }
 
     /**
-     * @param  TransactionJournal  $journal
-     * @param  string  $action
-     * @param  array  $tags
+     * @param TransactionJournal $journal
+     * @param string             $action
+     * @param array              $tags
      *
      * @return bool
      */
@@ -175,9 +175,9 @@ class BulkController extends Controller
     }
 
     /**
-     * @param  TransactionJournal  $journal
-     * @param  bool  $ignoreUpdate
-     * @param  string  $category
+     * @param TransactionJournal $journal
+     * @param bool               $ignoreUpdate
+     * @param string             $category
      *
      * @return bool
      */

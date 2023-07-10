@@ -53,7 +53,7 @@ class BudgetTransformer extends AbstractTransformer
     /**
      * Transform a budget.
      *
-     * @param  Budget  $budget
+     * @param Budget $budget
      *
      * @return array
      */
@@ -78,6 +78,7 @@ class BudgetTransformer extends AbstractTransformer
         $types = [
             AutoBudget::AUTO_BUDGET_RESET    => 'reset',
             AutoBudget::AUTO_BUDGET_ROLLOVER => 'rollover',
+            AutoBudget::AUTO_BUDGET_ADJUSTED => 'adjusted',
         ];
 
         if (null !== $autoBudget) {
@@ -105,14 +106,14 @@ class BudgetTransformer extends AbstractTransformer
             'links'                     => [
                 [
                     'rel' => 'self',
-                    'uri' => '/budgets/'.$budget->id,
+                    'uri' => '/budgets/' . $budget->id,
                 ],
             ],
         ];
     }
 
     /**
-     * @param  array  $array
+     * @param array $array
      *
      * @return array
      */

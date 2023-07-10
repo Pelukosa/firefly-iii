@@ -70,7 +70,7 @@ class CreateRecurringTransactions implements ShouldQueue
      * Create a new job instance.
      *
      *
-     * @param  Carbon|null  $date
+     * @param Carbon|null $date
      */
     public function __construct(?Carbon $date)
     {
@@ -160,7 +160,7 @@ class CreateRecurringTransactions implements ShouldQueue
     }
 
     /**
-     * @param  Collection  $recurrences
+     * @param Collection $recurrences
      *
      * @return Collection
      */
@@ -176,7 +176,7 @@ class CreateRecurringTransactions implements ShouldQueue
     /**
      * Is the info in the recurrence valid?
      *
-     * @param  Recurrence  $recurrence
+     * @param Recurrence $recurrence
      *
      * @return bool
      *
@@ -241,7 +241,7 @@ class CreateRecurringTransactions implements ShouldQueue
     /**
      * Return recurring transaction is active.
      *
-     * @param  Recurrence  $recurrence
+     * @param Recurrence $recurrence
      *
      * @return bool
      */
@@ -253,7 +253,7 @@ class CreateRecurringTransactions implements ShouldQueue
     /**
      * Return true if the $repeat_until date is in the past.
      *
-     * @param  Recurrence  $recurrence
+     * @param Recurrence $recurrence
      *
      * @return bool
      */
@@ -266,7 +266,7 @@ class CreateRecurringTransactions implements ShouldQueue
     /**
      * Has the recurrence started yet?
      *
-     * @param  Recurrence  $recurrence
+     * @param Recurrence $recurrence
      *
      * @return bool
      */
@@ -281,7 +281,7 @@ class CreateRecurringTransactions implements ShouldQueue
     /**
      * Get the start date of a recurrence.
      *
-     * @param  Recurrence  $recurrence
+     * @param Recurrence $recurrence
      *
      * @return Carbon
      */
@@ -298,7 +298,7 @@ class CreateRecurringTransactions implements ShouldQueue
     /**
      * Has the recurrence fired today.
      *
-     * @param  Recurrence  $recurrence
+     * @param Recurrence $recurrence
      *
      * @return bool
      */
@@ -311,7 +311,7 @@ class CreateRecurringTransactions implements ShouldQueue
      * Separate method that will loop all repetitions and do something with it. Will return
      * all created transaction journals.
      *
-     * @param  Recurrence  $recurrence
+     * @param Recurrence $recurrence
      *
      * @return Collection
      * @throws DuplicateTransactionException
@@ -349,9 +349,9 @@ class CreateRecurringTransactions implements ShouldQueue
     /**
      * Check if the occurences should be executed.
      *
-     * @param  Recurrence  $recurrence
-     * @param  RecurrenceRepetition  $repetition
-     * @param  array  $occurrences
+     * @param Recurrence           $recurrence
+     * @param RecurrenceRepetition $repetition
+     * @param array                $occurrences
      *
      * @return Collection
      * @throws DuplicateTransactionException
@@ -372,9 +372,9 @@ class CreateRecurringTransactions implements ShouldQueue
     }
 
     /**
-     * @param  Recurrence  $recurrence
-     * @param  RecurrenceRepetition  $repetition
-     * @param  Carbon  $date
+     * @param Recurrence           $recurrence
+     * @param RecurrenceRepetition $repetition
+     * @param Carbon               $date
      *
      * @return TransactionGroup|null
      * @throws DuplicateTransactionException
@@ -447,9 +447,9 @@ class CreateRecurringTransactions implements ShouldQueue
     /**
      * Get transaction information from a recurring transaction.
      *
-     * @param  Recurrence  $recurrence
-     * @param  RecurrenceRepetition  $repetition
-     * @param  Carbon  $date
+     * @param Recurrence           $recurrence
+     * @param RecurrenceRepetition $repetition
+     * @param Carbon               $date
      *
      * @return array
      *
@@ -503,7 +503,7 @@ class CreateRecurringTransactions implements ShouldQueue
     }
 
     /**
-     * @param  Carbon  $date
+     * @param Carbon $date
      */
     public function setDate(Carbon $date): void
     {
@@ -513,7 +513,7 @@ class CreateRecurringTransactions implements ShouldQueue
     }
 
     /**
-     * @param  bool  $force
+     * @param bool $force
      */
     public function setForce(bool $force): void
     {
@@ -521,7 +521,7 @@ class CreateRecurringTransactions implements ShouldQueue
     }
 
     /**
-     * @param  Collection  $recurrences
+     * @param Collection $recurrences
      */
     public function setRecurrences(Collection $recurrences): void
     {

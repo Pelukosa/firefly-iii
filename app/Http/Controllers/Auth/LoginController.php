@@ -38,8 +38,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
@@ -141,7 +141,7 @@ class LoginController extends Controller
     /**
      * Get the failed login response instance.
      *
-     * @param  Request  $request
+     * @param Request $request
      *
      * @return void
      *
@@ -162,7 +162,7 @@ class LoginController extends Controller
     /**
      * Log the user out of the application.
      *
-     * @param  Request  $request
+     * @param Request $request
      *
      * @return RedirectResponse|Redirector|Response
      */
@@ -199,7 +199,7 @@ class LoginController extends Controller
     /**
      * Show the application's login form.
      *
-     * @param  Request  $request
+     * @param Request $request
      *
      * @return Factory|Application|View|Redirector|RedirectResponse
      * @throws FireflyException

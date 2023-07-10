@@ -7,7 +7,6 @@ namespace FireflyIII\Console\Commands\Correction;
 use FireflyIII\Models\Account;
 use FireflyIII\Services\Internal\Support\CreditRecalculateService;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Log;
 
 /**
  * Class CorrectionSkeleton
@@ -15,18 +14,8 @@ use Illuminate\Support\Facades\Log;
  */
 class TriggerCreditCalculation extends Command
 {
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Triggers the credit recalculation service for liabilities.';
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'firefly-iii:trigger-credit-recalculation';
+    protected $signature   = 'firefly-iii:trigger-credit-recalculation';
 
     /**
      * Execute the console command.
@@ -36,6 +25,7 @@ class TriggerCreditCalculation extends Command
     public function handle(): int
     {
         $this->processAccounts();
+
         return 0;
     }
 
@@ -45,13 +35,13 @@ class TriggerCreditCalculation extends Command
                            ->whereIn('account_types.type', config('firefly.valid_liabilities'))
                            ->get(['accounts.*']);
         foreach ($accounts as $account) {
-            Log::debug(sprintf('Processing account #%d ("%s")', $account->id, $account->name));
             $this->processAccount($account);
         }
     }
 
     /**
-     * @param  Account  $account
+     * @param Account $account
+     *
      * @return void
      */
     private function processAccount(Account $account): void

@@ -32,7 +32,7 @@ use FireflyIII\Models\ObjectGroup;
 trait CreatesObjectGroups
 {
     /**
-     * @param  int  $groupId
+     * @param int $groupId
      *
      * @return ObjectGroup|null
      */
@@ -42,7 +42,7 @@ trait CreatesObjectGroups
     }
 
     /**
-     * @param  string  $title
+     * @param string $title
      *
      * @return ObjectGroup|null
      */
@@ -72,7 +72,7 @@ trait CreatesObjectGroups
     }
 
     /**
-     * @param  string  $title
+     * @param string $title
      *
      * @return bool
      */
@@ -82,7 +82,7 @@ trait CreatesObjectGroups
     }
 
     /**
-     * @param  string  $title
+     * @param string $title
      *
      * @return null|ObjectGroup
      */

@@ -44,7 +44,7 @@ class UpdatePiggybank implements ActionInterface
     /**
      * TriggerInterface constructor.
      *
-     * @param  RuleAction  $action
+     * @param RuleAction $action
      */
     public function __construct(RuleAction $action)
     {
@@ -64,12 +64,6 @@ class UpdatePiggybank implements ActionInterface
         $journalObj                       = $user->transactionJournals()->find($journal['transaction_journal_id']);
         $type                             = TransactionType::find((int)$journalObj->transaction_type_id);
         $journal['transaction_type_type'] = $type->type;
-
-        if (TransactionType::TRANSFER !== $journal['transaction_type_type']) {
-            Log::info(sprintf('Journal #%d is a "%s" so skip this action.', $journal['transaction_journal_id'], $journal['transaction_type_type']));
-
-            return false;
-        }
 
         $piggyBank = $this->findPiggyBank($user);
         if (null === $piggyBank) {
@@ -141,7 +135,7 @@ class UpdatePiggybank implements ActionInterface
     }
 
     /**
-     * @param  User  $user
+     * @param User $user
      *
      * @return PiggyBank|null
      */
@@ -151,9 +145,9 @@ class UpdatePiggybank implements ActionInterface
     }
 
     /**
-     * @param  PiggyBank  $piggyBank
-     * @param  TransactionJournal  $journal
-     * @param  string  $amount
+     * @param PiggyBank          $piggyBank
+     * @param TransactionJournal $journal
+     * @param string             $amount
      * @return void
      */
     private function removeAmount(PiggyBank $piggyBank, TransactionJournal $journal, string $amount): void
@@ -188,9 +182,9 @@ class UpdatePiggybank implements ActionInterface
     }
 
     /**
-     * @param  PiggyBank  $piggyBank
-     * @param  TransactionJournal  $journal
-     * @param  string  $amount
+     * @param PiggyBank          $piggyBank
+     * @param TransactionJournal $journal
+     * @param string             $amount
      * @return void
      */
     private function addAmount(PiggyBank $piggyBank, TransactionJournal $journal, string $amount): void

@@ -38,9 +38,9 @@ use FireflyIII\User;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use JsonException;
-use Illuminate\Support\Facades\Log;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
@@ -77,9 +77,9 @@ class ReconcileController extends Controller
     /**
      * Reconciliation overview.
      *
-     * @param  Account  $account
-     * @param  Carbon|null  $start
-     * @param  Carbon|null  $end
+     * @param Account     $account
+     * @param Carbon|null $start
+     * @param Carbon|null $end
      *
      * @return Factory|RedirectResponse|Redirector|View
      * @throws FireflyException
@@ -154,10 +154,10 @@ class ReconcileController extends Controller
     /**
      * Submit a new reconciliation.
      *
-     * @param  ReconciliationStoreRequest  $request
-     * @param  Account  $account
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param ReconciliationStoreRequest $request
+     * @param Account                    $account
+     * @param Carbon                     $start
+     * @param Carbon                     $end
      *
      * @return RedirectResponse|Redirector
      * @throws DuplicateTransactionException
@@ -202,10 +202,10 @@ class ReconcileController extends Controller
     /**
      * Creates a reconciliation group.
      *
-     * @param  Account  $account
-     * @param  Carbon  $start
-     * @param  Carbon  $end
-     * @param  string  $difference
+     * @param Account $account
+     * @param Carbon  $start
+     * @param Carbon  $end
+     * @param string  $difference
      *
      * @return RedirectResponse|Redirector|string
      * @throws DuplicateTransactionException

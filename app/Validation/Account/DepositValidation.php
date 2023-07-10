@@ -33,7 +33,7 @@ use Illuminate\Support\Facades\Log;
 trait DepositValidation
 {
     /**
-     * @param  array  $array
+     * @param array $array
      *
      * @return bool
      */
@@ -42,12 +42,13 @@ trait DepositValidation
         $result      = null;
         $accountId   = array_key_exists('id', $array) ? $array['id'] : null;
         $accountName = array_key_exists('name', $array) ? $array['name'] : null;
+        $accountIban = array_key_exists('iban', $array) ? $array['iban'] : null;
 
         Log::debug('Now in validateDepositDestination', $array);
 
         // source can be any of the following types.
         $validTypes = $this->combinations[$this->transactionType][$this->source->accountType->type] ?? [];
-        if (null === $accountId && null === $accountName && false === $this->canCreateTypes($validTypes)) {
+        if (null === $accountId && null === $accountName && null === $accountIban && false === $this->canCreateTypes($validTypes)) {
             // if both values are NULL we return false,
             // because the destination of a deposit can't be created.
             $this->destError = (string)trans('validation.deposit_dest_need_data');
@@ -71,7 +72,7 @@ trait DepositValidation
             if (null !== $search) {
                 Log::debug(sprintf('findExistingAccount() returned #%d ("%s"), so the result is true.', $search->id, $search->name));
                 $this->setDestination($search);
-                $result            = true;
+                $result = true;
             }
         }
         Log::debug(sprintf('validateDepositDestination will return %s', var_export($result, true)));
@@ -80,22 +81,22 @@ trait DepositValidation
     }
 
     /**
-     * @param  array  $accountTypes
+     * @param array $accountTypes
      *
      * @return bool
      */
     abstract protected function canCreateTypes(array $accountTypes): bool;
 
     /**
-     * @param  array  $validTypes
-     * @param  array  $data
+     * @param array $validTypes
+     * @param array $data
      *
      * @return Account|null
      */
     abstract protected function findExistingAccount(array $validTypes, array $data): ?Account;
 
     /**
-     * @param  array  $array
+     * @param array $array
      *
      * @return bool
      */
@@ -121,6 +122,16 @@ trait DepositValidation
             $result            = false;
         }
 
+        // if there is an iban, it can only be in use by a revenue account or we will fail.
+        if(null !== $accountIban && '' !== $accountIban) {
+            app('log')->debug('Check if there is not already an account with this IBAN');
+            $existing = $this->findExistingAccount([AccountType::ASSET, AccountType::LOAN, AccountType::DEBT, AccountType::MORTGAGE], ['iban' => $accountIban]);
+            if(null !== $existing) {
+                $this->destError = (string)trans('validation.deposit_src_iban_exists');
+                return false;
+            }
+        }
+
         // if the user submits an ID, but that ID is not of the correct type,
         // return false.
         if (null !== $accountId) {
@@ -132,7 +143,7 @@ trait DepositValidation
             if (null !== $search && in_array($search->accountType->type, $validTypes, true)) {
                 Log::debug('ID result is not null and seems valid, save as source account.');
                 $this->setSource($search);
-                $result       = true;
+                $result = true;
             }
         }
 
@@ -146,7 +157,7 @@ trait DepositValidation
             if (null !== $search && in_array($search->accountType->type, $validTypes, true)) {
                 Log::debug('IBAN result is not null and seems valid, save as source account.');
                 $this->setSource($search);
-                $result       = true;
+                $result = true;
             }
         }
 
@@ -162,7 +173,7 @@ trait DepositValidation
             if (null !== $search && in_array($search->accountType->type, $validTypes, true)) {
                 Log::debug('Number result is not null and seems valid, save as source account.');
                 $this->setSource($search);
-                $result       = true;
+                $result = true;
             }
         }
 

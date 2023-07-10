@@ -23,6 +23,7 @@ declare(strict_types=1);
 
 namespace FireflyIII\Console\Commands\Correction;
 
+use FireflyIII\Console\Commands\ShowsFriendlyMessages;
 use FireflyIII\Repositories\Account\AccountRepositoryInterface;
 use FireflyIII\User;
 use Illuminate\Console\Command;
@@ -32,18 +33,10 @@ use Illuminate\Console\Command;
  */
 class FixAccountOrder extends Command
 {
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
+    use ShowsFriendlyMessages;
+
     protected $description = 'Make sure account order is correct.';
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'firefly-iii:fix-account-order';
+    protected $signature   = 'firefly-iii:fix-account-order';
 
     private AccountRepositoryInterface $repository;
 
@@ -55,7 +48,6 @@ class FixAccountOrder extends Command
     public function handle(): int
     {
         $this->stupidLaravel();
-        $start = microtime(true);
 
         $users = User::get();
         foreach ($users as $user) {
@@ -63,8 +55,7 @@ class FixAccountOrder extends Command
             $this->repository->resetAccountOrder();
         }
 
-        $end = round(microtime(true) - $start, 2);
-        $this->info(sprintf('Verifying account order took %s seconds', $end));
+        $this->friendlyPositive('All accounts are ordered correctly');
 
         return 0;
     }

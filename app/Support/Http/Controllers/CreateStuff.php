@@ -28,8 +28,8 @@ use FireflyIII\Http\Requests\NewUserFormRequest;
 use FireflyIII\Models\TransactionCurrency;
 use FireflyIII\Repositories\Account\AccountRepositoryInterface;
 use FireflyIII\User;
-use Laravel\Passport\Passport;
 use Illuminate\Support\Facades\Log;
+use Laravel\Passport\Passport;
 use phpseclib3\Crypt\RSA;
 
 /**
@@ -41,8 +41,8 @@ trait CreateStuff
     /**
      * Creates an asset account.
      *
-     * @param  NewUserFormRequest  $request
-     * @param  TransactionCurrency  $currency
+     * @param NewUserFormRequest  $request
+     * @param TransactionCurrency $currency
      *
      * @return bool
      */
@@ -71,8 +71,8 @@ trait CreateStuff
     /**
      * Creates a cash wallet.
      *
-     * @param  TransactionCurrency  $currency
-     * @param  string  $language
+     * @param TransactionCurrency $currency
+     * @param string              $language
      *
      * @return bool
      */
@@ -123,9 +123,9 @@ trait CreateStuff
     /**
      * Create a savings account.
      *
-     * @param  NewUserFormRequest  $request
-     * @param  TransactionCurrency  $currency
-     * @param  string  $language
+     * @param NewUserFormRequest  $request
+     * @param TransactionCurrency $currency
+     * @param string              $language
      *
      * @return bool
      */
@@ -153,7 +153,7 @@ trait CreateStuff
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param array $data
      *
      * @return User
      */

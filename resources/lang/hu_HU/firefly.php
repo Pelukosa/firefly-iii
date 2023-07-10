@@ -1706,6 +1706,7 @@ return [
     'auto_budget_none'                          => 'Nincs auto-költségkeret',
     'auto_budget_reset'                         => 'Fix összeg beállítása minden időszakra',
     'auto_budget_rollover'                      => 'Összeg hozzáadása minden időszakhoz',
+    'auto_budget_adjusted'                      => 'Add an amount every period and correct for overspending',
     'auto_budget_period_daily'                  => 'Napi',
     'auto_budget_period_weekly'                 => 'Heti',
     'auto_budget_period_monthly'                => 'Havi',
@@ -1715,6 +1716,7 @@ return [
     'auto_budget_help'                          => 'Erről a funkcióról további információ a súgóban található. A súgó a jobb felső (?) ikonra kattintva érhető el.',
     'auto_budget_reset_icon'                    => 'A költségvetés periodikusan újraszámlálódik',
     'auto_budget_rollover_icon'                 => 'A költségvetési összeg periodikusan növekszik',
+    'auto_budget_adjusted_icon'                 => 'The budget amount will increase periodically and will correct for overspending',
     'remove_budgeted_amount'                    => 'Remove budgeted amount in :currency',
 
     // bills:
@@ -2292,6 +2294,7 @@ return [
     'budgeted'                                  => 'Betervezett',
     'period'                                    => 'Időszak',
     'balance'                                   => 'Egyenleg',
+    'in_out_period'                             => 'In + out this period',
     'sum'                                       => 'Összesen',
     'summary'                                   => 'Összefoglaló',
     'average'                                   => 'Átlag',
@@ -2692,6 +2695,9 @@ return [
     'ale_action_log_add'                 => 'Added :amount to piggy bank ":name"',
     'ale_action_log_remove'              => 'Removed :amount from piggy bank ":name"',
     'ale_action_clear_budget'            => 'Removed from budget',
+    'ale_action_update_group_title'      => 'Updated transaction group title',
+    'ale_action_update_date'             => 'Updated transaction date',
+    'ale_action_update_order'            => 'Updated transaction order',
     'ale_action_clear_category'          => 'Removed from category',
     'ale_action_clear_notes'             => 'Removed notes',
     'ale_action_clear_tag'               => 'Cleared tag',

@@ -23,6 +23,7 @@ declare(strict_types=1);
 
 namespace FireflyIII\Console\Commands\Upgrade;
 
+use FireflyIII\Console\Commands\ShowsFriendlyMessages;
 use FireflyIII\Exceptions\FireflyException;
 use FireflyIII\Models\BudgetLimit;
 use Illuminate\Console\Command;
@@ -34,6 +35,8 @@ use Psr\Container\NotFoundExceptionInterface;
  */
 class BudgetLimitCurrency extends Command
 {
+    use ShowsFriendlyMessages;
+
     public const CONFIG_NAME = '480_bl_currency';
     /**
      * The console command description.
@@ -58,10 +61,8 @@ class BudgetLimitCurrency extends Command
      */
     public function handle(): int
     {
-        $start = microtime(true);
-
         if ($this->isExecuted() && true !== $this->option('force')) {
-            $this->warn('This command has already been executed.');
+            $this->friendlyInfo('This command has already been executed.');
 
             return 0;
         }
@@ -79,7 +80,7 @@ class BudgetLimitCurrency extends Command
                         $currency                             = app('amount')->getDefaultCurrencyByUser($user);
                         $budgetLimit->transaction_currency_id = $currency->id;
                         $budgetLimit->save();
-                        $this->line(
+                        $this->friendlyInfo(
                             sprintf('Budget limit #%d (part of budget "%s") now has a currency setting (%s).', $budgetLimit->id, $budget->name, $currency->name)
                         );
                         $count++;
@@ -88,11 +89,8 @@ class BudgetLimitCurrency extends Command
             }
         }
         if (0 === $count) {
-            $this->info('All budget limits are correct.');
+            $this->friendlyPositive('All budget limits are OK.');
         }
-        $end = round(microtime(true) - $start, 2);
-        $this->info(sprintf('Verified budget limits in %s seconds.', $end));
-
         $this->markAsExecuted();
 
         return 0;

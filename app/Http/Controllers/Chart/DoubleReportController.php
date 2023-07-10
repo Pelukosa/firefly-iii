@@ -66,10 +66,10 @@ class DoubleReportController extends Controller
     }
 
     /**
-     * @param  Collection  $accounts
-     * @param  Collection  $others
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Collection $others
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return JsonResponse
      */
@@ -101,10 +101,10 @@ class DoubleReportController extends Controller
     }
 
     /**
-     * @param  Collection  $accounts
-     * @param  Collection  $others
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Collection $others
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return JsonResponse
      */
@@ -136,10 +136,10 @@ class DoubleReportController extends Controller
     }
 
     /**
-     * @param  Collection  $accounts
-     * @param  Collection  $others
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Collection $others
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return JsonResponse
      */
@@ -171,10 +171,10 @@ class DoubleReportController extends Controller
     }
 
     /**
-     * @param  Collection  $accounts
-     * @param  Account  $account
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Account    $account
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return JsonResponse
      *
@@ -250,10 +250,10 @@ class DoubleReportController extends Controller
     /**
      * TODO duplicate function
      *
-     * @param  Collection  $accounts
-     * @param  int  $id
-     * @param  string  $name
-     * @param  null|string  $iban
+     * @param Collection  $accounts
+     * @param int         $id
+     * @param string      $name
+     * @param null|string $iban
      *
      * @return string
      */
@@ -275,8 +275,8 @@ class DoubleReportController extends Controller
     /**
      * TODO duplicate function
      *
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Carbon $start
+     * @param Carbon $end
      *
      * @return array
      */
@@ -298,10 +298,10 @@ class DoubleReportController extends Controller
     }
 
     /**
-     * @param  Collection  $accounts
-     * @param  Collection  $others
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Collection $others
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return JsonResponse
      */
@@ -358,10 +358,10 @@ class DoubleReportController extends Controller
     }
 
     /**
-     * @param  Collection  $accounts
-     * @param  Collection  $others
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Collection $others
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return JsonResponse
      */

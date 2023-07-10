@@ -61,6 +61,10 @@ return [
     'invalid_selection'              => 'Ongeldige selectie.',
     'belongs_user'                   => 'Deze waarde is ongeldig voor dit veld.',
     'at_least_one_transaction'       => 'Er is op zijn minst één transactie nodig.',
+    'recurring_transaction_id'       => 'Need at least one transaction.',
+    'need_id_to_match'               => 'You need to submit this entry with an ID for the API to be able to match it.',
+    'too_many_unmatched'             => 'Too many submitted transactions cannot be matched to their respective database entries. Make sure existing entries have a valid ID.',
+    'id_does_not_match'              => 'Submitted ID #:id does not match expected ID. Make sure it matches or omit the field.',
     'at_least_one_repetition'        => 'Er is op zijn minst één herhaling nodig.',
     'require_repeat_until'           => 'Je moet een aantal herhalingen opgeven, of een einddatum (repeat_until). Niet beide.',
     'require_currency_info'          => 'De inhoud van dit veld is ongeldig zonder valutagegevens.',
@@ -230,17 +234,20 @@ return [
 
     // validation of accounts:
     'withdrawal_source_need_data' => 'Om door te gaan moet een geldige bronrekening ID en/of geldige bronrekeningnaam worden gevonden.',
-    'withdrawal_source_bad_data'  => 'Kan geen geldige bronrekening vinden bij het zoeken naar ID ":id" of naam ":name".',
-    'withdrawal_dest_need_data'   => 'Om door te gaan moet een geldig bronrekening ID en/of geldige bronrekeningnaam worden gevonden.',
+    'withdrawal_source_bad_data'  => '[a] Could not find a valid source account when searching for ID ":id" or name ":name".',
+    'withdrawal_dest_need_data'   => '[a] Need to get a valid destination account ID and/or valid destination account name to continue.',
     'withdrawal_dest_bad_data'    => 'Kan geen geldige doelrekening vinden bij het zoeken naar ID ":id" of naam ":name".',
+
+    'withdrawal_dest_iban_exists' => 'This destination account IBAN is already in use by an asset account or a liability and cannot be used as a withdrawal destination.',
+    'deposit_src_iban_exists'     => 'This source account IBAN is already in use by an asset account or a liability and cannot be used as a deposit source.',
 
     'reconciliation_source_bad_data' => 'Kan geen geldige afstemmingsrekening vinden bij het zoeken naar ID ":id" of naam ":name".',
 
-    'generic_source_bad_data' => 'Kan geen geldige bronrekening vinden bij het zoeken naar ID ":id" of naam ":name".',
+    'generic_source_bad_data' => '[e] Could not find a valid source account when searching for ID ":id" or name ":name".',
 
     'deposit_source_need_data' => 'Om door te gaan moet een geldige bronrekening ID en/of geldige bronrekeningnaam worden gevonden.',
-    'deposit_source_bad_data'  => 'Kan geen geldige bronrekening vinden bij het zoeken naar ID ":id" of naam ":name".',
-    'deposit_dest_need_data'   => 'Om door te gaan moet een geldig doelrekening ID en/of geldige doelrekeningnaam worden gevonden.',
+    'deposit_source_bad_data'  => '[b] Could not find a valid source account when searching for ID ":id" or name ":name".',
+    'deposit_dest_need_data'   => '[b] Need to get a valid destination account ID and/or valid destination account name to continue.',
     'deposit_dest_bad_data'    => 'Kan geen geldige doelrekening vinden bij het zoeken naar ID ":id" of naam ":name".',
     'deposit_dest_wrong_type'  => 'De ingevoerde doelrekening is niet van het juiste type.',
 
@@ -257,22 +264,22 @@ return [
 
 
     'transfer_source_need_data' => 'Om door te gaan moet een geldig bronaccount ID en/of geldige bronaccountnaam worden gevonden.',
-    'transfer_source_bad_data'  => 'Kan geen geldige bronrekening vinden bij het zoeken naar ID ":id" of naam ":name".',
-    'transfer_dest_need_data'   => 'Om door te gaan moet een geldig doelrekening ID en/of geldige doelrekeningnaam worden gevonden.',
+    'transfer_source_bad_data'  => '[c] Could not find a valid source account when searching for ID ":id" or name ":name".',
+    'transfer_dest_need_data'   => '[c] Need to get a valid destination account ID and/or valid destination account name to continue.',
     'transfer_dest_bad_data'    => 'Kan geen geldige doelrekening vinden bij het zoeken naar ID ":id" of naam ":name".',
     'need_id_in_edit'           => 'Elke split moet een transaction_journal_id hebben (een geldig ID of 0).',
 
     'ob_source_need_data'           => 'Om door te gaan moet er een geldig bronrekening ID en/of geldige bronrekeningnaam worden gevonden.',
     'lc_source_need_data'           => 'Er moet een geldig bronrekening-ID zijn om door te gaan.',
-    'ob_dest_need_data'             => 'Om door te gaan moet een geldig doelrekening ID en/of geldige doelrekeningnaam worden gevonden.',
+    'ob_dest_need_data'             => '[d] Need to get a valid destination account ID and/or valid destination account name to continue.',
     'ob_dest_bad_data'              => 'Kan geen geldige doelrekening vinden bij het zoeken naar ID ":id" of naam ":name".',
     'reconciliation_either_account' => 'Om een afstemmingstransactie in te dienen moet je een bron- of doelrekening insturen. Niet beide, niet geen beide.',
 
     'generic_invalid_source'      => 'Je kan deze rekening niet gebruiken als bronrekening.',
     'generic_invalid_destination' => 'Je kan deze rekening niet gebruiken als doelrekening.',
 
-    'generic_no_source'      => 'You must submit source account information or submit a transaction journal ID.',
-    'generic_no_destination' => 'You must submit destination account information or submit a transaction journal ID.',
+    'generic_no_source'      => 'Je moet bronrekeninggegevens submitten of een transactie journal ID meegeven.',
+    'generic_no_destination' => 'Je moet doelrekeninggegevens submitten of een transactie journal ID meegeven.',
 
     'gte.numeric' => ':attribute moet groter of gelijk zijn aan :value.',
     'gt.numeric'  => ':attribute moet groter zijn dan :value.',

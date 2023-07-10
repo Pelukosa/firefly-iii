@@ -74,11 +74,11 @@ class OperatorQuerySearch implements SearchInterface
     private int                         $limit;
     private Collection                  $operators;
     private int                         $page;
-    private array                  $prohibitedWords;
-    private float                  $startTime;
-    private TagRepositoryInterface $tagRepository;
-    private array                  $validOperators;
-    private array                  $words;
+    private array                       $prohibitedWords;
+    private float                       $startTime;
+    private TagRepositoryInterface      $tagRepository;
+    private array                       $validOperators;
+    private array                       $words;
 
     /**
      * OperatorQuerySearch constructor.
@@ -138,10 +138,11 @@ class OperatorQuerySearch implements SearchInterface
 
     /**
      * @inheritDoc
+     * @throws FireflyException
      */
     public function hasModifiers(): bool
     {
-        die(__METHOD__);
+        throw new FireflyException('Not implemented');
     }
 
     /**
@@ -154,7 +155,7 @@ class OperatorQuerySearch implements SearchInterface
         $parser = new QueryParser();
         try {
             $query1 = $parser->parse($query);
-        } catch (TypeError|LogicException $e) {
+        } catch (TypeError | LogicException $e) {
             Log::error($e->getMessage());
             Log::error(sprintf('Could not parse search: "%s".', $query));
             throw new FireflyException(sprintf('Invalid search value "%s". See the logs.', e($query)), 0, $e);
@@ -170,7 +171,7 @@ class OperatorQuerySearch implements SearchInterface
     }
 
     /**
-     * @param  Node  $searchNode
+     * @param Node $searchNode
      *
      * @throws FireflyException
      */
@@ -1317,7 +1318,7 @@ class OperatorQuerySearch implements SearchInterface
     }
 
     /**
-     * @param  string  $operator
+     * @param string $operator
      *
      * @return string
      * @throws FireflyException
@@ -1353,10 +1354,10 @@ class OperatorQuerySearch implements SearchInterface
      * searchDirection: 1 = source (default), 2 = destination, 3 = both
      * stringPosition: 1 = start (default), 2 = end, 3 = contains, 4 = is
      *
-     * @param  string  $value
-     * @param  int  $searchDirection
-     * @param  int  $stringPosition
-     * @param  bool  $prohibited
+     * @param string $value
+     * @param int    $searchDirection
+     * @param int    $stringPosition
+     * @param bool   $prohibited
      */
     private function searchAccount(string $value, int $searchDirection, int $stringPosition, bool $prohibited = false): void
     {
@@ -1397,7 +1398,7 @@ class OperatorQuerySearch implements SearchInterface
             $stringMethod = 'str_contains';
         }
         if (4 === $stringPosition) {
-            $stringMethod = 'str_is_equal';
+            $stringMethod = 'stringIsEqual';
         }
 
         // get accounts:
@@ -1429,10 +1430,10 @@ class OperatorQuerySearch implements SearchInterface
      * searchDirection: 1 = source (default), 2 = destination, 3 = both
      * stringPosition: 1 = start (default), 2 = end, 3 = contains, 4 = is
      *
-     * @param  string  $value
-     * @param  int  $searchDirection
-     * @param  int  $stringPosition
-     * @param  bool  $prohibited
+     * @param string $value
+     * @param int    $searchDirection
+     * @param int    $stringPosition
+     * @param bool   $prohibited
      */
     private function searchAccountNr(string $value, int $searchDirection, int $stringPosition, bool $prohibited = false): void
     {
@@ -1475,7 +1476,7 @@ class OperatorQuerySearch implements SearchInterface
             $stringMethod = 'str_contains';
         }
         if (4 === $stringPosition) {
-            $stringMethod = 'str_is_equal';
+            $stringMethod = 'stringIsEqual';
         }
 
         // search for accounts:
@@ -1524,7 +1525,7 @@ class OperatorQuerySearch implements SearchInterface
     }
 
     /**
-     * @param  string  $value
+     * @param string $value
      *
      * @return TransactionCurrency|null
      */
@@ -1544,7 +1545,7 @@ class OperatorQuerySearch implements SearchInterface
     }
 
     /**
-     * @param  string  $value
+     * @param string $value
      *
      * @return array
      * @throws FireflyException
@@ -1569,7 +1570,7 @@ class OperatorQuerySearch implements SearchInterface
     private function setExactDateParams(array $range, bool $prohibited = false): void
     {
         /**
-         * @var string $key
+         * @var string        $key
          * @var Carbon|string $value
          */
         foreach ($range as $key => $value) {
@@ -1627,7 +1628,7 @@ class OperatorQuerySearch implements SearchInterface
     private function setDateBeforeParams(array $range, bool $prohibited = false): void
     {
         /**
-         * @var string $key
+         * @var string        $key
          * @var Carbon|string $value
          */
         foreach ($range as $key => $value) {
@@ -1665,7 +1666,7 @@ class OperatorQuerySearch implements SearchInterface
     private function setDateAfterParams(array $range, bool $prohibited = false)
     {
         /**
-         * @var string $key
+         * @var string        $key
          * @var Carbon|string $value
          */
         foreach ($range as $key => $value) {
@@ -1703,7 +1704,7 @@ class OperatorQuerySearch implements SearchInterface
     {
         Log::debug('Now in setExactMetaDateParams()');
         /**
-         * @var string $key
+         * @var string        $key
          * @var Carbon|string $value
          */
         foreach ($range as $key => $value) {
@@ -1761,7 +1762,7 @@ class OperatorQuerySearch implements SearchInterface
     private function setMetaDateBeforeParams(string $field, array $range, bool $prohibited = false): void
     {
         /**
-         * @var string $key
+         * @var string        $key
          * @var Carbon|string $value
          */
         foreach ($range as $key => $value) {
@@ -1798,7 +1799,7 @@ class OperatorQuerySearch implements SearchInterface
     private function setMetaDateAfterParams(string $field, array $range, bool $prohibited = false): void
     {
         /**
-         * @var string $key
+         * @var string        $key
          * @var Carbon|string $value
          */
         foreach ($range as $key => $value) {
@@ -1835,7 +1836,7 @@ class OperatorQuerySearch implements SearchInterface
     private function setExactObjectDateParams(string $field, array $range, bool $prohibited = false): void
     {
         /**
-         * @var string $key
+         * @var string        $key
          * @var Carbon|string $value
          */
         foreach ($range as $key => $value) {
@@ -1894,7 +1895,7 @@ class OperatorQuerySearch implements SearchInterface
     private function setObjectDateBeforeParams(string $field, array $range, bool $prohibited = false): void
     {
         /**
-         * @var string $key
+         * @var string        $key
          * @var Carbon|string $value
          */
         foreach ($range as $key => $value) {
@@ -1932,7 +1933,7 @@ class OperatorQuerySearch implements SearchInterface
     private function setObjectDateAfterParams(string $field, array $range, bool $prohibited = false): void
     {
         /**
-         * @var string $key
+         * @var string        $key
          * @var Carbon|string $value
          */
         foreach ($range as $key => $value) {
@@ -1992,7 +1993,7 @@ class OperatorQuerySearch implements SearchInterface
     }
 
     /**
-     * @param  Carbon  $date
+     * @param Carbon $date
      */
     public function setDate(Carbon $date): void
     {
@@ -2026,7 +2027,7 @@ class OperatorQuerySearch implements SearchInterface
     }
 
     /**
-     * @param  int  $limit
+     * @param int $limit
      */
     public function setLimit(int $limit): void
     {

@@ -23,6 +23,7 @@ declare(strict_types=1);
 
 namespace FireflyIII\Console\Commands\Correction;
 
+use FireflyIII\Console\Commands\ShowsFriendlyMessages;
 use FireflyIII\Models\LinkType;
 use Illuminate\Console\Command;
 
@@ -31,6 +32,8 @@ use Illuminate\Console\Command;
  */
 class CreateLinkTypes extends Command
 {
+    use ShowsFriendlyMessages;
+
     /**
      * The console command description.
      *
@@ -51,7 +54,6 @@ class CreateLinkTypes extends Command
      */
     public function handle(): int
     {
-        $start = microtime(true);
         $count = 0;
         $set   = [
             'Related'       => ['relates to', 'relates to'],
@@ -68,17 +70,14 @@ class CreateLinkTypes extends Command
                 $link->inward  = $values[1];
                 $link->outward = $values[0];
                 ++$count;
-                $this->line(sprintf('Created missing link type "%s"', $name));
+                $this->friendlyInfo(sprintf('Created missing link type "%s"', $name));
             }
             $link->editable = false;
             $link->save();
         }
         if (0 === $count) {
-            $this->info('All link types OK!');
+            $this->friendlyPositive('All link types are OK');
         }
-        $end = round(microtime(true) - $start, 2);
-        $this->info(sprintf('Verified link types in %s seconds', $end));
-
         return 0;
     }
 }

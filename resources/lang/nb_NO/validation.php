@@ -61,14 +61,18 @@ return [
     'invalid_selection'              => 'Dine valg er ugyldig.',
     'belongs_user'                   => 'Denne verdien er ugyldig for dette feltet.',
     'at_least_one_transaction'       => 'Trenger minst én transaksjon.',
+    'recurring_transaction_id'       => 'Need at least one transaction.',
+    'need_id_to_match'               => 'You need to submit this entry with an ID for the API to be able to match it.',
+    'too_many_unmatched'             => 'Too many submitted transactions cannot be matched to their respective database entries. Make sure existing entries have a valid ID.',
+    'id_does_not_match'              => 'Submitted ID #:id does not match expected ID. Make sure it matches or omit the field.',
     'at_least_one_repetition'        => 'Trenger minst en gjentagelse.',
     'require_repeat_until'           => 'Krever enten et antall repetisjoner eller en slutt dato (gjentas til). Ikke begge.',
     'require_currency_info'          => 'Innholdet i dette feltet er ugyldig uten valutainformasjon.',
     'not_transfer_account'           => 'Denne kontoen er ikke en konto som kan benyttes for overføringer.',
     'require_currency_amount'        => 'Innholdet i dette feltet er ugyldig uten utenlandsk beløpsinformasjon.',
-    'require_foreign_currency'       => 'This field requires a number',
-    'require_foreign_dest'           => 'This field value must match the currency of the destination account.',
-    'require_foreign_src'            => 'This field value must match the currency of the source account.',
+    'require_foreign_currency'       => 'Dette feltet krever et tall',
+    'require_foreign_dest'           => 'Denne feltverdien må samsvare med valutaen til målkontoen.',
+    'require_foreign_src'            => 'Denne feltverdien må samsvare med valutaen til kildekontoen.',
     'equal_description'              => 'Transaksjonsbeskrivelsen bør ikke være lik global beskrivelse.',
     'file_invalid_mime'              => 'Kan ikke akseptere fil ":name" av typen ":mime" for opplasting.',
     'file_too_large'                 => '":name"-filen er for stor.',
@@ -230,17 +234,20 @@ return [
 
     // validation of accounts:
     'withdrawal_source_need_data' => 'Trenger en gyldig kilde konto-ID og/eller gyldig kilde kontonavn for å fortsette.',
-    'withdrawal_source_bad_data'  => 'Finner ikke en gyldig kilde-konto ved å søke etter ID ":id" eller navn ":name".',
-    'withdrawal_dest_need_data'   => 'Trenger en gyldig destinasjons konto-ID og/eller gyldig destinasjons kontonavn for å fortsette.',
+    'withdrawal_source_bad_data'  => '[a] Could not find a valid source account when searching for ID ":id" or name ":name".',
+    'withdrawal_dest_need_data'   => '[a] Need to get a valid destination account ID and/or valid destination account name to continue.',
     'withdrawal_dest_bad_data'    => 'Kunne ikke finne en gyldig målkonto ved søk etter ID ":id" eller navn ":name".',
+
+    'withdrawal_dest_iban_exists' => 'This destination account IBAN is already in use by an asset account or a liability and cannot be used as a withdrawal destination.',
+    'deposit_src_iban_exists'     => 'This source account IBAN is already in use by an asset account or a liability and cannot be used as a deposit source.',
 
     'reconciliation_source_bad_data' => 'Kunne ikke finne en gyldig avstemmingskonto ved søk etter ID ":id" eller navn ":name".',
 
-    'generic_source_bad_data' => 'Kunne ikke finne en gyldig kildekonto ved søk etter ID ":id" eller navn ":name".',
+    'generic_source_bad_data' => '[e] Could not find a valid source account when searching for ID ":id" or name ":name".',
 
     'deposit_source_need_data' => 'Trenger en gyldig kilde konto-ID og/eller gyldig kilde kontonavn for å fortsette.',
-    'deposit_source_bad_data'  => 'Kunne ikke finne en gyldig kilde-konto ved å søke etter ID ":id" eller navn ":name".',
-    'deposit_dest_need_data'   => 'Trenger en gyldig destinasjons konto-ID og/eller gyldig destinasjons kontonavn for å fortsette.',
+    'deposit_source_bad_data'  => '[b] Could not find a valid source account when searching for ID ":id" or name ":name".',
+    'deposit_dest_need_data'   => '[b] Need to get a valid destination account ID and/or valid destination account name to continue.',
     'deposit_dest_bad_data'    => 'Kunne ikke finne en gyldig destinasjons konto ved å søke etter ID ":id" eller navn ":name".',
     'deposit_dest_wrong_type'  => 'Den oppgitte målkontoen er ikke av riktig type.',
 
@@ -257,22 +264,22 @@ return [
 
 
     'transfer_source_need_data' => 'Trenger en gyldig kilde konto-ID og/eller gyldig kilde kontonavn for å fortsette.',
-    'transfer_source_bad_data'  => 'Finner ikke en gyldig kilde-konto ved å søke etter ID ":id" eller navn ":name".',
-    'transfer_dest_need_data'   => 'Trenger en gyldig destinasjons konto-ID og/eller gyldig destinasjons kontonavn for å fortsette.',
+    'transfer_source_bad_data'  => '[c] Could not find a valid source account when searching for ID ":id" or name ":name".',
+    'transfer_dest_need_data'   => '[c] Need to get a valid destination account ID and/or valid destination account name to continue.',
     'transfer_dest_bad_data'    => 'Kunne ikke finne en gyldig destinasjons konto ved å søke etter ID ":id" eller navn ":name".',
     'need_id_in_edit'           => 'Hver del må ha transaction_journal_id (enten gyldig ID eller 0).',
 
     'ob_source_need_data'           => 'Trenger en gyldig kildekonto ID og/eller gyldig kildekonto navn for å fortsette.',
     'lc_source_need_data'           => 'Trenger en gyldig kildekonto ID for å fortsette.',
-    'ob_dest_need_data'             => 'Trenger en gyldig destinasjons konto-ID og/eller gyldig destinasjons kontonavn for å fortsette.',
+    'ob_dest_need_data'             => '[d] Need to get a valid destination account ID and/or valid destination account name to continue.',
     'ob_dest_bad_data'              => 'Kunne ikke finne en gyldig destinasjonskonto ved søk etter ID ":id" eller navn ":name".',
     'reconciliation_either_account' => 'For å utføre en avstemming, må du enten oppgi en kilde eller en målkonto. Ikke begge eller ingen.',
 
     'generic_invalid_source'      => 'Du kan ikke bruke denne kontoen som kildekonto.',
     'generic_invalid_destination' => 'Du kan ikke bruke denne kontoen som destinasjonskonto.',
 
-    'generic_no_source'      => 'You must submit source account information or submit a transaction journal ID.',
-    'generic_no_destination' => 'You must submit destination account information or submit a transaction journal ID.',
+    'generic_no_source'      => 'Du må sende inn kontoinformasjon eller sende inn transaksjons-journal-ID.',
+    'generic_no_destination' => 'Du må sende inn kontoinformasjon om mottakerkontoen, eller sende inn en transaksjons-journal-ID.',
 
     'gte.numeric' => ':attribute må være større enn eller lik :value.',
     'gt.numeric'  => ':attribute må være større enn :value.',

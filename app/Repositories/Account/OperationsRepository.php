@@ -44,9 +44,9 @@ class OperationsRepository implements OperationsRepositoryInterface
      * which have the specified accounts. It's grouped per currency, with as few details in the array
      * as possible. Amounts are always negative.
      *
-     * @param  Carbon  $start
-     * @param  Carbon  $end
-     * @param  Collection  $accounts
+     * @param Carbon     $start
+     * @param Carbon     $end
+     * @param Collection $accounts
      *
      * @return array
      */
@@ -60,10 +60,10 @@ class OperationsRepository implements OperationsRepositoryInterface
     /**
      * Collect transactions with some parameters
      *
-     * @param  Carbon  $start
-     * @param  Carbon  $end
-     * @param  Collection  $accounts
-     * @param  string  $type
+     * @param Carbon     $start
+     * @param Carbon     $end
+     * @param Collection $accounts
+     * @param string     $type
      *
      * @return array
      */
@@ -79,9 +79,9 @@ class OperationsRepository implements OperationsRepositoryInterface
     }
 
     /**
-     * @param  User|Authenticatable|null  $user
+     * @param User|Authenticatable|null $user
      */
-    public function setUser(User|Authenticatable|null $user): void
+    public function setUser(User | Authenticatable | null $user): void
     {
         if (null !== $user) {
             $this->user = $user;
@@ -89,8 +89,8 @@ class OperationsRepository implements OperationsRepositoryInterface
     }
 
     /**
-     * @param  array  $journals
-     * @param  string  $direction
+     * @param array  $journals
+     * @param string $direction
      *
      * @return array
      */
@@ -136,9 +136,9 @@ class OperationsRepository implements OperationsRepositoryInterface
      * which have the specified accounts. It's grouped per currency, with as few details in the array
      * as possible. Amounts are always positive.
      *
-     * @param  Carbon  $start
-     * @param  Carbon  $end
-     * @param  Collection|null  $accounts
+     * @param Carbon          $start
+     * @param Carbon          $end
+     * @param Collection|null $accounts
      *
      * @return array
      */
@@ -153,10 +153,10 @@ class OperationsRepository implements OperationsRepositoryInterface
      * @inheritDoc
      */
     public function sumExpenses(
-        Carbon $start,
-        Carbon $end,
-        ?Collection $accounts = null,
-        ?Collection $expense = null,
+        Carbon               $start,
+        Carbon               $end,
+        ?Collection          $accounts = null,
+        ?Collection          $expense = null,
         ?TransactionCurrency $currency = null
     ): array {
         $journals = $this->getTransactionsForSum(TransactionType::WITHDRAWAL, $start, $end, $accounts, $expense, $currency);
@@ -165,21 +165,21 @@ class OperationsRepository implements OperationsRepositoryInterface
     }
 
     /**
-     * @param  Carbon  $start
-     * @param  Carbon  $end
-     * @param  Collection|null  $accounts
-     * @param  Collection|null  $opposing
-     * @param  TransactionCurrency|null  $currency
-     * @param  string  $type
+     * @param Carbon                   $start
+     * @param Carbon                   $end
+     * @param Collection|null          $accounts
+     * @param Collection|null          $opposing
+     * @param TransactionCurrency|null $currency
+     * @param string                   $type
      *
      * @return array
      */
     private function getTransactionsForSum(
-        string $type,
-        Carbon $start,
-        Carbon $end,
-        ?Collection $accounts = null,
-        ?Collection $opposing = null,
+        string               $type,
+        Carbon               $start,
+        Carbon               $end,
+        ?Collection          $accounts = null,
+        ?Collection          $opposing = null,
         ?TransactionCurrency $currency = null
     ): array {
         $start->startOfDay();
@@ -249,8 +249,8 @@ class OperationsRepository implements OperationsRepositoryInterface
     }
 
     /**
-     * @param  array  $journals
-     * @param  string  $direction
+     * @param array  $journals
+     * @param string $direction
      *
      * @return array
      */
@@ -292,10 +292,10 @@ class OperationsRepository implements OperationsRepositoryInterface
      * @inheritDoc
      */
     public function sumExpensesByDestination(
-        Carbon $start,
-        Carbon $end,
-        ?Collection $accounts = null,
-        ?Collection $expense = null,
+        Carbon               $start,
+        Carbon               $end,
+        ?Collection          $accounts = null,
+        ?Collection          $expense = null,
         ?TransactionCurrency $currency = null
     ): array {
         $journals = $this->getTransactionsForSum(TransactionType::WITHDRAWAL, $start, $end, $accounts, $expense, $currency);
@@ -304,9 +304,9 @@ class OperationsRepository implements OperationsRepositoryInterface
     }
 
     /**
-     * @param  array  $journals
-     * @param  string  $direction
-     * @param  string  $method
+     * @param array  $journals
+     * @param string $direction
+     * @param string $method
      *
      * @return array
      */
@@ -354,10 +354,10 @@ class OperationsRepository implements OperationsRepositoryInterface
      * @inheritDoc
      */
     public function sumExpensesBySource(
-        Carbon $start,
-        Carbon $end,
-        ?Collection $accounts = null,
-        ?Collection $expense = null,
+        Carbon               $start,
+        Carbon               $end,
+        ?Collection          $accounts = null,
+        ?Collection          $expense = null,
         ?TransactionCurrency $currency = null
     ): array {
         $journals = $this->getTransactionsForSum(TransactionType::WITHDRAWAL, $start, $end, $accounts, $expense, $currency);
@@ -369,10 +369,10 @@ class OperationsRepository implements OperationsRepositoryInterface
      * @inheritDoc
      */
     public function sumIncome(
-        Carbon $start,
-        Carbon $end,
-        ?Collection $accounts = null,
-        ?Collection $revenue = null,
+        Carbon               $start,
+        Carbon               $end,
+        ?Collection          $accounts = null,
+        ?Collection          $revenue = null,
         ?TransactionCurrency $currency = null
     ): array {
         $journals = $this->getTransactionsForSum(TransactionType::DEPOSIT, $start, $end, $accounts, $revenue, $currency);
@@ -384,10 +384,10 @@ class OperationsRepository implements OperationsRepositoryInterface
      * @inheritDoc
      */
     public function sumIncomeByDestination(
-        Carbon $start,
-        Carbon $end,
-        ?Collection $accounts = null,
-        ?Collection $revenue = null,
+        Carbon               $start,
+        Carbon               $end,
+        ?Collection          $accounts = null,
+        ?Collection          $revenue = null,
         ?TransactionCurrency $currency = null
     ): array {
         $journals = $this->getTransactionsForSum(TransactionType::DEPOSIT, $start, $end, $accounts, $revenue, $currency);
@@ -399,10 +399,10 @@ class OperationsRepository implements OperationsRepositoryInterface
      * @inheritDoc
      */
     public function sumIncomeBySource(
-        Carbon $start,
-        Carbon $end,
-        ?Collection $accounts = null,
-        ?Collection $revenue = null,
+        Carbon               $start,
+        Carbon               $end,
+        ?Collection          $accounts = null,
+        ?Collection          $revenue = null,
         ?TransactionCurrency $currency = null
     ): array {
         $journals = $this->getTransactionsForSum(TransactionType::DEPOSIT, $start, $end, $accounts, $revenue, $currency);
@@ -421,7 +421,7 @@ class OperationsRepository implements OperationsRepositoryInterface
     }
 
     /**
-     * @param  array  $journals
+     * @param array $journals
      *
      * @return array
      */
@@ -444,8 +444,8 @@ class OperationsRepository implements OperationsRepositoryInterface
     }
 
     /**
-     * @param  array  $return
-     * @param  array  $journal
+     * @param array $return
+     * @param array $journal
      *
      * @return array
      */

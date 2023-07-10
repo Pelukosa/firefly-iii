@@ -50,7 +50,7 @@ class RuleTransformer extends AbstractTransformer
     /**
      * Transform the rule.
      *
-     * @param  Rule  $rule
+     * @param Rule $rule
      *
      * @return array
      * @throws FireflyException
@@ -77,14 +77,14 @@ class RuleTransformer extends AbstractTransformer
             'links'            => [
                 [
                     'rel' => 'self',
-                    'uri' => '/rules/'.$rule->id,
+                    'uri' => '/rules/' . $rule->id,
                 ],
             ],
         ];
     }
 
     /**
-     * @param  Rule  $rule
+     * @param Rule $rule
      *
      * @return string
      * @throws FireflyException
@@ -107,7 +107,7 @@ class RuleTransformer extends AbstractTransformer
     }
 
     /**
-     * @param  Rule  $rule
+     * @param Rule $rule
      *
      * @return array
      */
@@ -136,7 +136,7 @@ class RuleTransformer extends AbstractTransformer
     }
 
     /**
-     * @param  Rule  $rule
+     * @param Rule $rule
      *
      * @return array
      */

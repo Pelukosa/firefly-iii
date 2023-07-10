@@ -25,6 +25,7 @@ namespace FireflyIII\Services\Internal\Update;
 
 use Carbon\Carbon;
 use Carbon\Exceptions\InvalidDateException;
+use FireflyIII\Events\TriggeredAuditLog;
 use FireflyIII\Exceptions\FireflyException;
 use FireflyIII\Factory\TagFactory;
 use FireflyIII\Factory\TransactionJournalMetaFactory;
@@ -97,11 +98,12 @@ class JournalUpdateService
             'external_id',
             'external_url',
         ];
-        $this->metaDate               = ['interest_date', 'book_date', 'process_date', 'due_date', 'payment_date', 'invoice_date',];
+        $this->metaDate               = ['interest_date', 'book_date', 'process_date', 'due_date', 'payment_date',
+                                         'invoice_date',];
     }
 
     /**
-     * @param  array  $data
+     * @param array $data
      */
     public function setData(array $data): void
     {
@@ -109,7 +111,7 @@ class JournalUpdateService
     }
 
     /**
-     * @param  TransactionGroup  $transactionGroup
+     * @param TransactionGroup $transactionGroup
      */
     public function setTransactionGroup(TransactionGroup $transactionGroup): void
     {
@@ -126,7 +128,7 @@ class JournalUpdateService
     }
 
     /**
-     * @param  TransactionJournal  $transactionJournal
+     * @param TransactionJournal $transactionJournal
      */
     public function setTransactionJournal(TransactionJournal $transactionJournal): void
     {
@@ -229,7 +231,9 @@ class JournalUpdateService
         $validator->setUser($this->transactionJournal->user);
 
         $result = $validator->validateSource(['id' => $sourceId]);
-        Log::debug(sprintf('hasValidSourceAccount(%d, "%s") will return %s', $sourceId, $sourceName, var_export($result, true)));
+        Log::debug(
+            sprintf('hasValidSourceAccount(%d, "%s") will return %s', $sourceId, $sourceName, var_export($result, true))
+        );
 
         // TODO typeoverrule the account validator may have a different opinion on the transaction type.
 
@@ -238,7 +242,7 @@ class JournalUpdateService
     }
 
     /**
-     * @param  array  $fields
+     * @param array $fields
      *
      * @return bool
      */
@@ -272,7 +276,11 @@ class JournalUpdateService
     private function getSourceTransaction(): Transaction
     {
         if (null === $this->sourceTransaction) {
-            $this->sourceTransaction = $this->transactionJournal->transactions()->with(['account'])->where('amount', '<', 0)->first();
+            $this->sourceTransaction = $this->transactionJournal->transactions()->with(['account'])->where(
+                'amount',
+                '<',
+                0
+            )->first();
         }
         Log::debug(sprintf('getSourceTransaction: %s', $this->sourceTransaction->amount));
 
@@ -280,9 +288,11 @@ class JournalUpdateService
     }
 
     /**
-     * This method returns the current or expected type of the journal (in case of a change) based on the data in the array.
+     * This method returns the current or expected type of the journal (in case of a change) based on the data in the
+     * array.
      *
-     * If the array contains key 'type' and the value is correct, this is returned. Otherwise, the original type is returned.
+     * If the array contains key 'type' and the value is correct, this is returned. Otherwise, the original type is
+     * returned.
      *
      * @return string
      */
@@ -323,7 +333,14 @@ class JournalUpdateService
         $validator->setUser($this->transactionJournal->user);
         $validator->source = $this->getValidSourceAccount();
         $result            = $validator->validateDestination(['id' => $destId, 'name' => $destName]);
-        Log::debug(sprintf('hasValidDestinationAccount(%d, "%s") will return %s', $destId, $destName, var_export($result, true)));
+        Log::debug(
+            sprintf(
+                'hasValidDestinationAccount(%d, "%s") will return %s',
+                $destId,
+                $destName,
+                var_export($result, true)
+            )
+        );
 
         // TODO typeOverrule: the account validator may have another opinion on the transaction type.
 
@@ -498,9 +515,9 @@ class JournalUpdateService
         $type = $this->transactionJournal->transactionType->type;
         if ((
             array_key_exists('bill_id', $this->data)
-            || array_key_exists('bill_name', $this->data)
+                || array_key_exists('bill_name', $this->data)
         )
-        && TransactionType::WITHDRAWAL === $type
+            && TransactionType::WITHDRAWAL === $type
         ) {
             $billId                            = (int)($this->data['bill_id'] ?? 0);
             $billName                          = (string)($this->data['bill_name'] ?? '');
@@ -513,7 +530,7 @@ class JournalUpdateService
     /**
      * Update journal generic field. Cannot be set to NULL.
      *
-     * @param  string  $fieldName
+     * @param string $fieldName
      */
     private function updateField(string $fieldName): void
     {
@@ -531,6 +548,16 @@ class JournalUpdateService
                 // do some parsing.
                 Log::debug(sprintf('Create date value from string "%s".', $value));
             }
+            event(
+                new TriggeredAuditLog(
+                    $this->transactionJournal->user,
+                    $this->transactionJournal,
+                    sprintf('update_%s', $fieldName),
+                    $this->transactionJournal->$fieldName,
+                    $value
+                )
+            );
+
             $this->transactionJournal->$fieldName = $value;
             Log::debug(sprintf('Updated %s', $fieldName));
         }
@@ -654,6 +681,7 @@ class JournalUpdateService
                     $value = '' === (string)$this->data[$field] ? null : new Carbon($this->data[$field]);
                 } catch (InvalidDateException $e) {
                     Log::debug(sprintf('%s is not a valid date value: %s', $this->data[$field], $e->getMessage()));
+
                     return;
                 }
                 Log::debug(sprintf('Field "%s" is present ("%s"), try to update it.', $field, $value));
@@ -749,7 +777,8 @@ class JournalUpdateService
         // find currency in data array
         $newForeignId    = $this->data['foreign_currency_id'] ?? null;
         $newForeignCode  = $this->data['foreign_currency_code'] ?? null;
-        $foreignCurrency = $this->currencyRepository->findCurrencyNull($newForeignId, $newForeignCode) ?? $foreignCurrency;
+        $foreignCurrency = $this->currencyRepository->findCurrencyNull($newForeignId, $newForeignCode) ??
+                           $foreignCurrency;
 
         // not the same as normal currency
         if (null !== $foreignCurrency && $foreignCurrency->id === $this->transactionJournal->transaction_currency_id) {
@@ -767,7 +796,14 @@ class JournalUpdateService
             $dest->foreign_amount      = app('steam')->positive($foreignAmount);
             $dest->save();
 
-            Log::debug(sprintf('Update foreign info to %s (#%d) %s', $foreignCurrency->code, $foreignCurrency->id, $foreignAmount));
+            Log::debug(
+                sprintf(
+                    'Update foreign info to %s (#%d) %s',
+                    $foreignCurrency->code,
+                    $foreignCurrency->id,
+                    $foreignAmount
+                )
+            );
 
             // refresh transactions.
             $this->sourceTransaction->refresh();

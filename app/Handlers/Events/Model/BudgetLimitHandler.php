@@ -27,9 +27,12 @@ use FireflyIII\Events\Model\BudgetLimit\Created;
 use FireflyIII\Events\Model\BudgetLimit\Deleted;
 use FireflyIII\Events\Model\BudgetLimit\Updated;
 use FireflyIII\Models\AvailableBudget;
+use FireflyIII\Models\Budget;
 use FireflyIII\Models\BudgetLimit;
 use FireflyIII\Repositories\Budget\BudgetLimitRepositoryInterface;
 use Illuminate\Support\Facades\Log;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Spatie\Period\Boundaries;
 use Spatie\Period\Period;
 use Spatie\Period\Precision;
@@ -40,37 +43,103 @@ use Spatie\Period\Precision;
 class BudgetLimitHandler
 {
     /**
-     * @param  Created  $event
+     * @param Created $event
      * @return void
      */
     public function created(Created $event): void
     {
-        Log::debug(sprintf('BudgetLimitHandler::created(%s)', $event->budgetLimit->id));
+        Log::debug(sprintf('BudgetLimitHandler::created(#%s)', $event->budgetLimit->id));
         $this->updateAvailableBudget($event->budgetLimit);
     }
 
     /**
-     * @param  Updated  $event
+     * @param BudgetLimit $budgetLimit
      * @return void
      */
-    public function updated(Updated $event): void
+    private function updateAvailableBudget(BudgetLimit $budgetLimit): void
     {
-        Log::debug(sprintf('BudgetLimitHandler::updated(%s)', $event->budgetLimit->id));
-        $this->updateAvailableBudget($event->budgetLimit);
+        Log::debug(sprintf('Now in updateAvailableBudget(#%d)', $budgetLimit->id));
+
+        // based on the view range of the user (month week quarter etc) the budget limit could
+        // either overlap multiple available budget periods or be contained in a single one.
+        // all have to be created or updated.
+        try {
+            $viewRange = app('preferences')->get('viewRange', '1M')->data;
+        } catch (ContainerExceptionInterface | NotFoundExceptionInterface $e) {
+            $viewRange = '1M';
+        }
+        $start  = app('navigation')->startOfPeriod($budgetLimit->start_date, $viewRange);
+        $end    = app('navigation')->startOfPeriod($budgetLimit->end_date, $viewRange);
+        $end    = app('navigation')->endOfPeriod($end, $viewRange);
+        $budget = Budget::find($budgetLimit->budget_id);
+        if (null === $budget) {
+            Log::warning('Budget is null, cannot continue.');
+            $budgetLimit->forceDelete();
+            return;
+        }
+        $user = $budget->user;
+
+        // sanity check. It happens when the budget has been deleted so the original user is unknown.
+        if (null === $user) {
+            Log::warning('User is null, cannot continue.');
+            $budgetLimit->forceDelete();
+            return;
+        }
+
+        // limit period in total is:
+        $limitPeriod = Period::make($start, $end, precision: Precision::DAY(), boundaries: Boundaries::EXCLUDE_NONE());
+
+        // from the start until the end of the budget limit, need to loop!
+        $current = clone $start;
+        while ($current <= $end) {
+            $currentEnd = app('navigation')->endOfPeriod($current, $viewRange);
+
+            // create or find AB for this particular period, and set the amount accordingly.
+            /** @var AvailableBudget $availableBudget */
+            $availableBudget = $user->availableBudgets()->where('start_date', $current->format('Y-m-d'))->where(
+                'end_date',
+                $currentEnd->format('Y-m-d')
+            )->where('transaction_currency_id', $budgetLimit->transaction_currency_id)->first();
+
+            if (null !== $availableBudget) {
+                Log::debug('Found 1 AB, will update.');
+                $this->calculateAmount($availableBudget);
+            }
+            if (null === $availableBudget) {
+                // if not exists:
+                $currentPeriod = Period::make($current, $currentEnd, precision: Precision::DAY(), boundaries: Boundaries::EXCLUDE_NONE());
+                $daily         = $this->getDailyAmount($budgetLimit);
+                $amount        = bcmul($daily, (string)$currentPeriod->length(), 12);
+
+                // no need to calculate if period is equal.
+                if ($currentPeriod->equals($limitPeriod)) {
+                    $amount = 0 === (int)$budgetLimit->id ? '0' : $budgetLimit->amount;
+                }
+                if (0 === bccomp($amount, '0')) {
+                    Log::debug('Amount is zero, will not create AB.');
+                }
+                if (0 !== bccomp($amount, '0')) {
+                    Log::debug(sprintf('Will create AB for period %s to %s', $current->format('Y-m-d'), $currentEnd->format('Y-m-d')));
+                    $availableBudget = new AvailableBudget(
+                        [
+                            'user_id'                 => $budgetLimit->budget->user->id,
+                            'transaction_currency_id' => $budgetLimit->transaction_currency_id,
+                            'start_date'              => $current,
+                            'end_date'                => $currentEnd,
+                            'amount'                  => $amount,
+                        ]
+                    );
+                    $availableBudget->save();
+                }
+            }
+
+            // prep for next loop
+            $current = app('navigation')->addPeriod($current, $viewRange, 0);
+        }
     }
 
     /**
-     * @param  Deleted  $event
-     * @return void
-     */
-    public function deleted(Deleted $event): void
-    {
-        Log::debug(sprintf('BudgetLimitHandler::deleted(%s)', $event->budgetLimit->id));
-        $this->updateAvailableBudget($event->budgetLimit);
-    }
-
-    /**
-     * @param  AvailableBudget  $availableBudget
+     * @param AvailableBudget $availableBudget
      * @return void
      */
     private function calculateAmount(AvailableBudget $availableBudget): void
@@ -104,7 +173,7 @@ class BudgetLimitHandler
             $limitPeriod = Period::make(
                 $budgetLimit->start_date,
                 $budgetLimit->end_date,
-                precision: Precision::DAY(),
+                precision : Precision::DAY(),
                 boundaries: Boundaries::EXCLUDE_NONE()
             );
             // if both equal eachother, amount from this BL must be added to the AB
@@ -124,21 +193,29 @@ class BudgetLimitHandler
                 }
             }
         }
+        if (0 === bccomp('0', $newAmount)) {
+            Log::debug('New amount is zero, deleting AB.');
+            $availableBudget->delete();
+            return;
+        }
         Log::debug(sprintf('Concluded new amount for this AB must be %s', $newAmount));
         $availableBudget->amount = $newAmount;
         $availableBudget->save();
     }
 
     /**
-     * @param  BudgetLimit  $budgetLimit
+     * @param BudgetLimit $budgetLimit
      * @return string
      */
     private function getDailyAmount(BudgetLimit $budgetLimit): string
     {
+        if (0 === (int)$budgetLimit->id) {
+            return '0';
+        }
         $limitPeriod = Period::make(
             $budgetLimit->start_date,
             $budgetLimit->end_date,
-            precision: Precision::DAY(),
+            precision : Precision::DAY(),
             boundaries: Boundaries::EXCLUDE_NONE()
         );
         $days        = $limitPeriod->length();
@@ -150,69 +227,25 @@ class BudgetLimitHandler
     }
 
     /**
-     * @param  BudgetLimit  $budgetLimit
+     * @param Deleted $event
      * @return void
-     * @throws \FireflyIII\Exceptions\FireflyException
-     * @throws \Psr\Container\ContainerExceptionInterface
-     * @throws \Psr\Container\NotFoundExceptionInterface
      */
-    private function updateAvailableBudget(BudgetLimit $budgetLimit): void
+    public function deleted(Deleted $event): void
     {
-        Log::debug(sprintf('Now in updateAvailableBudget(#%d)', $budgetLimit->id));
+        Log::debug(sprintf('BudgetLimitHandler::deleted(#%s)', $event->budgetLimit->id));
+        $budgetLimit     = $event->budgetLimit;
+        $budgetLimit->id = null;
+        $this->updateAvailableBudget($event->budgetLimit);
+    }
 
-        // based on the view range of the user (month week quarter etc) the budget limit could
-        // either overlap multiple available budget periods or be contained in a single one.
-        // all have to be created or updated.
-        $viewRange = app('preferences')->get('viewRange', '1M')->data;
-        $start     = app('navigation')->startOfPeriod($budgetLimit->start_date, $viewRange);
-        $end       = app('navigation')->startOfPeriod($budgetLimit->end_date, $viewRange);
-        $end       = app('navigation')->endOfPeriod($end, $viewRange);
-        $user      = $budgetLimit->budget->user;
-
-        // limit period in total is:
-        $limitPeriod = Period::make($start, $end, precision: Precision::DAY(), boundaries: Boundaries::EXCLUDE_NONE());
-
-        // from the start until the end of the budget limit, need to loop!
-        $current = clone $start;
-        while ($current <= $end) {
-            $currentEnd = app('navigation')->endOfPeriod($current, $viewRange);
-
-            // create or find AB for this particular period, and set the amount accordingly.
-            /** @var AvailableBudget $availableBudget */
-            $availableBudget = $user->availableBudgets()->where('start_date', $current->format('Y-m-d'))->where(
-                'end_date',
-                $currentEnd->format('Y-m-d')
-            )->where('transaction_currency_id', $budgetLimit->transaction_currency_id)->first();
-            if (null !== $availableBudget) {
-                Log::debug('Found 1 AB, will update.');
-                $this->calculateAmount($availableBudget);
-            }
-            if (null === $availableBudget) {
-                // if not exists:
-                $currentPeriod = Period::make($current, $currentEnd, precision: Precision::DAY(), boundaries: Boundaries::EXCLUDE_NONE());
-                $daily         = $this->getDailyAmount($budgetLimit);
-                $amount        = bcmul($daily, (string)$currentPeriod->length(), 12);
-
-                // no need to calculate if period is equal.
-                if ($currentPeriod->equals($limitPeriod)) {
-                    $amount = $budgetLimit->amount;
-                }
-                Log::debug(sprintf('Will create AB for period %s to %s', $current->format('Y-m-d'), $currentEnd->format('Y-m-d')));
-                $availableBudget = new AvailableBudget(
-                    [
-                        'user_id'                 => $budgetLimit->budget->user->id,
-                        'transaction_currency_id' => $budgetLimit->transaction_currency_id,
-                        'start_date'              => $current,
-                        'end_date'                => $currentEnd,
-                        'amount'                  => $amount,
-                    ]
-                );
-                $availableBudget->save();
-            }
-
-            // prep for next loop
-            $current = app('navigation')->addPeriod($current, $viewRange, 0);
-        }
+    /**
+     * @param Updated $event
+     * @return void
+     */
+    public function updated(Updated $event): void
+    {
+        Log::debug(sprintf('BudgetLimitHandler::updated(#%s)', $event->budgetLimit->id));
+        $this->updateAvailableBudget($event->budgetLimit);
     }
 
 }

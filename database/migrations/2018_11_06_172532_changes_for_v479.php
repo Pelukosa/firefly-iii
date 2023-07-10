@@ -41,7 +41,7 @@ class ChangesForV479 extends Migration
      */
     public function down(): void
     {
-        if(Schema::hasColumn('transaction_currencies', 'enabled')) {
+        if (Schema::hasColumn('transaction_currencies', 'enabled')) {
             try {
                 Schema::table(
                     'transaction_currencies',
@@ -49,7 +49,7 @@ class ChangesForV479 extends Migration
                         $table->dropColumn(['enabled']);
                     }
                 );
-            } catch (QueryException|ColumnDoesNotExist $e) {
+            } catch (QueryException | ColumnDoesNotExist $e) {
                 Log::error(sprintf('Could not execute query: %s', $e->getMessage()));
                 Log::error('If the column or index already exists (see error), this is not an problem. Otherwise, please open a GitHub discussion.');
             }
@@ -63,7 +63,7 @@ class ChangesForV479 extends Migration
      */
     public function up(): void
     {
-        if(!Schema::hasColumn('transaction_currencies', 'enabled')) {
+        if (!Schema::hasColumn('transaction_currencies', 'enabled')) {
             try {
                 Schema::table(
                     'transaction_currencies',

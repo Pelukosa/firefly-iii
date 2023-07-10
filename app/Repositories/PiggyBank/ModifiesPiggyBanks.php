@@ -72,9 +72,9 @@ trait ModifiesPiggyBanks
     }
 
     /**
-     * @param  PiggyBank  $piggyBank
-     * @param  string  $amount
-     * @param  TransactionJournal|null  $journal
+     * @param PiggyBank               $piggyBank
+     * @param string                  $amount
+     * @param TransactionJournal|null $journal
      * @return bool
      */
     public function addAmount(PiggyBank $piggyBank, string $amount, ?TransactionJournal $journal = null): bool
@@ -94,8 +94,8 @@ trait ModifiesPiggyBanks
     }
 
     /**
-     * @param  PiggyBank  $piggyBank
-     * @param  string  $amount
+     * @param PiggyBank $piggyBank
+     * @param string    $amount
      *
      * @return bool
      * @throws JsonException
@@ -125,8 +125,8 @@ trait ModifiesPiggyBanks
     }
 
     /**
-     * @param  PiggyBank  $piggyBank
-     * @param  string  $amount
+     * @param PiggyBank $piggyBank
+     * @param string    $amount
      *
      * @return bool
      */
@@ -142,7 +142,7 @@ trait ModifiesPiggyBanks
     }
 
     /**
-     * @param  PiggyBank  $piggyBank
+     * @param PiggyBank $piggyBank
      *
      * @return bool
      * @throws Exception
@@ -166,8 +166,8 @@ trait ModifiesPiggyBanks
     }
 
     /**
-     * @param  PiggyBank  $piggyBank
-     * @param  string  $amount
+     * @param PiggyBank $piggyBank
+     * @param string    $amount
      *
      * @return PiggyBank
      */
@@ -211,7 +211,7 @@ trait ModifiesPiggyBanks
     }
 
     /**
-     * @param  array  $data
+     * @param array $data
      *
      * @return PiggyBank
      * @throws FireflyException
@@ -320,8 +320,8 @@ trait ModifiesPiggyBanks
     }
 
     /**
-     * @param  PiggyBank  $piggyBank
-     * @param  string  $note
+     * @param PiggyBank $piggyBank
+     * @param string    $note
      *
      * @return bool
      */
@@ -345,8 +345,8 @@ trait ModifiesPiggyBanks
     }
 
     /**
-     * @param  PiggyBank  $piggyBank
-     * @param  array  $data
+     * @param PiggyBank $piggyBank
+     * @param array     $data
      *
      * @return PiggyBank
      */
@@ -414,8 +414,8 @@ trait ModifiesPiggyBanks
     }
 
     /**
-     * @param  PiggyBank  $piggyBank
-     * @param  array  $data
+     * @param PiggyBank $piggyBank
+     * @param array     $data
      *
      * @return PiggyBank
      */

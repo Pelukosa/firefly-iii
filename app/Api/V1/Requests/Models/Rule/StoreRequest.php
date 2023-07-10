@@ -129,12 +129,12 @@ class StoreRequest extends FormRequest
             'rule_group_id'              => 'belongsToUser:rule_groups|required_without:rule_group_title',
             'rule_group_title'           => 'nullable|between:1,255|required_without:rule_group_id|belongsToUser:rule_groups,title',
             'trigger'                    => 'required|in:store-journal,update-journal',
-            'triggers.*.type'            => 'required|in:'.implode(',', $validTriggers),
-            'triggers.*.value'           => 'required_if:actions.*.type,'.$contextTriggers.'|min:1|ruleTriggerValue|max:1024',
+            'triggers.*.type'            => 'required|in:' . implode(',', $validTriggers),
+            'triggers.*.value'           => 'required_if:actions.*.type,' . $contextTriggers . '|min:1|ruleTriggerValue|max:1024',
             'triggers.*.stop_processing' => [new IsBoolean()],
             'triggers.*.active'          => [new IsBoolean()],
-            'actions.*.type'             => 'required|in:'.implode(',', $validActions),
-            'actions.*.value'            => 'required_if:actions.*.type,'.$contextActions.'|ruleActionValue',
+            'actions.*.type'             => 'required|in:' . implode(',', $validActions),
+            'actions.*.value'            => 'required_if:actions.*.type,' . $contextActions . '|ruleActionValue',
             'actions.*.stop_processing'  => [new IsBoolean()],
             'actions.*.active'           => [new IsBoolean()],
             'strict'                     => [new IsBoolean()],
@@ -146,7 +146,7 @@ class StoreRequest extends FormRequest
     /**
      * Configure the validator instance.
      *
-     * @param  Validator  $validator
+     * @param Validator $validator
      *
      * @return void
      */
@@ -165,7 +165,7 @@ class StoreRequest extends FormRequest
     /**
      * Adds an error to the validator when there are no triggers in the array of data.
      *
-     * @param  Validator  $validator
+     * @param Validator $validator
      */
     protected function atLeastOneTrigger(Validator $validator): void
     {
@@ -180,7 +180,7 @@ class StoreRequest extends FormRequest
     /**
      * Adds an error to the validator when there are no repetitions in the array of data.
      *
-     * @param  Validator  $validator
+     * @param Validator $validator
      */
     protected function atLeastOneAction(Validator $validator): void
     {
@@ -195,7 +195,7 @@ class StoreRequest extends FormRequest
     /**
      * Adds an error to the validator when there are no ACTIVE triggers in the array of data.
      *
-     * @param  Validator  $validator
+     * @param Validator $validator
      */
     protected function atLeastOneActiveTrigger(Validator $validator): void
     {
@@ -224,7 +224,7 @@ class StoreRequest extends FormRequest
     /**
      * Adds an error to the validator when there are no ACTIVE actions in the array of data.
      *
-     * @param  Validator  $validator
+     * @param Validator $validator
      */
     protected function atLeastOneActiveAction(Validator $validator): void
     {

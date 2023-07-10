@@ -55,7 +55,7 @@ class PiggyBankTransformer extends AbstractTransformer
     /**
      * Transform the piggy bank.
      *
-     * @param  PiggyBank  $piggyBank
+     * @param PiggyBank $piggyBank
      *
      * @return array
      * @throws FireflyException
@@ -103,9 +103,8 @@ class PiggyBankTransformer extends AbstractTransformer
             $leftToSave   = app('steam')->bcround($leftToSave, $currency->decimal_places);
             $savePerMonth = app('steam')->bcround($this->piggyRepos->getSuggestedMonthlyAmount($piggyBank), $currency->decimal_places);
         }
-        $startDate  = $piggyBank->startdate?->toAtomString();
-        $targetDate = $piggyBank->targetdate?->toAtomString();
-
+        $startDate  = $piggyBank->startdate?->format('Y-m-d');
+        $targetDate = $piggyBank->targetdate?->format('Y-m-d');
 
         return [
             'id'                      => (string)$piggyBank->id,
@@ -134,7 +133,7 @@ class PiggyBankTransformer extends AbstractTransformer
             'links'                   => [
                 [
                     'rel' => 'self',
-                    'uri' => '/piggy_banks/'.$piggyBank->id,
+                    'uri' => '/piggy_banks/' . $piggyBank->id,
                 ],
             ],
         ];

@@ -26,6 +26,7 @@ namespace FireflyIII\Console\Commands\Export;
 
 use Carbon\Carbon;
 use Exception;
+use FireflyIII\Console\Commands\ShowsFriendlyMessages;
 use FireflyIII\Console\Commands\VerifiesAccessToken;
 use FireflyIII\Exceptions\FireflyException;
 use FireflyIII\Models\Account;
@@ -35,14 +36,15 @@ use FireflyIII\Repositories\Journal\JournalRepositoryInterface;
 use FireflyIII\Support\Export\ExportDataGenerator;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
-use InvalidArgumentException;
 use Illuminate\Support\Facades\Log;
+use InvalidArgumentException;
 
 /**
  * Class ExportData
  */
 class ExportData extends Command
 {
+    use ShowsFriendlyMessages;
     use VerifiesAccessToken;
 
     /**
@@ -86,7 +88,7 @@ class ExportData extends Command
     {
         // verify access token
         if (!$this->verifyAccessToken()) {
-            $this->error('Invalid access token. Check /profile.');
+            $this->friendlyError('Invalid access token. Check /profile.');
 
             return 1;
         }
@@ -99,7 +101,7 @@ class ExportData extends Command
         try {
             $options = $this->parseOptions();
         } catch (FireflyException $e) {
-            $this->error(sprintf('Could not work with your options: %s', $e));
+            $this->friendlyError(sprintf('Could not work with your options: %s', $e));
 
             return 1;
         }
@@ -122,14 +124,14 @@ class ExportData extends Command
         $exporter->setExportPiggies($options['export']['piggies']);
         $data = $exporter->export();
         if (0 === count($data)) {
-            $this->error('You must export *something*. Use --export-transactions or another option. See docs.firefly-iii.org');
+            $this->friendlyError('You must export *something*. Use --export-transactions or another option. See docs.firefly-iii.org');
         }
         $returnCode = 0;
         if (0 !== count($data)) {
             try {
                 $this->exportData($options, $data);
             } catch (FireflyException $e) {
-                $this->error(sprintf('Could not store data: %s', $e->getMessage()));
+                $this->friendlyError(sprintf('Could not store data: %s', $e->getMessage()));
 
                 $returnCode = 1;
             }
@@ -184,7 +186,7 @@ class ExportData extends Command
     }
 
     /**
-     * @param  string  $field
+     * @param string $field
      *
      * @return Carbon
      * @throws Exception
@@ -198,7 +200,7 @@ class ExportData extends Command
                 $date = Carbon::createFromFormat('!Y-m-d', $this->option($field));
             } catch (InvalidArgumentException $e) {
                 Log::error($e->getMessage());
-                $this->error(sprintf('%s date "%s" must be formatted YYYY-MM-DD. Field will be ignored.', $field, $this->option('start')));
+                $this->friendlyError(sprintf('%s date "%s" must be formatted YYYY-MM-DD. Field will be ignored.', $field, $this->option('start')));
                 $error = true;
             }
         }
@@ -274,8 +276,8 @@ class ExportData extends Command
     }
 
     /**
-     * @param  array  $options
-     * @param  array  $data
+     * @param array $options
+     * @param array $data
      *
      * @throws FireflyException
      */
@@ -288,11 +290,11 @@ class ExportData extends Command
                 throw new FireflyException(sprintf('File "%s" exists already. Use --force to overwrite.', $file));
             }
             if (true === $options['force'] && file_exists($file)) {
-                $this->warn(sprintf('File "%s" exists already but will be replaced.', $file));
+                $this->friendlyWarning(sprintf('File "%s" exists already but will be replaced.', $file));
             }
             // continue to write to file.
             file_put_contents($file, $content);
-            $this->info(sprintf('Wrote %s-export to file "%s".', $key, $file));
+            $this->friendlyPositive(sprintf('Wrote %s-export to file "%s".', $key, $file));
         }
     }
 }

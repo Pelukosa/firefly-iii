@@ -28,8 +28,8 @@ use Artisan;
 use Crypt;
 use FireflyIII\Exceptions\FireflyException;
 use Illuminate\Contracts\Encryption\DecryptException;
-use Laravel\Passport\Console\KeysCommand;
 use Illuminate\Support\Facades\Log;
+use Laravel\Passport\Console\KeysCommand;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
@@ -74,7 +74,7 @@ class OAuthKeys
             try {
                 $privateKey = (string)app('fireflyconfig')->get(self::PRIVATE_KEY)?->data;
                 $publicKey  = (string)app('fireflyconfig')->get(self::PUBLIC_KEY)?->data;
-            } catch (ContainerExceptionInterface|NotFoundExceptionInterface|FireflyException $e) {
+            } catch (ContainerExceptionInterface | NotFoundExceptionInterface | FireflyException $e) {
                 Log::error(sprintf('Could not validate keysInDatabase(): %s', $e->getMessage()));
                 Log::error($e->getTraceAsString());
             }

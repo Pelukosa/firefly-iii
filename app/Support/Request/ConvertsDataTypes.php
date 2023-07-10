@@ -24,6 +24,7 @@ declare(strict_types=1);
 namespace FireflyIII\Support\Request;
 
 use Carbon\Carbon;
+use Carbon\Exceptions\InvalidDateException;
 use Carbon\Exceptions\InvalidFormatException;
 use Illuminate\Support\Facades\Log;
 
@@ -35,7 +36,7 @@ trait ConvertsDataTypes
     /**
      * Return integer value.
      *
-     * @param  string  $field
+     * @param string $field
      *
      * @return int
      */
@@ -48,8 +49,8 @@ trait ConvertsDataTypes
      * Abstract method that always exists in the Request classes that use this
      * trait, OR a stub needs to be added by any other class that uses this train.
      *
-     * @param  string  $key
-     * @param  mixed|null  $default
+     * @param string     $key
+     * @param mixed|null $default
      * @return mixed
      */
     abstract public function get(string $key, mixed $default = null): mixed;
@@ -57,7 +58,7 @@ trait ConvertsDataTypes
     /**
      * Return string value.
      *
-     * @param  string  $field
+     * @param string $field
      *
      * @return string
      */
@@ -71,8 +72,8 @@ trait ConvertsDataTypes
     }
 
     /**
-     * @param  string|null  $string
-     * @param  bool  $keepNewlines
+     * @param string|null $string
+     * @param bool        $keepNewlines
      *
      * @return string|null
      */
@@ -154,7 +155,7 @@ trait ConvertsDataTypes
     /**
      * Return string value with newlines.
      *
-     * @param  string  $field
+     * @param string $field
      *
      * @return string
      */
@@ -164,7 +165,7 @@ trait ConvertsDataTypes
     }
 
     /**
-     * @param  mixed  $array
+     * @param mixed $array
      *
      * @return array|null
      */
@@ -184,7 +185,7 @@ trait ConvertsDataTypes
     }
 
     /**
-     * @param  string|null  $value
+     * @param string|null $value
      *
      * @return bool
      */
@@ -209,10 +210,48 @@ trait ConvertsDataTypes
         return false;
     }
 
+    protected function convertDateTime(?string $string): ?Carbon
+    {
+        $value = $this->get($string);
+        if (null === $value) {
+            return null;
+        }
+        if ('' === $value) {
+            return null;
+        }
+        if (10 === strlen($value)) {
+            // probably a date format.
+            try {
+                $carbon = Carbon::createFromFormat('Y-m-d', $value);
+            } catch (InvalidDateException $e) {
+                Log::error(sprintf('[1] "%s" is not a valid date: %s', $value, $e->getMessage()));
+                return null;
+            } catch (InvalidFormatException $e) {
+                Log::error(sprintf('[2] "%s" is of an invalid format: %s', $value, $e->getMessage()));
+
+                return null;
+            }
+            return $carbon;
+        }
+        // is an atom string, I hope?
+        try {
+            $carbon = Carbon::parse($value);
+        } catch (InvalidDateException $e) {
+            Log::error(sprintf('[3] "%s" is not a valid date or time: %s', $value, $e->getMessage()));
+
+            return null;
+        } catch (InvalidFormatException $e) {
+            Log::error(sprintf('[4] "%s" is of an invalid format: %s', $value, $e->getMessage()));
+
+            return null;
+        }
+        return $carbon;
+    }
+
     /**
      * Return floating value.
      *
-     * @param  string  $field
+     * @param string $field
      *
      * @return float|null
      */
@@ -227,7 +266,7 @@ trait ConvertsDataTypes
     }
 
     /**
-     * @param  string|null  $string
+     * @param string|null $string
      *
      * @return Carbon|null
      */
@@ -259,7 +298,7 @@ trait ConvertsDataTypes
      * Returns all data in the request, or omits the field if not set,
      * according to the config from the request. This is the way.
      *
-     * @param  array  $fields
+     * @param array $fields
      *
      * @return array
      */
@@ -280,7 +319,7 @@ trait ConvertsDataTypes
      * Abstract method that always exists in the Request classes that use this
      * trait, OR a stub needs to be added by any other class that uses this train.
      *
-     * @param  mixed  $key
+     * @param mixed $key
      * @return mixed
      */
     abstract public function has($key);
@@ -288,7 +327,7 @@ trait ConvertsDataTypes
     /**
      * Return date or NULL.
      *
-     * @param  string  $field
+     * @param string $field
      *
      * @return Carbon|null
      */
@@ -310,7 +349,7 @@ trait ConvertsDataTypes
     /**
      * Parse to integer
      *
-     * @param  string|null  $string
+     * @param string|null $string
      *
      * @return int|null
      */
@@ -329,7 +368,7 @@ trait ConvertsDataTypes
     /**
      * Return integer value, or NULL when it's not set.
      *
-     * @param  string  $field
+     * @param string $field
      *
      * @return int|null
      */

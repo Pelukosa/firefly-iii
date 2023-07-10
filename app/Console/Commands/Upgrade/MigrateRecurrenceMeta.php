@@ -24,6 +24,7 @@ declare(strict_types=1);
 
 namespace FireflyIII\Console\Commands\Upgrade;
 
+use FireflyIII\Console\Commands\ShowsFriendlyMessages;
 use FireflyIII\Exceptions\FireflyException;
 use FireflyIII\Models\Recurrence;
 use FireflyIII\Models\RecurrenceMeta;
@@ -38,6 +39,8 @@ use Psr\Container\NotFoundExceptionInterface;
  */
 class MigrateRecurrenceMeta extends Command
 {
+    use ShowsFriendlyMessages;
+
     public const CONFIG_NAME = '481_migrate_recurrence_meta';
     /**
      * The console command description.
@@ -63,25 +66,21 @@ class MigrateRecurrenceMeta extends Command
      */
     public function handle(): int
     {
-        $start = microtime(true);
         if ($this->isExecuted() && true !== $this->option('force')) {
-            $this->warn('This command has already been executed.');
+            $this->friendlyInfo('This command has already been executed.');
 
             return 0;
         }
         $count = $this->migrateMetaData();
 
         if (0 === $count) {
-            $this->line('No recurrence meta data migrated.');
+            $this->friendlyPositive('No recurrence meta data migrated.');
         }
         if ($count > 0) {
-            $this->line(sprintf('Migrated %d meta data entries', $count));
+            $this->friendlyInfo(sprintf('Migrated %d meta data entries', $count));
         }
 
         $this->markAsExecuted();
-
-        $end = round(microtime(true) - $start, 2);
-        $this->info(sprintf('Migrated recurrence meta data in %s seconds.', $end));
 
         return 0;
     }
@@ -119,7 +118,7 @@ class MigrateRecurrenceMeta extends Command
     }
 
     /**
-     * @param  RecurrenceMeta  $meta
+     * @param RecurrenceMeta $meta
      *
      * @return int
      * @throws JsonException

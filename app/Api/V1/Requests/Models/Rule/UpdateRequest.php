@@ -146,12 +146,12 @@ class UpdateRequest extends FormRequest
             'rule_group_id'              => 'belongsToUser:rule_groups',
             'rule_group_title'           => 'nullable|between:1,255|belongsToUser:rule_groups,title',
             'trigger'                    => 'in:store-journal,update-journal',
-            'triggers.*.type'            => 'required|in:'.implode(',', $validTriggers),
-            'triggers.*.value'           => 'required_if:actions.*.type,'.$contextTriggers.'|min:1|ruleTriggerValue|max:1024',
+            'triggers.*.type'            => 'required|in:' . implode(',', $validTriggers),
+            'triggers.*.value'           => 'required_if:actions.*.type,' . $contextTriggers . '|min:1|ruleTriggerValue|max:1024',
             'triggers.*.stop_processing' => [new IsBoolean()],
             'triggers.*.active'          => [new IsBoolean()],
-            'actions.*.type'             => 'required|in:'.implode(',', $validActions),
-            'actions.*.value'            => 'required_if:actions.*.type,'.$contextActions.'|ruleActionValue',
+            'actions.*.type'             => 'required|in:' . implode(',', $validActions),
+            'actions.*.value'            => 'required_if:actions.*.type,' . $contextActions . '|ruleActionValue',
             'actions.*.stop_processing'  => [new IsBoolean()],
             'actions.*.active'           => [new IsBoolean()],
             'strict'                     => [new IsBoolean()],
@@ -164,7 +164,7 @@ class UpdateRequest extends FormRequest
     /**
      * Configure the validator instance.
      *
-     * @param  Validator  $validator
+     * @param Validator $validator
      *
      * @return void
      */
@@ -183,7 +183,7 @@ class UpdateRequest extends FormRequest
     /**
      * Adds an error to the validator when there are no repetitions in the array of data.
      *
-     * @param  Validator  $validator
+     * @param Validator $validator
      */
     protected function atLeastOneTrigger(Validator $validator): void
     {
@@ -198,7 +198,7 @@ class UpdateRequest extends FormRequest
     /**
      * Adds an error to the validator when there are no repetitions in the array of data.
      *
-     * @param  Validator  $validator
+     * @param Validator $validator
      */
     protected function atLeastOneValidTrigger(Validator $validator): void
     {
@@ -227,7 +227,7 @@ class UpdateRequest extends FormRequest
     /**
      * Adds an error to the validator when there are no repetitions in the array of data.
      *
-     * @param  Validator  $validator
+     * @param Validator $validator
      */
     protected function atLeastOneAction(Validator $validator): void
     {
@@ -242,7 +242,7 @@ class UpdateRequest extends FormRequest
     /**
      * Adds an error to the validator when there are no repetitions in the array of data.
      *
-     * @param  Validator  $validator
+     * @param Validator $validator
      */
     protected function atLeastOneValidAction(Validator $validator): void
     {

@@ -61,6 +61,10 @@ return [
     'invalid_selection'              => 'Váš výběr je neplatný.',
     'belongs_user'                   => 'Tato hodnota není platná pro toto pole.',
     'at_least_one_transaction'       => 'Potřebujete alespoň jednu transakci.',
+    'recurring_transaction_id'       => 'Need at least one transaction.',
+    'need_id_to_match'               => 'You need to submit this entry with an ID for the API to be able to match it.',
+    'too_many_unmatched'             => 'Too many submitted transactions cannot be matched to their respective database entries. Make sure existing entries have a valid ID.',
+    'id_does_not_match'              => 'Submitted ID #:id does not match expected ID. Make sure it matches or omit the field.',
     'at_least_one_repetition'        => 'Potřebujete alespoň jedno opakování.',
     'require_repeat_until'           => 'Vyžaduje buď několik opakování nebo datum ukončení (repeat_until). Ne obojí.',
     'require_currency_info'          => 'Obsah tohoto pole je neplatný bez informace o měně.',
@@ -230,17 +234,20 @@ return [
 
     // validation of accounts:
     'withdrawal_source_need_data' => 'Pro pokračování je potřeba získat platné ID zdrojového účtu a/nebo platný název zdrojového účtu.',
-    'withdrawal_source_bad_data'  => 'Nelze najít platný zdrojový účet při hledání ID „:id“ nebo jména „:name“.',
-    'withdrawal_dest_need_data'   => 'Pro pokračování je potřeba získat platné ID zdrojového účtu a/nebo platný název zdrojového účtu.',
+    'withdrawal_source_bad_data'  => '[a] Could not find a valid source account when searching for ID ":id" or name ":name".',
+    'withdrawal_dest_need_data'   => '[a] Need to get a valid destination account ID and/or valid destination account name to continue.',
     'withdrawal_dest_bad_data'    => 'Při hledání ID „:id“ nebo jména „:name“ nelze najít platný cílový účet.',
+
+    'withdrawal_dest_iban_exists' => 'This destination account IBAN is already in use by an asset account or a liability and cannot be used as a withdrawal destination.',
+    'deposit_src_iban_exists'     => 'This source account IBAN is already in use by an asset account or a liability and cannot be used as a deposit source.',
 
     'reconciliation_source_bad_data' => 'Could not find a valid reconciliation account when searching for ID ":id" or name ":name".',
 
-    'generic_source_bad_data' => 'Nelze najít platný zdrojový účet při hledání ID „:id“ nebo jména „:name“.',
+    'generic_source_bad_data' => '[e] Could not find a valid source account when searching for ID ":id" or name ":name".',
 
     'deposit_source_need_data' => 'Pro pokračování je potřeba získat platné ID zdrojového účtu a/nebo platný název zdrojového účtu.',
-    'deposit_source_bad_data'  => 'Nelze najít platný zdrojový účet při hledání ID „:id“ nebo jména „:name“.',
-    'deposit_dest_need_data'   => 'Pro pokračování je potřeba získat platné cílové ID účtu a/nebo platné jméno cílového účtu.',
+    'deposit_source_bad_data'  => '[b] Could not find a valid source account when searching for ID ":id" or name ":name".',
+    'deposit_dest_need_data'   => '[b] Need to get a valid destination account ID and/or valid destination account name to continue.',
     'deposit_dest_bad_data'    => 'Při hledání ID „:id“ nebo jména „:name“ nelze najít platný cílový účet.',
     'deposit_dest_wrong_type'  => 'Předložený cílový účet není správného typu.',
 
@@ -257,14 +264,14 @@ return [
 
 
     'transfer_source_need_data' => 'Pro pokračování je potřeba získat platné ID zdrojového účtu a/nebo platný název zdrojového účtu.',
-    'transfer_source_bad_data'  => 'Nelze najít platný zdrojový účet při hledání ID „:id“ nebo jména „:name“.',
-    'transfer_dest_need_data'   => 'Pro pokračování je potřeba získat platné cílové ID účtu a/nebo platné jméno cílového účtu.',
+    'transfer_source_bad_data'  => '[c] Could not find a valid source account when searching for ID ":id" or name ":name".',
+    'transfer_dest_need_data'   => '[c] Need to get a valid destination account ID and/or valid destination account name to continue.',
     'transfer_dest_bad_data'    => 'Při hledání ID „:id“ nebo jména „:name“ nelze najít platný cílový účet.',
     'need_id_in_edit'           => 'Každé rozdělení musí mít transakci_journal_id (platné ID nebo 0).',
 
     'ob_source_need_data'           => 'Pro pokračování je potřeba získat platné ID zdrojového účtu a/nebo platný název zdrojového účtu.',
     'lc_source_need_data'           => 'Pro pokračování je třeba získat platné ID zdrojového účtu.',
-    'ob_dest_need_data'             => 'Pro pokračování je potřeba získat platné cílové ID účtu a/nebo platné jméno cílového účtu.',
+    'ob_dest_need_data'             => '[d] Need to get a valid destination account ID and/or valid destination account name to continue.',
     'ob_dest_bad_data'              => 'Při hledání ID „:id“ nebo jména „:name“ nelze najít platný cílový účet.',
     'reconciliation_either_account' => 'To submit a reconciliation, you must submit either a source or a destination account. Not both, not neither.',
 

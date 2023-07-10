@@ -24,6 +24,7 @@ declare(strict_types=1);
 
 namespace FireflyIII\Console\Commands\Upgrade;
 
+use FireflyIII\Console\Commands\ShowsFriendlyMessages;
 use FireflyIII\Exceptions\FireflyException;
 use FireflyIII\Models\Recurrence;
 use FireflyIII\Models\RecurrenceTransaction;
@@ -37,6 +38,8 @@ use Psr\Container\NotFoundExceptionInterface;
  */
 class MigrateRecurrenceType extends Command
 {
+    use ShowsFriendlyMessages;
+
     public const CONFIG_NAME = '550_migrate_recurrence_type';
     /**
      * The console command description.
@@ -61,19 +64,15 @@ class MigrateRecurrenceType extends Command
      */
     public function handle(): int
     {
-        $start = microtime(true);
         if ($this->isExecuted() && true !== $this->option('force')) {
-            $this->warn('This command has already been executed.');
+            $this->friendlyInfo('This command has already been executed.');
 
             return 0;
         }
 
         $this->migrateTypes();
-
         $this->markAsExecuted();
 
-        $end = round(microtime(true) - $start, 2);
-        $this->info(sprintf('Update recurring transaction types in %s seconds.', $end));
 
         return 0;
     }
@@ -86,11 +85,7 @@ class MigrateRecurrenceType extends Command
     private function isExecuted(): bool
     {
         $configVar = app('fireflyconfig')->get(self::CONFIG_NAME, false);
-        if (null !== $configVar) {
-            return (bool)$configVar->data;
-        }
-
-        return false;
+        return (bool)$configVar?->data;
     }
 
     /**
@@ -107,6 +102,10 @@ class MigrateRecurrenceType extends Command
         }
     }
 
+    /**
+     * @param Recurrence $recurrence
+     * @return void
+     */
     private function migrateRecurrence(Recurrence $recurrence): void
     {
         $originalType                    = (int)$recurrence->transaction_type_id;
@@ -118,7 +117,7 @@ class MigrateRecurrenceType extends Command
             $transaction->transaction_type_id = $originalType;
             $transaction->save();
         }
-        $this->line(sprintf('Updated recurrence #%d to new transaction type model.', $recurrence->id));
+        $this->friendlyInfo(sprintf('Updated recurrence #%d to new transaction type model.', $recurrence->id));
     }
 
     /**

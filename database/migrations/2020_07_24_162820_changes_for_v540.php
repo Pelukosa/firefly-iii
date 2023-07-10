@@ -42,7 +42,7 @@ class ChangesForV540 extends Migration
      */
     public function down(): void
     {
-        if(Schema::hasColumn('oauth_clients', 'provider')) {
+        if (Schema::hasColumn('oauth_clients', 'provider')) {
             try {
                 Schema::table(
                     'oauth_clients',
@@ -50,13 +50,13 @@ class ChangesForV540 extends Migration
                         $table->dropColumn('provider');
                     }
                 );
-            } catch (QueryException|ColumnDoesNotExist $e) {
+            } catch (QueryException | ColumnDoesNotExist $e) {
                 Log::error(sprintf('Could not execute query: %s', $e->getMessage()));
                 Log::error('If the column or index already exists (see error), this is not an problem. Otherwise, please open a GitHub discussion.');
             }
         }
 
-        if(Schema::hasColumn('accounts', 'order')) {
+        if (Schema::hasColumn('accounts', 'order')) {
             try {
                 Schema::table(
                     'accounts',
@@ -64,22 +64,34 @@ class ChangesForV540 extends Migration
                         $table->dropColumn('order');
                     }
                 );
-            } catch (QueryException|ColumnDoesNotExist $e) {
+            } catch (QueryException | ColumnDoesNotExist $e) {
                 Log::error(sprintf('Could not execute query: %s', $e->getMessage()));
                 Log::error('If the column or index already exists (see error), this is not an problem. Otherwise, please open a GitHub discussion.');
             }
         }
-        if(Schema::hasColumn('bills', 'end_date') && Schema::hasColumn('bills', 'extension_date')) {
+        // in two steps for sqlite
+        if (Schema::hasColumn('bills', 'end_date')) {
             try {
                 Schema::table(
                     'bills',
                     static function (Blueprint $table) {
                         $table->dropColumn('end_date');
-
+                    }
+                );
+            } catch (QueryException | ColumnDoesNotExist $e) {
+                Log::error(sprintf('Could not execute query: %s', $e->getMessage()));
+                Log::error('If the column or index already exists (see error), this is not an problem. Otherwise, please open a GitHub discussion.');
+            }
+        }
+        if (Schema::hasColumn('bills', 'extension_date')) {
+            try {
+                Schema::table(
+                    'bills',
+                    static function (Blueprint $table) {
                         $table->dropColumn('extension_date');
                     }
                 );
-            } catch (QueryException|ColumnDoesNotExist $e) {
+            } catch (QueryException | ColumnDoesNotExist $e) {
                 Log::error(sprintf('Could not execute query: %s', $e->getMessage()));
                 Log::error('If the column or index already exists (see error), this is not an problem. Otherwise, please open a GitHub discussion.');
             }
@@ -93,7 +105,7 @@ class ChangesForV540 extends Migration
      */
     public function up(): void
     {
-        if(!Schema::hasColumn('accounts', 'order')) {
+        if (!Schema::hasColumn('accounts', 'order')) {
             try {
                 Schema::table(
                     'accounts',
@@ -107,7 +119,7 @@ class ChangesForV540 extends Migration
             }
         }
 
-        if(!Schema::hasColumn('oauth_clients', 'provider')) {
+        if (!Schema::hasColumn('oauth_clients', 'provider')) {
             try {
                 Schema::table(
                     'oauth_clients',
@@ -121,7 +133,7 @@ class ChangesForV540 extends Migration
             }
         }
 
-        if(!Schema::hasColumn('bills', 'end_date') && !Schema::hasColumn('bills', 'extension_date')) {
+        if (!Schema::hasColumn('bills', 'end_date') && !Schema::hasColumn('bills', 'extension_date')) {
             try {
                 Schema::table(
                     'bills',

@@ -65,14 +65,14 @@ return [
 
         'sendmail' => [
             'transport' => 'sendmail',
-            'path'      => '/usr/sbin/sendmail -bs',
+            'path'      => envNonEmpty('MAIL_SENDMAIL_COMMAND', '/usr/sbin/sendmail -bs'),
         ],
         'log'      => [
             'transport' => 'log',
             'channel'   => env('MAIL_LOG_CHANNEL', 'stack'),
             'level'     => 'notice',
         ],
-        'null'      => [
+        'null'     => [
             'transport' => 'log',
             'channel'   => env('MAIL_LOG_CHANNEL', 'stack'),
             'level'     => 'notice',

@@ -24,27 +24,19 @@ declare(strict_types=1);
 namespace FireflyIII\Console\Commands\Correction;
 
 use Exception;
+use FireflyIII\Console\Commands\ShowsFriendlyMessages;
 use FireflyIII\Models\TransactionGroup;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Log;
 
 /**
  * Class DeleteEmptyGroups
  */
 class DeleteEmptyGroups extends Command
 {
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
+    use ShowsFriendlyMessages;
+
     protected $description = 'Delete empty transaction groups.';
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'firefly-iii:delete-empty-groups';
+    protected $signature   = 'firefly-iii:delete-empty-groups';
 
     /**
      * Execute the console command.
@@ -55,16 +47,13 @@ class DeleteEmptyGroups extends Command
      */
     public function handle(): int
     {
-        Log::debug(sprintf('Now in %s', __METHOD__));
-        $start = microtime(true);
         $groupIds
-               = TransactionGroup::leftJoin('transaction_journals', 'transaction_groups.id', '=', 'transaction_journals.transaction_group_id')
-                                 ->whereNull('transaction_journals.id')->get(['transaction_groups.id'])->pluck('id')->toArray();
+            = TransactionGroup::leftJoin('transaction_journals', 'transaction_groups.id', '=', 'transaction_journals.transaction_group_id')
+                              ->whereNull('transaction_journals.id')->get(['transaction_groups.id'])->pluck('id')->toArray();
 
         $total = count($groupIds);
-        Log::debug(sprintf('Count is %d', $total));
         if ($total > 0) {
-            $this->info(sprintf('Deleted %d empty transaction group(s).', $total));
+            $this->friendlyInfo(sprintf('Deleted %d empty transaction group(s).', $total));
 
             // again, chunks for SQLite.
             $chunks = array_chunk($groupIds, 500);
@@ -72,8 +61,9 @@ class DeleteEmptyGroups extends Command
                 TransactionGroup::whereNull('deleted_at')->whereIn('id', $chunk)->delete();
             }
         }
-        $end = round(microtime(true) - $start, 2);
-        $this->info(sprintf('Verified empty groups in %s seconds', $end));
+        if (0 === $total) {
+            $this->friendlyInfo('Verified there are no empty groups.');
+        }
 
         return 0;
     }

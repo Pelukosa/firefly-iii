@@ -218,7 +218,7 @@ class ExportDataGenerator
     }
 
     /**
-     * @param  User  $user
+     * @param User $user
      */
     public function setUser(User $user): void
     {
@@ -980,7 +980,7 @@ class ExportDataGenerator
     }
 
     /**
-     * @param  Collection  $accounts
+     * @param Collection $accounts
      */
     public function setAccounts(Collection $accounts): void
     {
@@ -988,7 +988,7 @@ class ExportDataGenerator
     }
 
     /**
-     * @param  array  $tags
+     * @param array $tags
      *
      * @return string
      */
@@ -1014,7 +1014,7 @@ class ExportDataGenerator
     }
 
     /**
-     * @param  Carbon  $end
+     * @param Carbon $end
      */
     public function setEnd(Carbon $end): void
     {
@@ -1022,7 +1022,7 @@ class ExportDataGenerator
     }
 
     /**
-     * @param  bool  $exportAccounts
+     * @param bool $exportAccounts
      */
     public function setExportAccounts(bool $exportAccounts): void
     {
@@ -1030,7 +1030,7 @@ class ExportDataGenerator
     }
 
     /**
-     * @param  bool  $exportBills
+     * @param bool $exportBills
      */
     public function setExportBills(bool $exportBills): void
     {
@@ -1038,7 +1038,7 @@ class ExportDataGenerator
     }
 
     /**
-     * @param  bool  $exportBudgets
+     * @param bool $exportBudgets
      */
     public function setExportBudgets(bool $exportBudgets): void
     {
@@ -1046,7 +1046,7 @@ class ExportDataGenerator
     }
 
     /**
-     * @param  bool  $exportCategories
+     * @param bool $exportCategories
      */
     public function setExportCategories(bool $exportCategories): void
     {
@@ -1054,7 +1054,7 @@ class ExportDataGenerator
     }
 
     /**
-     * @param  bool  $exportPiggies
+     * @param bool $exportPiggies
      */
     public function setExportPiggies(bool $exportPiggies): void
     {
@@ -1062,7 +1062,7 @@ class ExportDataGenerator
     }
 
     /**
-     * @param  bool  $exportRecurring
+     * @param bool $exportRecurring
      */
     public function setExportRecurring(bool $exportRecurring): void
     {
@@ -1070,7 +1070,7 @@ class ExportDataGenerator
     }
 
     /**
-     * @param  bool  $exportRules
+     * @param bool $exportRules
      */
     public function setExportRules(bool $exportRules): void
     {
@@ -1078,7 +1078,7 @@ class ExportDataGenerator
     }
 
     /**
-     * @param  bool  $exportTags
+     * @param bool $exportTags
      */
     public function setExportTags(bool $exportTags): void
     {
@@ -1086,7 +1086,7 @@ class ExportDataGenerator
     }
 
     /**
-     * @param  bool  $exportTransactions
+     * @param bool $exportTransactions
      */
     public function setExportTransactions(bool $exportTransactions): void
     {
@@ -1094,7 +1094,7 @@ class ExportDataGenerator
     }
 
     /**
-     * @param  Carbon  $start
+     * @param Carbon $start
      */
     public function setStart(Carbon $start): void
     {

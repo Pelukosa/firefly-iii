@@ -88,12 +88,12 @@ class CategoryReportGenerator
     /**
      * Process one of the spent arrays from the operations method.
      *
-     * @param  array  $data
+     * @param array $data
      */
     private function processOpsArray(array $data): void
     {
         /**
-         * @var int $currencyId
+         * @var int   $currencyId
          * @var array $currencyRow
          */
         foreach ($data as $currencyId => $currencyRow) {
@@ -102,8 +102,8 @@ class CategoryReportGenerator
     }
 
     /**
-     * @param  int  $currencyId
-     * @param  array  $currencyRow
+     * @param int   $currencyId
+     * @param array $currencyRow
      */
     private function processCurrencyArray(int $currencyId, array $currencyRow): void
     {
@@ -119,7 +119,7 @@ class CategoryReportGenerator
         ];
 
         /**
-         * @var int $categoryId
+         * @var int   $categoryId
          * @var array $categoryRow
          */
         foreach ($currencyRow['categories'] as $categoryId => $categoryRow) {
@@ -128,10 +128,10 @@ class CategoryReportGenerator
     }
 
     /**
-     * @param  int  $currencyId
-     * @param  array  $currencyRow
-     * @param  int  $categoryId
-     * @param  array  $categoryRow
+     * @param int   $currencyId
+     * @param array $currencyRow
+     * @param int   $categoryId
+     * @param array $categoryRow
      */
     private function processCategoryRow(int $currencyId, array $currencyRow, int $categoryId, array $categoryRow): void
     {
@@ -179,7 +179,7 @@ class CategoryReportGenerator
     }
 
     /**
-     * @param  Collection  $accounts
+     * @param Collection $accounts
      */
     public function setAccounts(Collection $accounts): void
     {
@@ -187,7 +187,7 @@ class CategoryReportGenerator
     }
 
     /**
-     * @param  Carbon  $end
+     * @param Carbon $end
      */
     public function setEnd(Carbon $end): void
     {
@@ -195,7 +195,7 @@ class CategoryReportGenerator
     }
 
     /**
-     * @param  Carbon  $start
+     * @param Carbon $start
      */
     public function setStart(Carbon $start): void
     {
@@ -203,7 +203,7 @@ class CategoryReportGenerator
     }
 
     /**
-     * @param  User  $user
+     * @param User $user
      */
     public function setUser(User $user): void
     {

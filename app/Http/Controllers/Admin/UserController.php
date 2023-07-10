@@ -36,8 +36,8 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
-use Illuminate\View\View;
 use Illuminate\Support\Facades\Log;
+use Illuminate\View\View;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
@@ -66,13 +66,11 @@ class UserController extends Controller
             }
         );
         $this->middleware(IsDemoUser::class)->except(['index', 'show']);
-        $loginProvider          = config('firefly.login_provider');
-        $authGuard              = config('firefly.authentication_guard');
-        $this->externalIdentity = 'eloquent' !== $loginProvider || 'web' !== $authGuard;
+        $this->externalIdentity = 'web' !== config('firefly.authentication_guard');
     }
 
     /**
-     * @param  User  $user
+     * @param User $user
      *
      * @return Application|Factory|RedirectResponse|Redirector|View
      */
@@ -90,7 +88,7 @@ class UserController extends Controller
     }
 
     /**
-     * @param  InvitedUser  $invitedUser
+     * @param InvitedUser $invitedUser
      * @return RedirectResponse
      */
     public function deleteInvite(InvitedUser $invitedUser): JsonResponse
@@ -110,7 +108,7 @@ class UserController extends Controller
     /**
      * Destroy a user.
      *
-     * @param  User  $user
+     * @param User $user
      *
      * @return RedirectResponse|Redirector
      */
@@ -130,7 +128,7 @@ class UserController extends Controller
     /**
      * Edit user form.
      *
-     * @param  User  $user
+     * @param User $user
      *
      * @return Factory|View
      */
@@ -193,7 +191,7 @@ class UserController extends Controller
     }
 
     /**
-     * @param  InviteUserFormRequest  $request
+     * @param InviteUserFormRequest $request
      * @return RedirectResponse
      */
     public function invite(InviteUserFormRequest $request): RedirectResponse
@@ -211,7 +209,7 @@ class UserController extends Controller
     /**
      * Show single user.
      *
-     * @param  User  $user
+     * @param User $user
      *
      * @return Factory|View
      */
@@ -239,8 +237,8 @@ class UserController extends Controller
     /**
      * Update single user.
      *
-     * @param  UserFormRequest  $request
-     * @param  User  $user
+     * @param UserFormRequest $request
+     * @param User            $user
      *
      * @return $this|RedirectResponse|Redirector
      */

@@ -33,8 +33,8 @@ use FireflyIII\Repositories\ObjectGroup\CreatesObjectGroups;
 use FireflyIII\Services\Internal\Support\BillServiceTrait;
 use FireflyIII\User;
 use Illuminate\Support\Collection;
-use JsonException;
 use Illuminate\Support\Facades\Log;
+use JsonException;
 
 /**
  * Class BillUpdateService
@@ -47,8 +47,8 @@ class BillUpdateService
     protected User $user;
 
     /**
-     * @param  Bill  $bill
-     * @param  array  $data
+     * @param Bill  $bill
+     * @param array $data
      *
      * @return Bill
      * @throws FireflyException
@@ -141,8 +141,8 @@ class BillUpdateService
     }
 
     /**
-     * @param  Bill  $bill
-     * @param  array  $data
+     * @param Bill  $bill
+     * @param array $data
      *
      * @return Bill
      */
@@ -185,9 +185,9 @@ class BillUpdateService
     }
 
     /**
-     * @param  Bill  $bill
-     * @param  int  $oldOrder
-     * @param  int  $newOrder
+     * @param Bill $bill
+     * @param int  $oldOrder
+     * @param int  $newOrder
      */
     private function updateOrder(Bill $bill, int $oldOrder, int $newOrder): void
     {
@@ -208,9 +208,9 @@ class BillUpdateService
     }
 
     /**
-     * @param  Bill  $bill
-     * @param  array  $oldData
-     * @param  array  $newData
+     * @param Bill  $bill
+     * @param array $oldData
+     * @param array $newData
      */
     private function updateBillTriggers(Bill $bill, array $oldData, array $newData): void
     {
@@ -244,10 +244,10 @@ class BillUpdateService
     }
 
     /**
-     * @param  Collection  $rules
-     * @param  string  $key
-     * @param  string  $oldValue
-     * @param  string  $newValue
+     * @param Collection $rules
+     * @param string     $key
+     * @param string     $oldValue
+     * @param string     $newValue
      */
     private function updateRules(Collection $rules, string $key, string $oldValue, string $newValue): void
     {
@@ -270,8 +270,8 @@ class BillUpdateService
     }
 
     /**
-     * @param  Rule  $rule
-     * @param  string  $key
+     * @param Rule   $rule
+     * @param string $key
      *
      * @return RuleTrigger|null
      */

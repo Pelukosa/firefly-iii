@@ -85,7 +85,7 @@ class MonthReportGenerator implements ReportGeneratorInterface
     /**
      * Empty budget setter.
      *
-     * @param  Collection  $budgets
+     * @param Collection $budgets
      *
      * @return ReportGeneratorInterface
      */
@@ -97,7 +97,7 @@ class MonthReportGenerator implements ReportGeneratorInterface
     /**
      * Set the end date for this report.
      *
-     * @param  Carbon  $date
+     * @param Carbon $date
      *
      * @return ReportGeneratorInterface
      */
@@ -111,7 +111,7 @@ class MonthReportGenerator implements ReportGeneratorInterface
     /**
      * Set the expenses involved in this report.
      *
-     * @param  Collection  $expense
+     * @param Collection $expense
      *
      * @return ReportGeneratorInterface
      */
@@ -123,7 +123,7 @@ class MonthReportGenerator implements ReportGeneratorInterface
     /**
      * Set the start date for this report.
      *
-     * @param  Carbon  $date
+     * @param Carbon $date
      *
      * @return ReportGeneratorInterface
      */
@@ -137,7 +137,7 @@ class MonthReportGenerator implements ReportGeneratorInterface
     /**
      * Unused tag setter.
      *
-     * @param  Collection  $tags
+     * @param Collection $tags
      *
      * @return ReportGeneratorInterface
      */
@@ -174,7 +174,7 @@ class MonthReportGenerator implements ReportGeneratorInterface
     /**
      * Set the categories involved in this report.
      *
-     * @param  Collection  $categories
+     * @param Collection $categories
      *
      * @return ReportGeneratorInterface
      */
@@ -188,7 +188,7 @@ class MonthReportGenerator implements ReportGeneratorInterface
     /**
      * Set the involved accounts.
      *
-     * @param  Collection  $accounts
+     * @param Collection $accounts
      *
      * @return ReportGeneratorInterface
      */

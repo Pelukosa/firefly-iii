@@ -52,7 +52,7 @@ class ChangesForV440 extends Migration
                     }
                 }
             );
-        } catch (QueryException|ColumnDoesNotExist $e) {
+        } catch (QueryException | ColumnDoesNotExist $e) {
             Log::error(sprintf('Could not execute query: %s', $e->getMessage()));
             Log::error('If the column or index already exists (see error), this is not an problem. Otherwise, please open a GitHub discussion.');
         }
@@ -89,7 +89,7 @@ class ChangesForV440 extends Migration
                 Log::error('If this table exists already (see the error message), this is not a problem. Other errors? Please open a discussion on GitHub.');
             }
         }
-        if(!Schema::hasColumn('transactions', 'transaction_currency_id')) {
+        if (!Schema::hasColumn('transactions', 'transaction_currency_id')) {
             try {
                 Schema::table(
                     'transactions',

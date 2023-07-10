@@ -36,9 +36,9 @@ use Psr\Container\NotFoundExceptionInterface;
 class Navigation
 {
     /**
-     * @param  Carbon  $theDate
-     * @param  string  $repeatFreq
-     * @param  int  $skip
+     * @param Carbon $theDate
+     * @param string $repeatFreq
+     * @param int    $skip
      *
      * @return Carbon
      */
@@ -65,6 +65,14 @@ class Navigation
             'yearly'    => 'addYears',
             '1Y'        => 'addYears',
             'custom'    => 'addMonths', // custom? just add one month.
+            // last X periods? Jump the relevant month / quarter / year
+            'last7'     => 'addDays',
+            'last30'    => 'addMonths',
+            'last90'    => 'addMonths',
+            'last365'   => 'addYears',
+            'MTD'       => 'addMonths',
+            'QTD'       => 'addMonths',
+            'YTD'       => 'addYears',
         ];
         $modifierMap = [
             'quarter'   => 3,
@@ -72,6 +80,9 @@ class Navigation
             'quarterly' => 3,
             '6M'        => 6,
             'half-year' => 6,
+            'last7'     => 7,
+            'last90'    => 3,
+            'QTD'       => 3,
         ];
 
         if (!array_key_exists($repeatFreq, $functionMap)) {
@@ -102,9 +113,9 @@ class Navigation
     }
 
     /**
-     * @param  Carbon  $start
-     * @param  Carbon  $end
-     * @param  string  $range
+     * @param Carbon $start
+     * @param Carbon $end
+     * @param string $range
      *
      * @return array
      *
@@ -163,8 +174,8 @@ class Navigation
     }
 
     /**
-     * @param  Carbon  $theDate
-     * @param  string  $repeatFreq
+     * @param Carbon $theDate
+     * @param string $repeatFreq
      *
      * @return Carbon
      */
@@ -228,8 +239,8 @@ class Navigation
     }
 
     /**
-     * @param  Carbon  $end
-     * @param  string  $repeatFreq
+     * @param Carbon $end
+     * @param string $repeatFreq
      *
      * @return Carbon
      */
@@ -280,6 +291,23 @@ class Navigation
 
             return $currentEnd;
         }
+
+        $result = match ($repeatFreq) {
+            'last7' => $currentEnd->addDays(7)->startOfDay(),
+            'last30' => $currentEnd->addDays(30)->startOfDay(),
+            'last90' => $currentEnd->addDays(90)->startOfDay(),
+            'last365' => $currentEnd->addDays(365)->startOfDay(),
+            'MTD' => $currentEnd->startOfMonth()->startOfDay(),
+            'QTD' => $currentEnd->firstOfQuarter()->startOfDay(),
+            'YTD' => $currentEnd->startOfYear()->startOfDay(),
+            default => null,
+        };
+        if (null !== $result) {
+            return $result;
+        }
+        unset($result);
+
+
         if (!array_key_exists($repeatFreq, $functionMap)) {
             Log::error(sprintf('Cannot do endOfPeriod for $repeat_freq "%s"', $repeatFreq));
 
@@ -306,9 +334,9 @@ class Navigation
     }
 
     /**
-     * @param  Carbon  $theCurrentEnd
-     * @param  string  $repeatFreq
-     * @param  Carbon|null  $maxDate
+     * @param Carbon      $theCurrentEnd
+     * @param string      $repeatFreq
+     * @param Carbon|null $maxDate
      *
      * @return Carbon
      */
@@ -348,7 +376,8 @@ class Navigation
     /**
      * Returns the user's view range and if necessary, corrects the dynamic view
      * range to a normal range.
-     * @param  bool  $correct
+     *
+     * @param bool $correct
      * @return string
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
@@ -377,8 +406,8 @@ class Navigation
     }
 
     /**
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Carbon $start
+     * @param Carbon $end
      *
      * @return array
      * @throws FireflyException
@@ -414,11 +443,11 @@ class Navigation
     }
 
     /**
-     * If the date difference between start and end is less than a month, method returns "Y-m-d". If the difference is less than a year,
-     * method returns "Y-m". If the date difference is larger, method returns "Y".
+     * If the date difference between start and end is less than a month, method returns "Y-m-d". If the difference is
+     * less than a year, method returns "Y-m". If the date difference is larger, method returns "Y".
      *
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Carbon $start
+     * @param Carbon $end
      *
      * @return string
      */
@@ -437,8 +466,8 @@ class Navigation
     }
 
     /**
-     * @param  Carbon  $theDate
-     * @param  string  $repeatFrequency
+     * @param Carbon $theDate
+     * @param string $repeatFrequency
      *
      * @return string
      */
@@ -477,11 +506,12 @@ class Navigation
     }
 
     /**
-     * If the date difference between start and end is less than a month, method returns trans(config.month_and_day). If the difference is less than a year,
-     * method returns "config.month". If the date difference is larger, method returns "config.year".
+     * If the date difference between start and end is less than a month, method returns trans(config.month_and_day).
+     * If the difference is less than a year, method returns "config.month". If the date difference is larger, method
+     * returns "config.year".
      *
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Carbon $start
+     * @param Carbon $end
      *
      * @return string
      */
@@ -501,11 +531,11 @@ class Navigation
     }
 
     /**
-     * If the date difference between start and end is less than a month, method returns "endOfDay". If the difference is less than a year,
-     * method returns "endOfMonth". If the date difference is larger, method returns "endOfYear".
+     * If the date difference between start and end is less than a month, method returns "endOfDay". If the difference
+     * is less than a year, method returns "endOfMonth". If the date difference is larger, method returns "endOfYear".
      *
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Carbon $start
+     * @param Carbon $end
      *
      * @return string
      */
@@ -524,11 +554,11 @@ class Navigation
     }
 
     /**
-     * If the date difference between start and end is less than a month, method returns "1D". If the difference is less than a year,
-     * method returns "1M". If the date difference is larger, method returns "1Y".
+     * If the date difference between start and end is less than a month, method returns "1D". If the difference is
+     * less than a year, method returns "1M". If the date difference is larger, method returns "1Y".
      *
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Carbon $start
+     * @param Carbon $end
      *
      * @return string
      */
@@ -547,11 +577,11 @@ class Navigation
     }
 
     /**
-     * If the date difference between start and end is less than a month, method returns "%Y-%m-%d". If the difference is less than a year,
-     * method returns "%Y-%m". If the date difference is larger, method returns "%Y".
+     * If the date difference between start and end is less than a month, method returns "%Y-%m-%d". If the difference
+     * is less than a year, method returns "%Y-%m". If the date difference is larger, method returns "%Y".
      *
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Carbon $start
+     * @param Carbon $end
      *
      * @return string
      */
@@ -570,9 +600,9 @@ class Navigation
     }
 
     /**
-     * @param  Carbon  $theDate
-     * @param  string  $repeatFreq
-     * @param  int|null  $subtract
+     * @param Carbon   $theDate
+     * @param string   $repeatFreq
+     * @param int|null $subtract
      *
      * @return Carbon
      *
@@ -659,8 +689,8 @@ class Navigation
     }
 
     /**
-     * @param  string  $range
-     * @param  Carbon  $start
+     * @param string $range
+     * @param Carbon $start
      *
      * @return Carbon
      *
@@ -722,8 +752,8 @@ class Navigation
     }
 
     /**
-     * @param  string  $range
-     * @param  Carbon  $start
+     * @param string $range
+     * @param Carbon $start
      *
      * @return Carbon
      *

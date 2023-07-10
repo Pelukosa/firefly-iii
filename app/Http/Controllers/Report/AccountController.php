@@ -40,14 +40,14 @@ class AccountController extends Controller
     /**
      * Show partial overview for account balances.
      *
-     * @param  Collection  $accounts
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
-     * @return mixed|string
+     * @return string
      * @throws FireflyException
      */
-    public function general(Collection $accounts, Carbon $start, Carbon $end)
+    public function general(Collection $accounts, Carbon $start, Carbon $end): string
     {
         // chart properties for cache:
         $cache = new CacheProperties();

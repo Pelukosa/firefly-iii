@@ -32,8 +32,8 @@ use FireflyIII\Repositories\Currency\CurrencyRepositoryInterface;
 use FireflyIII\User;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Collection;
-use JsonException;
 use Illuminate\Support\Facades\Log;
+use JsonException;
 
 /**
  * Class AccountTasker.
@@ -43,9 +43,9 @@ class AccountTasker implements AccountTaskerInterface
     private User $user;
 
     /**
-     * @param  Collection  $accounts
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return array
      * @throws FireflyException
@@ -90,8 +90,6 @@ class AccountTasker implements AccountTaskerInterface
                 'currency_symbol'         => $currency->symbol,
                 'currency_name'           => $currency->name,
                 'currency_decimal_places' => $currency->decimal_places,
-                'start_balance'           => '0',
-                'end_balance'             => '0',
             ];
 
             // get first journal date:
@@ -118,9 +116,9 @@ class AccountTasker implements AccountTaskerInterface
     }
 
     /**
-     * @param  Carbon  $start
-     * @param  Carbon  $end
-     * @param  Collection  $accounts
+     * @param Carbon     $start
+     * @param Carbon     $end
+     * @param Collection $accounts
      *
      * @return array
      * @throws FireflyException
@@ -155,7 +153,7 @@ class AccountTasker implements AccountTaskerInterface
     }
 
     /**
-     * @param  array  $array
+     * @param array $array
      *
      * @return array
      * @throws FireflyException
@@ -218,9 +216,9 @@ class AccountTasker implements AccountTaskerInterface
     }
 
     /**
-     * @param  Carbon  $start
-     * @param  Carbon  $end
-     * @param  Collection  $accounts
+     * @param Carbon     $start
+     * @param Carbon     $end
+     * @param Collection $accounts
      *
      * @return array
      * @throws FireflyException
@@ -252,7 +250,7 @@ class AccountTasker implements AccountTaskerInterface
     }
 
     /**
-     * @param  array  $array
+     * @param array $array
      *
      * @return array
      * @throws FireflyException
@@ -314,9 +312,9 @@ class AccountTasker implements AccountTaskerInterface
     }
 
     /**
-     * @param  User|Authenticatable|null  $user
+     * @param User|Authenticatable|null $user
      */
-    public function setUser(User|Authenticatable|null $user): void
+    public function setUser(User | Authenticatable | null $user): void
     {
         if (null !== $user) {
             $this->user = $user;

@@ -61,6 +61,10 @@ return [
     'invalid_selection'              => 'Din markering er ikke gyldig.',
     'belongs_user'                   => 'Denne værdi er ikke gyldig for dette felt.',
     'at_least_one_transaction'       => 'Kræver mindst en overførsel.',
+    'recurring_transaction_id'       => 'Need at least one transaction.',
+    'need_id_to_match'               => 'You need to submit this entry with an ID for the API to be able to match it.',
+    'too_many_unmatched'             => 'Too many submitted transactions cannot be matched to their respective database entries. Make sure existing entries have a valid ID.',
+    'id_does_not_match'              => 'Submitted ID #:id does not match expected ID. Make sure it matches or omit the field.',
     'at_least_one_repetition'        => 'Kræver mindst en gentagelse.',
     'require_repeat_until'           => 'Kræver enten et antal af gentagelser, eller en slutdato (repeat_until). Ikke begge.',
     'require_currency_info'          => 'Indholdet af dette felt er ugyldigt uden møntfodsinformation.',
@@ -230,17 +234,20 @@ return [
 
     // validation of accounts:
     'withdrawal_source_need_data' => 'Det er nødvendigt at have et gyldigt kildekonto ID og/eller gyldigt kildekontonavn for at fortsætte.',
-    'withdrawal_source_bad_data'  => 'Kunne ikke finde en gyldig kildekonto ved søgning efter ID ":id" eller kontonavn ":name".',
-    'withdrawal_dest_need_data'   => 'Det er nødvendigt at have et gyldigt destinationskonto ID og/eller gyldigt destinationskontonavn for at fortsætte.',
+    'withdrawal_source_bad_data'  => '[a] Could not find a valid source account when searching for ID ":id" or name ":name".',
+    'withdrawal_dest_need_data'   => '[a] Need to get a valid destination account ID and/or valid destination account name to continue.',
     'withdrawal_dest_bad_data'    => 'Kunne ikke finde en gyldig destinationskonto, ved søgning efter ID ":id" eller navn ":name".',
+
+    'withdrawal_dest_iban_exists' => 'This destination account IBAN is already in use by an asset account or a liability and cannot be used as a withdrawal destination.',
+    'deposit_src_iban_exists'     => 'This source account IBAN is already in use by an asset account or a liability and cannot be used as a deposit source.',
 
     'reconciliation_source_bad_data' => 'Could not find a valid reconciliation account when searching for ID ":id" or name ":name".',
 
-    'generic_source_bad_data' => 'Kunne ikke finde en gyldig kildekonto ved søgning efter ID ":id" eller kontonavn ":name".',
+    'generic_source_bad_data' => '[e] Could not find a valid source account when searching for ID ":id" or name ":name".',
 
     'deposit_source_need_data' => 'Det er nødvendigt at have et gyldigt kildekonto ID og/eller gyldigt kildekontonavn for at fortsætte.',
-    'deposit_source_bad_data'  => 'Kunne ikke finde en gyldig kildekonto ved søgning efter ID ":id" eller kontonavn ":name".',
-    'deposit_dest_need_data'   => 'Det er nødvendigt at have et gyldigt destinationskonto ID og/eller gyldigt destinationskontonavn for at fortsætte.',
+    'deposit_source_bad_data'  => '[b] Could not find a valid source account when searching for ID ":id" or name ":name".',
+    'deposit_dest_need_data'   => '[b] Need to get a valid destination account ID and/or valid destination account name to continue.',
     'deposit_dest_bad_data'    => 'Kunne ikke finde en gyldig destinationskonto, ved søgning efter ID ":id" eller kontonavn ":name".',
     'deposit_dest_wrong_type'  => 'Den foreslåede destinationskonto er ikke af den rigtige type.',
 
@@ -257,14 +264,14 @@ return [
 
 
     'transfer_source_need_data' => 'Det er nødvendigt at have et gyldigt kildekonto ID og/eller gyldigt kildekontonavn for at fortsætte.',
-    'transfer_source_bad_data'  => 'Kunne ikke finde en gyldig kildekonto ved søgning efter ID ":id" eller kontonavn ":name".',
-    'transfer_dest_need_data'   => 'Det er nødvendigt at have et gyldigt destinationskonto ID og/eller gyldigt destinationskontonavn for at fortsætte.',
+    'transfer_source_bad_data'  => '[c] Could not find a valid source account when searching for ID ":id" or name ":name".',
+    'transfer_dest_need_data'   => '[c] Need to get a valid destination account ID and/or valid destination account name to continue.',
     'transfer_dest_bad_data'    => 'Kunne ikke finde en gyldig destinationskonto, ved søgning efter ID ":id" eller kontonavn ":name".',
     'need_id_in_edit'           => 'Hver opdeling skal have et transaction_journal_id (enten gyldigt ID eller 0).',
 
     'ob_source_need_data'           => 'Det er nødvendigt at have et gyldigt kildekonto ID og/eller gyldigt kildekontonavn for at fortsætte.',
     'lc_source_need_data'           => 'Du skal bruge et gyldigt konto-id for at fortsætte.',
-    'ob_dest_need_data'             => 'Det er nødvendigt at have et gyldigt destinationskonto ID og/eller gyldigt destinationskontonavn for at fortsætte.',
+    'ob_dest_need_data'             => '[d] Need to get a valid destination account ID and/or valid destination account name to continue.',
     'ob_dest_bad_data'              => 'Kunne ikke finde en gyldig destinationskonto, ved søgning efter ID ":id" eller kontonavn ":name".',
     'reconciliation_either_account' => 'To submit a reconciliation, you must submit either a source or a destination account. Not both, not neither.',
 

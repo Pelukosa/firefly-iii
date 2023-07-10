@@ -33,9 +33,9 @@ use FireflyIII\Support\Http\Controllers\PeriodOverview;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use JsonException;
-use Illuminate\Support\Facades\Log;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
@@ -73,9 +73,9 @@ class NoCategoryController extends Controller
     /**
      * Show transactions without a category.
      *
-     * @param  Request  $request
-     * @param  Carbon|null  $start
-     * @param  Carbon|null  $end
+     * @param Request     $request
+     * @param Carbon|null $start
+     * @param Carbon|null $end
      *
      * @return Factory|View
      * @throws FireflyException
@@ -116,7 +116,7 @@ class NoCategoryController extends Controller
     /**
      * Show all transactions without a category.
      *
-     * @param  Request  $request
+     * @param Request $request
      *
      * @return Factory|View
      * @throws FireflyException

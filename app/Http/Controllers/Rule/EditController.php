@@ -36,8 +36,8 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
-use Illuminate\View\View;
 use Illuminate\Support\Facades\Log;
+use Illuminate\View\View;
 use Throwable;
 
 /**
@@ -74,8 +74,8 @@ class EditController extends Controller
     /**
      * Edit a rule.
      *
-     * @param  Request  $request
-     * @param  Rule  $rule
+     * @param Request $request
+     * @param Rule    $rule
      *
      * @return Factory|View
      * @throws FireflyException
@@ -140,7 +140,7 @@ class EditController extends Controller
     }
 
     /**
-     * @param  array  $submittedOperators
+     * @param array $submittedOperators
      *
      * @return array
      * @throws FireflyException
@@ -186,8 +186,8 @@ class EditController extends Controller
     /**
      * Update the rule.
      *
-     * @param  RuleFormRequest  $request
-     * @param  Rule  $rule
+     * @param RuleFormRequest $request
+     * @param Rule            $rule
      *
      * @return RedirectResponse|Redirector
      */

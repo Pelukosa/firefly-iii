@@ -61,6 +61,10 @@ return [
     'invalid_selection'              => '您的選擇無效。',
     'belongs_user'                   => '此欄位不接受此值。',
     'at_least_one_transaction'       => '至少需要一個交易。',
+    'recurring_transaction_id'       => 'Need at least one transaction.',
+    'need_id_to_match'               => 'You need to submit this entry with an ID for the API to be able to match it.',
+    'too_many_unmatched'             => 'Too many submitted transactions cannot be matched to their respective database entries. Make sure existing entries have a valid ID.',
+    'id_does_not_match'              => 'Submitted ID #:id does not match expected ID. Make sure it matches or omit the field.',
     'at_least_one_repetition'        => '至少需要一次重複。',
     'require_repeat_until'           => '要嘛重複次數，要嘛結束日期 (repeat_until)，須二擇其一。',
     'require_currency_info'          => '此欄位內容須要貨幣資訊。',
@@ -230,17 +234,20 @@ return [
 
     // validation of accounts:
     'withdrawal_source_need_data' => '需要有效的來源帳戶 ID 及/或有效的來源帳戶名稱才能繼續。',
-    'withdrawal_source_bad_data'  => '搜尋 ID ":id" 或名稱 ":name" 都找不到有效的來源帳戶。',
-    'withdrawal_dest_need_data'   => '需要有效的目標帳戶 ID 及/或有效的目標帳戶名稱才能繼續。',
+    'withdrawal_source_bad_data'  => '[a] Could not find a valid source account when searching for ID ":id" or name ":name".',
+    'withdrawal_dest_need_data'   => '[a] Need to get a valid destination account ID and/or valid destination account name to continue.',
     'withdrawal_dest_bad_data'    => '搜尋 ID ":id" 或名稱 ":name" 都找不到有效的目標帳戶。',
+
+    'withdrawal_dest_iban_exists' => 'This destination account IBAN is already in use by an asset account or a liability and cannot be used as a withdrawal destination.',
+    'deposit_src_iban_exists'     => 'This source account IBAN is already in use by an asset account or a liability and cannot be used as a deposit source.',
 
     'reconciliation_source_bad_data' => 'Could not find a valid reconciliation account when searching for ID ":id" or name ":name".',
 
-    'generic_source_bad_data' => 'Could not find a valid source account when searching for ID ":id" or name ":name".',
+    'generic_source_bad_data' => '[e] Could not find a valid source account when searching for ID ":id" or name ":name".',
 
     'deposit_source_need_data' => '需要有效的來源帳戶 ID 及/或有效的來源帳戶名稱才能繼續。',
-    'deposit_source_bad_data'  => '搜尋 ID ":id" 或名稱 ":name" 都找不到有效的來源帳戶。',
-    'deposit_dest_need_data'   => '需要有效的目標帳戶 ID 及/或有效的目標帳戶名稱才能繼續。',
+    'deposit_source_bad_data'  => '[b] Could not find a valid source account when searching for ID ":id" or name ":name".',
+    'deposit_dest_need_data'   => '[b] Need to get a valid destination account ID and/or valid destination account name to continue.',
     'deposit_dest_bad_data'    => '搜尋 ID ":id" 或名稱 ":name" 都找不到有效的目標帳戶。',
     'deposit_dest_wrong_type'  => 'The submitted destination account is not of the right type.',
 
@@ -257,14 +264,14 @@ return [
 
 
     'transfer_source_need_data' => '需要有效的來源帳戶 ID 及/或有效的來源帳戶名稱才能繼續。',
-    'transfer_source_bad_data'  => '搜尋 ID ":id" 或名稱 ":name" 都找不到有效的來源帳戶。',
-    'transfer_dest_need_data'   => '需要有效的目標帳戶 ID 及/或有效的目標帳戶名稱才能繼續。',
+    'transfer_source_bad_data'  => '[c] Could not find a valid source account when searching for ID ":id" or name ":name".',
+    'transfer_dest_need_data'   => '[c] Need to get a valid destination account ID and/or valid destination account name to continue.',
     'transfer_dest_bad_data'    => '搜尋 ID ":id" 或名稱 ":name" 都找不到有效的目標帳戶。',
     'need_id_in_edit'           => '每筆拆分須有 transaction_journal_id (為有效的 ID 或是 0)。',
 
     'ob_source_need_data'           => '需要有效的來源帳戶 ID 及/或有效的來源帳戶名稱才能繼續。',
     'lc_source_need_data'           => 'Need to get a valid source account ID to continue.',
-    'ob_dest_need_data'             => '需要有效的目標帳戶 ID 及/或有效的目標帳戶名稱才能繼續。',
+    'ob_dest_need_data'             => '[d] Need to get a valid destination account ID and/or valid destination account name to continue.',
     'ob_dest_bad_data'              => '搜尋 ID ":id" 或名稱 ":name" 都找不到有效的目標帳戶。',
     'reconciliation_either_account' => 'To submit a reconciliation, you must submit either a source or a destination account. Not both, not neither.',
 

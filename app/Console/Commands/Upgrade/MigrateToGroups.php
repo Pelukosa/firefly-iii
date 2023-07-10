@@ -25,7 +25,7 @@ namespace FireflyIII\Console\Commands\Upgrade;
 
 use DB;
 use Exception;
-use FireflyIII\Exceptions\FireflyException;
+use FireflyIII\Console\Commands\ShowsFriendlyMessages;
 use FireflyIII\Factory\TransactionGroupFactory;
 use FireflyIII\Models\Budget;
 use FireflyIII\Models\Category;
@@ -49,19 +49,11 @@ use Psr\Container\NotFoundExceptionInterface;
  */
 class MigrateToGroups extends Command
 {
+    use ShowsFriendlyMessages;
+
     public const CONFIG_NAME = '480_migrated_to_groups';
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Migrates a pre-4.7.8 transaction structure to the 4.7.8+ transaction structure.';
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'firefly-iii:migrate-to-groups {--F|force : Force the migration, even if it fired before.}';
+    protected $signature   = 'firefly-iii:migrate-to-groups {--F|force : Force the migration, even if it fired before.}';
     private JournalCLIRepositoryInterface $cliRepository;
     private int                           $count;
     private TransactionGroupFactory       $groupFactory;
@@ -72,42 +64,30 @@ class MigrateToGroups extends Command
      * Execute the console command.
      *
      * @return int
-     * @throws ContainerExceptionInterface
-     * @throws FireflyException
-     * @throws NotFoundExceptionInterface
      */
     public function handle(): int
     {
         $this->stupidLaravel();
-        $start = microtime(true);
 
         if ($this->isMigrated() && true !== $this->option('force')) {
-            $this->info('Database already seems to be migrated.');
+            $this->friendlyInfo('Database is already migrated.');
 
             return 0;
         }
 
         if (true === $this->option('force')) {
-            $this->warn('Forcing the migration.');
+            $this->friendlyWarning('Forcing the migration.');
         }
 
 
-        Log::debug('---- start group migration ----');
         $this->makeGroupsFromSplitJournals();
-        $end = round(microtime(true) - $start, 2);
-        $this->info(sprintf('Migrate split journals to groups in %s seconds.', $end));
-
-        $start = microtime(true);
         $this->makeGroupsFromAll();
-        Log::debug('---- end group migration ----');
-        $end = round(microtime(true) - $start, 2);
-        $this->info(sprintf('Migrate all journals to groups in %s seconds.', $end));
 
         if (0 !== $this->count) {
-            $this->line(sprintf('Migrated %d transaction journal(s).', $this->count));
+            $this->friendlyInfo(sprintf('Migrated %d transaction journal(s).', $this->count));
         }
         if (0 === $this->count) {
-            $this->line('No journals to migrate to groups.');
+            $this->friendlyPositive('No journals to migrate to groups.');
         }
         $this->markAsMigrated();
 
@@ -152,19 +132,16 @@ class MigrateToGroups extends Command
     {
         $splitJournals = $this->cliRepository->getSplitJournals();
         if ($splitJournals->count() > 0) {
-            $this->info(sprintf('Going to convert %d split transaction(s). Please hold..', $splitJournals->count()));
+            $this->friendlyLine(sprintf('Going to convert %d split transaction(s). Please hold..', $splitJournals->count()));
             /** @var TransactionJournal $journal */
             foreach ($splitJournals as $journal) {
                 $this->makeMultiGroup($journal);
             }
         }
-        if (0 === $splitJournals->count()) {
-            $this->info('Found no split transaction journals. Nothing to do.');
-        }
     }
 
     /**
-     * @param  TransactionJournal  $journal
+     * @param TransactionJournal $journal
      *
      * @throws Exception
      */
@@ -222,7 +199,7 @@ class MigrateToGroups extends Command
             $opposingTr = $this->findOpposingTransaction($journal, $transaction);
 
             if (null === $opposingTr) {
-                $this->error(
+                $this->friendlyError(
                     sprintf(
                         'Journal #%d has no opposing transaction for transaction #%d. Cannot upgrade this entry.',
                         $journal->id,
@@ -295,7 +272,7 @@ class MigrateToGroups extends Command
                 implode(', #', $group->transactionJournals->pluck('id')->toArray())
             )
         );
-        $this->line(
+        $this->friendlyInfo(
             sprintf(
                 'Migrated journal #%d into group #%d with these journals: #%s',
                 $journal->id,
@@ -306,7 +283,7 @@ class MigrateToGroups extends Command
     }
 
     /**
-     * @param  TransactionJournal  $journal
+     * @param TransactionJournal $journal
      *
      * @return Collection
      */
@@ -320,8 +297,8 @@ class MigrateToGroups extends Command
     }
 
     /**
-     * @param  TransactionJournal  $journal
-     * @param  Transaction  $transaction
+     * @param TransactionJournal $journal
+     * @param Transaction        $transaction
      *
      * @return Transaction|null
      */
@@ -342,8 +319,8 @@ class MigrateToGroups extends Command
     }
 
     /**
-     * @param  Transaction  $left
-     * @param  Transaction  $right
+     * @param Transaction $left
+     * @param Transaction $right
      *
      * @return int|null
      */
@@ -375,8 +352,8 @@ class MigrateToGroups extends Command
     }
 
     /**
-     * @param  Transaction  $left
-     * @param  Transaction  $right
+     * @param Transaction $left
+     * @param Transaction $right
      *
      * @return int|null
      */
@@ -416,19 +393,19 @@ class MigrateToGroups extends Command
         $total            = count($orphanedJournals);
         if ($total > 0) {
             Log::debug(sprintf('Going to convert %d transaction journals. Please hold..', $total));
-            $this->line(sprintf('Going to convert %d transaction journals. Please hold..', $total));
+            $this->friendlyInfo(sprintf('Going to convert %d transaction journals. Please hold..', $total));
             /** @var array $array */
             foreach ($orphanedJournals as $array) {
                 $this->giveGroup($array);
             }
         }
         if (0 === $total) {
-            $this->info('No need to convert transaction journals.');
+            $this->friendlyPositive('No need to convert transaction journals.');
         }
     }
 
     /**
-     * @param  array  $array
+     * @param array $array
      */
     private function giveGroup(array $array): void
     {

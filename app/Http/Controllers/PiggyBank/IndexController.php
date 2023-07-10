@@ -74,7 +74,7 @@ class IndexController extends Controller
      *
      * TODO very complicated function.
      *
-     * @param  Request  $request
+     * @param Request $request
      *
      * @return Factory|View
      * @throws FireflyException
@@ -145,7 +145,7 @@ class IndexController extends Controller
     }
 
     /**
-     * @param  array  $piggyBanks
+     * @param array $piggyBanks
      *
      * @return array
      */
@@ -187,8 +187,8 @@ class IndexController extends Controller
     /**
      * Set the order of a piggy bank.
      *
-     * @param  Request  $request
-     * @param  PiggyBank  $piggyBank
+     * @param Request   $request
+     * @param PiggyBank $piggyBank
      *
      * @return JsonResponse
      */

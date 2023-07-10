@@ -38,7 +38,7 @@ trait ConvertsExchangeRates
     private ?bool $enabled = null;
 
     /**
-     * @param  array  $set
+     * @param array $set
      * @return array
      */
     public function cerChartSet(array $set): array
@@ -83,7 +83,7 @@ trait ConvertsExchangeRates
     }
 
     /**
-     * @param  int  $currencyId
+     * @param int $currencyId
      * @return TransactionCurrency
      */
     private function getCurrency(int $currencyId): TransactionCurrency
@@ -96,9 +96,9 @@ trait ConvertsExchangeRates
     }
 
     /**
-     * @param  TransactionCurrency  $from
-     * @param  TransactionCurrency  $to
-     * @param  Carbon  $date
+     * @param TransactionCurrency $from
+     * @param TransactionCurrency $to
+     * @param Carbon              $date
      * @return string
      */
     private function getRate(TransactionCurrency $from, TransactionCurrency $to, Carbon $date): string
@@ -152,8 +152,8 @@ trait ConvertsExchangeRates
     }
 
     /**
-     * @param  TransactionCurrency  $currency
-     * @param  Carbon  $date
+     * @param TransactionCurrency $currency
+     * @param Carbon              $date
      * @return string
      */
     private function getEuroRate(TransactionCurrency $currency, Carbon $date): string
@@ -201,7 +201,8 @@ trait ConvertsExchangeRates
     /**
      * For a sum of entries, get the exchange rate to the native currency of
      * the user.
-     * @param  array  $entries
+     *
+     * @param array $entries
      * @return array
      */
     public function cerSum(array $entries): array

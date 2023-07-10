@@ -36,8 +36,8 @@ use FireflyIII\Repositories\Journal\JournalRepositoryInterface;
 use FireflyIII\User;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Collection;
-use JsonException;
 use Illuminate\Support\Facades\Log;
+use JsonException;
 use Storage;
 
 /**
@@ -59,8 +59,8 @@ class PiggyBankRepository implements PiggyBankRepositoryInterface
     }
 
     /**
-     * @param  int|null  $piggyBankId
-     * @param  string|null  $piggyBankName
+     * @param int|null    $piggyBankId
+     * @param string|null $piggyBankName
      *
      * @return PiggyBank|null
      */
@@ -90,7 +90,7 @@ class PiggyBankRepository implements PiggyBankRepositoryInterface
     }
 
     /**
-     * @param  int  $piggyBankId
+     * @param int $piggyBankId
      *
      * @return PiggyBank|null
      */
@@ -103,7 +103,7 @@ class PiggyBankRepository implements PiggyBankRepositoryInterface
     /**
      * Find by name or return NULL.
      *
-     * @param  string  $name
+     * @param string $name
      *
      * @return PiggyBank|null
      */
@@ -136,7 +136,7 @@ class PiggyBankRepository implements PiggyBankRepositoryInterface
     /**
      * Get current amount saved in piggy bank.
      *
-     * @param  PiggyBank  $piggyBank
+     * @param PiggyBank $piggyBank
      *
      * @return string
      */
@@ -151,7 +151,7 @@ class PiggyBankRepository implements PiggyBankRepositoryInterface
     }
 
     /**
-     * @param  PiggyBank  $piggyBank
+     * @param PiggyBank $piggyBank
      *
      * @return PiggyBankRepetition|null
      */
@@ -161,7 +161,7 @@ class PiggyBankRepository implements PiggyBankRepositoryInterface
     }
 
     /**
-     * @param  PiggyBank  $piggyBank
+     * @param PiggyBank $piggyBank
      *
      * @return Collection
      */
@@ -173,9 +173,9 @@ class PiggyBankRepository implements PiggyBankRepositoryInterface
     /**
      * Used for connecting to a piggy bank.
      *
-     * @param  PiggyBank  $piggyBank
-     * @param  PiggyBankRepetition  $repetition
-     * @param  TransactionJournal  $journal
+     * @param PiggyBank           $piggyBank
+     * @param PiggyBankRepetition $repetition
+     * @param TransactionJournal  $journal
      *
      * @return string
      * @throws FireflyException
@@ -275,9 +275,9 @@ class PiggyBankRepository implements PiggyBankRepositoryInterface
     }
 
     /**
-     * @param  User|Authenticatable|null  $user
+     * @param User|Authenticatable|null $user
      */
-    public function setUser(User|Authenticatable|null $user): void
+    public function setUser(User | Authenticatable | null $user): void
     {
         if (null !== $user) {
             $this->user = $user;
@@ -295,7 +295,7 @@ class PiggyBankRepository implements PiggyBankRepositoryInterface
     /**
      * Return note for piggy bank.
      *
-     * @param  PiggyBank  $piggyBank
+     * @param PiggyBank $piggyBank
      *
      * @return string
      */
@@ -324,7 +324,7 @@ class PiggyBankRepository implements PiggyBankRepositoryInterface
         /** @var PiggyBank $piggy */
         foreach ($set as $piggy) {
             $currentAmount = $this->getRepetition($piggy)->currentamount ?? '0';
-            $piggy->name   = $piggy->name.' ('.app('amount')->formatAnything($currency, $currentAmount, false).')';
+            $piggy->name   = $piggy->name . ' (' . app('amount')->formatAnything($currency, $currentAmount, false) . ')';
         }
 
         return $set;
@@ -349,7 +349,7 @@ class PiggyBankRepository implements PiggyBankRepositoryInterface
     /**
      * Returns the suggested amount the user should save per month, or "".
      *
-     * @param  PiggyBank  $piggyBank
+     * @param PiggyBank $piggyBank
      *
      * @return string
      *
@@ -384,8 +384,8 @@ class PiggyBankRepository implements PiggyBankRepositoryInterface
     /**
      * Get for piggy account what is left to put in piggies.
      *
-     * @param  PiggyBank  $piggyBank
-     * @param  Carbon  $date
+     * @param PiggyBank $piggyBank
+     * @param Carbon    $date
      *
      * @return string
      * @throws JsonException

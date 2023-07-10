@@ -25,21 +25,25 @@ declare(strict_types=1);
 namespace FireflyIII\Api\V2\Response\Sum;
 
 use Closure;
+use FireflyIII\Exceptions\FireflyException;
 use FireflyIII\Models\TransactionCurrency;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
 /**
  * Class AutoSum
+ *
  * @deprecated
  */
 class AutoSum
 {
     /**
-     * @param  Collection  $objects
-     * @param  Closure  $getCurrency
-     * @param  Closure  $getSum
+     * @param Collection $objects
+     * @param Closure    $getCurrency
+     * @param Closure    $getSum
+     *
      * @return array
+     * @throws FireflyException
      */
     public function autoSum(Collection $objects, Closure $getCurrency, Closure $getSum): array
     {
@@ -64,6 +68,6 @@ class AutoSum
         }
 
         var_dump(array_values($return));
-        exit;
+        throw new FireflyException('Not implemented');
     }
 }

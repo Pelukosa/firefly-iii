@@ -48,7 +48,7 @@ class AvailableBudgetRepository implements AvailableBudgetRepositoryInterface
     }
 
     /**
-     * @param  AvailableBudget  $availableBudget
+     * @param AvailableBudget $availableBudget
      */
     public function destroyAvailableBudget(AvailableBudget $availableBudget): void
     {
@@ -66,9 +66,9 @@ class AvailableBudgetRepository implements AvailableBudgetRepositoryInterface
     /**
      * Find existing AB.
      *
-     * @param  TransactionCurrency  $currency
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param TransactionCurrency $currency
+     * @param Carbon              $start
+     * @param Carbon              $end
      *
      * @return AvailableBudget|null
      */
@@ -82,9 +82,9 @@ class AvailableBudgetRepository implements AvailableBudgetRepositoryInterface
     }
 
     /**
-     * @param  TransactionCurrency  $currency
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param TransactionCurrency $currency
+     * @param Carbon              $start
+     * @param Carbon              $end
      *
      * @return string
      */
@@ -103,8 +103,8 @@ class AvailableBudgetRepository implements AvailableBudgetRepositoryInterface
     }
 
     /**
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Carbon $start
+     * @param Carbon $end
      *
      * @return array
      */
@@ -125,8 +125,8 @@ class AvailableBudgetRepository implements AvailableBudgetRepositoryInterface
     /**
      * Return a list of all available budgets (in all currencies) (for the selected period).
      *
-     * @param  Carbon|null  $start
-     * @param  Carbon|null  $end
+     * @param Carbon|null $start
+     * @param Carbon|null $end
      *
      * @return Collection
      */
@@ -148,7 +148,7 @@ class AvailableBudgetRepository implements AvailableBudgetRepositoryInterface
     /**
      * Returns all available budget objects.
      *
-     * @param  TransactionCurrency  $currency
+     * @param TransactionCurrency $currency
      *
      * @return Collection
      */
@@ -160,8 +160,8 @@ class AvailableBudgetRepository implements AvailableBudgetRepositoryInterface
     /**
      * Returns all available budget objects.
      *
-     * @param  Carbon|null  $start
-     * @param  Carbon|null  $end
+     * @param Carbon|null $start
+     * @param Carbon|null $end
      *
      * @return Collection
      *
@@ -193,10 +193,10 @@ class AvailableBudgetRepository implements AvailableBudgetRepositoryInterface
     }
 
     /**
-     * @param  TransactionCurrency  $currency
-     * @param  Carbon  $start
-     * @param  Carbon  $end
-     * @param  string  $amount
+     * @param TransactionCurrency $currency
+     * @param Carbon              $start
+     * @param Carbon              $end
+     * @param string              $amount
      *
      * @return AvailableBudget
      * @deprecated
@@ -221,9 +221,9 @@ class AvailableBudgetRepository implements AvailableBudgetRepositoryInterface
     }
 
     /**
-     * @param  User|Authenticatable|null  $user
+     * @param User|Authenticatable|null $user
      */
-    public function setUser(User|Authenticatable|null $user): void
+    public function setUser(User | Authenticatable | null $user): void
     {
         if (null !== $user) {
             $this->user = $user;
@@ -231,7 +231,7 @@ class AvailableBudgetRepository implements AvailableBudgetRepositoryInterface
     }
 
     /**
-     * @param  array  $data
+     * @param array $data
      *
      * @return AvailableBudget|null
      */
@@ -259,8 +259,8 @@ class AvailableBudgetRepository implements AvailableBudgetRepositoryInterface
     }
 
     /**
-     * @param  AvailableBudget  $availableBudget
-     * @param  array  $data
+     * @param AvailableBudget $availableBudget
+     * @param array           $data
      *
      * @return AvailableBudget
      */
@@ -275,8 +275,8 @@ class AvailableBudgetRepository implements AvailableBudgetRepositoryInterface
     }
 
     /**
-     * @param  AvailableBudget  $availableBudget
-     * @param  array  $data
+     * @param AvailableBudget $availableBudget
+     * @param array           $data
      *
      * @return AvailableBudget
      */

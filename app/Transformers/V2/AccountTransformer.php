@@ -89,7 +89,7 @@ class AccountTransformer extends AbstractTransformer
     /**
      * Transform the account.
      *
-     * @param  Account  $account
+     * @param Account $account
      *
      * @return array
      */
@@ -141,7 +141,7 @@ class AccountTransformer extends AbstractTransformer
             'links'                   => [
                 [
                     'rel' => 'self',
-                    'uri' => '/accounts/'.$account->id,
+                    'uri' => '/accounts/' . $account->id,
                 ],
             ],
         ];

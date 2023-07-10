@@ -23,6 +23,7 @@ declare(strict_types=1);
 
 namespace FireflyIII\Console\Commands\Upgrade;
 
+use FireflyIII\Console\Commands\ShowsFriendlyMessages;
 use FireflyIII\Exceptions\FireflyException;
 use FireflyIII\Models\BudgetLimit;
 use Illuminate\Console\Command;
@@ -32,6 +33,8 @@ use Psr\Container\NotFoundExceptionInterface;
 
 class AppendBudgetLimitPeriods extends Command
 {
+    use ShowsFriendlyMessages;
+
     public const CONFIG_NAME = '550_budget_limit_periods';
     /**
      * The console command description.
@@ -56,19 +59,14 @@ class AppendBudgetLimitPeriods extends Command
      */
     public function handle(): int
     {
-        $start = microtime(true);
         if ($this->isExecuted() && true !== $this->option('force')) {
-            $this->warn('This command has already been executed.');
+            $this->friendlyInfo('This command has already been executed.');
 
             return 0;
         }
 
         $this->theresNoLimit();
-
         $this->markAsExecuted();
-
-        $end = round(microtime(true) - $start, 2);
-        $this->info(sprintf('Fixed budget limits in %s seconds.', $end));
 
         return 0;
     }
@@ -98,7 +96,7 @@ class AppendBudgetLimitPeriods extends Command
     }
 
     /**
-     * @param  BudgetLimit  $limit
+     * @param BudgetLimit $limit
      */
     private function fixLimit(BudgetLimit $limit)
     {
@@ -111,7 +109,7 @@ class AppendBudgetLimitPeriods extends Command
                 $limit->start_date->format('Y-m-d'),
                 $limit->end_date->format('Y-m-d')
             );
-            $this->warn($message);
+            $this->friendlyWarning($message);
             app('log')->warning($message);
 
             return;
@@ -130,7 +128,7 @@ class AppendBudgetLimitPeriods extends Command
     }
 
     /**
-     * @param  BudgetLimit  $limit
+     * @param BudgetLimit $limit
      *
      * @return string|null
      */

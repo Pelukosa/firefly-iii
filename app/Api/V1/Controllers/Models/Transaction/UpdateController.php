@@ -32,8 +32,8 @@ use FireflyIII\Repositories\TransactionGroup\TransactionGroupRepositoryInterface
 use FireflyIII\Transformers\TransactionGroupTransformer;
 use FireflyIII\User;
 use Illuminate\Http\JsonResponse;
-use League\Fractal\Resource\Item;
 use Illuminate\Support\Facades\Log;
+use League\Fractal\Resource\Item;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -70,8 +70,8 @@ class UpdateController extends Controller
      *
      * Update a transaction.
      *
-     * @param  UpdateRequest  $request
-     * @param  TransactionGroup  $transactionGroup
+     * @param UpdateRequest    $request
+     * @param TransactionGroup $transactionGroup
      *
      * @return JsonResponse
      */

@@ -29,9 +29,9 @@ use FireflyIII\Models\Recurrence;
 use FireflyIII\Services\Internal\Support\RecurringTransactionTrait;
 use FireflyIII\Services\Internal\Support\TransactionTypeTrait;
 use FireflyIII\User;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\MessageBag;
 use JsonException;
-use Illuminate\Support\Facades\Log;
 
 /**
  * Class RecurrenceFactory
@@ -55,7 +55,7 @@ class RecurrenceFactory
     }
 
     /**
-     * @param  array  $data
+     * @param array $data
      *
      * @return Recurrence
      * @throws FireflyException
@@ -148,7 +148,7 @@ class RecurrenceFactory
     }
 
     /**
-     * @param  User  $user
+     * @param User $user
      */
     public function setUser(User $user): void
     {

@@ -65,7 +65,7 @@ class RecurrenceTransformer extends AbstractTransformer
     /**
      * Transform the recurring transaction.
      *
-     * @param  Recurrence  $recurrence
+     * @param Recurrence $recurrence
      *
      * @return array
      * @throws FireflyException
@@ -92,9 +92,9 @@ class RecurrenceTransformer extends AbstractTransformer
             'type'              => $shortType,
             'title'             => $recurrence->title,
             'description'       => $recurrence->description,
-            'first_date'        => $recurrence->first_date->toAtomString(),
-            'latest_date'       => $recurrence->latest_date?->toAtomString(),
-            'repeat_until'      => $recurrence->repeat_until?->toAtomString(),
+            'first_date'        => $recurrence->first_date->format('Y-m-d'),
+            'latest_date'       => $recurrence->latest_date?->format('Y-m-d'),
+            'repeat_until'      => $recurrence->repeat_until?->format('Y-m-d'),
             'apply_rules'       => $recurrence->apply_rules,
             'active'            => $recurrence->active,
             'nr_of_repetitions' => $reps,
@@ -104,14 +104,14 @@ class RecurrenceTransformer extends AbstractTransformer
             'links'             => [
                 [
                     'rel' => 'self',
-                    'uri' => '/recurring/'.$recurrence->id,
+                    'uri' => '/recurring/' . $recurrence->id,
                 ],
             ],
         ];
     }
 
     /**
-     * @param  Recurrence  $recurrence
+     * @param Recurrence $recurrence
      *
      * @return array
      * @throws FireflyException
@@ -150,7 +150,7 @@ class RecurrenceTransformer extends AbstractTransformer
     }
 
     /**
-     * @param  Recurrence  $recurrence
+     * @param Recurrence $recurrence
      *
      * @return array
      * @throws FireflyException
@@ -202,6 +202,7 @@ class RecurrenceTransformer extends AbstractTransformer
                 $foreignAmount = app('steam')->bcround($transaction->foreign_amount, $foreignCurrencyDp);
             }
             $transactionArray = [
+                'id'                              => (string)$transaction->id,
                 'currency_id'                     => (string)$transaction->transaction_currency_id,
                 'currency_code'                   => $transaction->transactionCurrency->code,
                 'currency_symbol'                 => $transaction->transactionCurrency->symbol,
@@ -237,8 +238,8 @@ class RecurrenceTransformer extends AbstractTransformer
     }
 
     /**
-     * @param  RecurrenceTransaction  $transaction
-     * @param  array  $array
+     * @param RecurrenceTransaction $transaction
+     * @param array                 $array
      *
      * @return array
      * @throws FireflyException

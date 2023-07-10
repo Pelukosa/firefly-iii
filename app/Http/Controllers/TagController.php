@@ -34,8 +34,8 @@ use FireflyIII\Support\Http\Controllers\PeriodOverview;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 use Illuminate\Support\Facades\Log;
+use Illuminate\View\View;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
@@ -103,7 +103,7 @@ class TagController extends Controller
     /**
      * Delete a tag.
      *
-     * @param  Tag  $tag
+     * @param Tag $tag
      *
      * @return Factory|View
      */
@@ -120,7 +120,7 @@ class TagController extends Controller
     /**
      * Edit a tag.
      *
-     * @param  Tag  $tag
+     * @param Tag $tag
      *
      * @return Factory|View
      */
@@ -155,7 +155,7 @@ class TagController extends Controller
     /**
      * Edit a tag.
      *
-     * @param  TagRepositoryInterface  $repository
+     * @param TagRepositoryInterface $repository
      *
      * @return Factory|View
      */
@@ -208,7 +208,7 @@ class TagController extends Controller
     /**
      * Destroy a tag.
      *
-     * @param  Tag  $tag
+     * @param Tag $tag
      *
      * @return RedirectResponse
      */
@@ -226,10 +226,10 @@ class TagController extends Controller
     /**
      * Show a single tag.
      *
-     * @param  Request  $request
-     * @param  Tag  $tag
-     * @param  Carbon|null  $start
-     * @param  Carbon|null  $end
+     * @param Request     $request
+     * @param Tag         $tag
+     * @param Carbon|null $start
+     * @param Carbon|null $end
      *
      * @return Factory|View
      * @throws FireflyException
@@ -276,8 +276,8 @@ class TagController extends Controller
     /**
      * Show a single tag over all time.
      *
-     * @param  Request  $request
-     * @param  Tag  $tag
+     * @param Request $request
+     * @param Tag     $tag
      *
      * @return Factory|View
      * @throws ContainerExceptionInterface
@@ -310,7 +310,7 @@ class TagController extends Controller
     /**
      * Store a tag.
      *
-     * @param  TagFormRequest  $request
+     * @param TagFormRequest $request
      *
      * @return RedirectResponse
      */
@@ -351,8 +351,8 @@ class TagController extends Controller
     /**
      * Update a tag.
      *
-     * @param  TagFormRequest  $request
-     * @param  Tag  $tag
+     * @param TagFormRequest $request
+     * @param Tag            $tag
      *
      * @return RedirectResponse
      */

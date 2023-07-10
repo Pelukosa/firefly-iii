@@ -61,6 +61,10 @@ return [
     'invalid_selection'              => 'Pilihan Anda tidak valid.',
     'belongs_user'                   => 'Nilai ini tidak sah untuk bidang ini.',
     'at_least_one_transaction'       => 'Minimal harus ada satu transaksi.',
+    'recurring_transaction_id'       => 'Need at least one transaction.',
+    'need_id_to_match'               => 'You need to submit this entry with an ID for the API to be able to match it.',
+    'too_many_unmatched'             => 'Too many submitted transactions cannot be matched to their respective database entries. Make sure existing entries have a valid ID.',
+    'id_does_not_match'              => 'Submitted ID #:id does not match expected ID. Make sure it matches or omit the field.',
     'at_least_one_repetition'        => 'Minimal harus ada satu pengulangan.',
     'require_repeat_until'           => 'Dibutuhkan hanya sebuah angka pengulangan, atau tanggal akhir (repeat_until). Bukan keduanya.',
     'require_currency_info'          => 'Isi dalam bidang ini tidak valid jika tidak disertai informasi mata uang.',
@@ -230,17 +234,20 @@ return [
 
     // validation of accounts:
     'withdrawal_source_need_data' => 'Perlu untuk mendapatkan sebuah ID akun sumber yang valid dan/atau nama akun sumber yang valid untuk melanjutkan.',
-    'withdrawal_source_bad_data'  => 'Tidak dapat menemukan sebuah akun sumber yang valid saat mencari ID ":id" atau nama ":name".',
-    'withdrawal_dest_need_data'   => 'Perlu untuk mendapatkan sebuah ID akun tujuan yang valid dan/atau nama akun tujuan yang valid untuk melanjutkan.',
+    'withdrawal_source_bad_data'  => '[a] Could not find a valid source account when searching for ID ":id" or name ":name".',
+    'withdrawal_dest_need_data'   => '[a] Need to get a valid destination account ID and/or valid destination account name to continue.',
     'withdrawal_dest_bad_data'    => 'Tidak dapat menemukan sebuah akun tujuan yang valid saat mencari ID ":id" atau nama ":name".',
+
+    'withdrawal_dest_iban_exists' => 'This destination account IBAN is already in use by an asset account or a liability and cannot be used as a withdrawal destination.',
+    'deposit_src_iban_exists'     => 'This source account IBAN is already in use by an asset account or a liability and cannot be used as a deposit source.',
 
     'reconciliation_source_bad_data' => 'Could not find a valid reconciliation account when searching for ID ":id" or name ":name".',
 
-    'generic_source_bad_data' => 'Tidak dapat menemukan sebuah akun sumber yang valid saat mencari ID ":id" atau nama ":name".',
+    'generic_source_bad_data' => '[e] Could not find a valid source account when searching for ID ":id" or name ":name".',
 
     'deposit_source_need_data' => 'Perlu untuk mendapatkan sebuah ID akun sumber yang valid dan/atau nama akun sumber yang valid untuk melanjutkan.',
-    'deposit_source_bad_data'  => 'Tidak dapat menemukan sebuah akun sumber yang valid saat mencari ID ":id" atau nama ":name".',
-    'deposit_dest_need_data'   => 'Perlu untuk mendapatkan sebuah ID akun tujuan yang valid dan/atau nama akun tujuan yang valid untuk melanjutkan.',
+    'deposit_source_bad_data'  => '[b] Could not find a valid source account when searching for ID ":id" or name ":name".',
+    'deposit_dest_need_data'   => '[b] Need to get a valid destination account ID and/or valid destination account name to continue.',
     'deposit_dest_bad_data'    => 'Tidak dapat menemukan sebuah akun tujuan yang valid saat mencari ID ":id" atau nama ":name".',
     'deposit_dest_wrong_type'  => 'Akun tujuan yang dikirimkan bukan dari jenis yang benar.',
 
@@ -257,14 +264,14 @@ return [
 
 
     'transfer_source_need_data' => 'Perlu untuk mendapatkan sebuah ID akun sumber yang valid dan/atau nama akun sumber yang valid untuk melanjutkan.',
-    'transfer_source_bad_data'  => 'Tidak dapat menemukan sebuah akun sumber yang valid saat mencari ID ":id" atau nama ":name".',
-    'transfer_dest_need_data'   => 'Perlu untuk mendapatkan sebuah ID akun tujuan yang valid dan/atau nama akun tujuan yang valid untuk melanjutkan.',
+    'transfer_source_bad_data'  => '[c] Could not find a valid source account when searching for ID ":id" or name ":name".',
+    'transfer_dest_need_data'   => '[c] Need to get a valid destination account ID and/or valid destination account name to continue.',
     'transfer_dest_bad_data'    => 'Tidak dapat menemukan sebuah akun tujuan yang valid saat mencari ID ":id" atau nama ":name".',
     'need_id_in_edit'           => 'Setiap pisahan harus memiliki transaction_journal_id (ID yang valid atau 0).',
 
     'ob_source_need_data'           => 'Perlu untuk mendapatkan sebuah ID akun sumber yang valid dan/atau nama akun sumber yang valid untuk melanjutkan.',
     'lc_source_need_data'           => 'Perlu untuk mendapatkan sebuah ID akun sumber yang valid untuk melanjutkan.',
-    'ob_dest_need_data'             => 'Perlu untuk mendapatkan sebuah ID akun tujuan yang valid dan/atau nama akun tujuan yang valid untuk melanjutkan.',
+    'ob_dest_need_data'             => '[d] Need to get a valid destination account ID and/or valid destination account name to continue.',
     'ob_dest_bad_data'              => 'Tidak dapat menemukan sebuah akun tujuan yang valid saat mencari ID ":id" atau nama ":name".',
     'reconciliation_either_account' => 'To submit a reconciliation, you must submit either a source or a destination account. Not both, not neither.',
 

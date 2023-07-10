@@ -92,7 +92,7 @@ class InstallController extends Controller
     }
 
     /**
-     * @param  Request  $request
+     * @param Request $request
      *
      * @return JsonResponse
      */
@@ -136,8 +136,8 @@ class InstallController extends Controller
     }
 
     /**
-     * @param  string  $command
-     * @param  array  $args
+     * @param string $command
+     * @param array  $args
      * @return bool
      * @throws FireflyException
      */

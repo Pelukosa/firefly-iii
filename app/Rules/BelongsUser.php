@@ -62,8 +62,8 @@ class BelongsUser implements Rule
     /**
      * Determine if the validation rule passes.
      *
-     * @param  string  $attribute
-     * @param  mixed  $value
+     * @param string $attribute
+     * @param mixed  $value
      *
      * @return bool
      * @throws FireflyException
@@ -93,7 +93,7 @@ class BelongsUser implements Rule
     }
 
     /**
-     * @param  string  $attribute
+     * @param string $attribute
      *
      * @return string
      */
@@ -111,7 +111,7 @@ class BelongsUser implements Rule
     }
 
     /**
-     * @param  int  $value
+     * @param int $value
      *
      * @return bool
      */
@@ -125,7 +125,7 @@ class BelongsUser implements Rule
     }
 
     /**
-     * @param  string  $value
+     * @param string $value
      *
      * @return bool
      */
@@ -137,9 +137,9 @@ class BelongsUser implements Rule
     }
 
     /**
-     * @param  string  $class
-     * @param  string  $field
-     * @param  string  $value
+     * @param string $class
+     * @param string $field
+     * @param string $value
      *
      * @return int
      *
@@ -170,7 +170,7 @@ class BelongsUser implements Rule
     }
 
     /**
-     * @param  int  $value
+     * @param int $value
      *
      * @return bool
      */
@@ -185,7 +185,7 @@ class BelongsUser implements Rule
     }
 
     /**
-     * @param  int  $value
+     * @param int $value
      *
      * @return bool
      */
@@ -200,7 +200,7 @@ class BelongsUser implements Rule
     }
 
     /**
-     * @param  string  $value
+     * @param string $value
      *
      * @return bool
      */
@@ -213,7 +213,7 @@ class BelongsUser implements Rule
     }
 
     /**
-     * @param  int  $value
+     * @param int $value
      *
      * @return bool
      */
@@ -228,7 +228,7 @@ class BelongsUser implements Rule
     }
 
     /**
-     * @param  int  $value
+     * @param int $value
      *
      * @return bool
      */
@@ -240,7 +240,7 @@ class BelongsUser implements Rule
     }
 
     /**
-     * @param  string  $value
+     * @param string $value
      *
      * @return bool
      */
@@ -252,7 +252,7 @@ class BelongsUser implements Rule
     }
 
     /**
-     * @param  int  $value
+     * @param int $value
      *
      * @return bool
      */

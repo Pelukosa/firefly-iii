@@ -44,8 +44,8 @@ use FireflyIII\User;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Collection;
-use JsonException;
 use Illuminate\Support\Facades\Log;
+use JsonException;
 use Storage;
 
 /**
@@ -145,9 +145,9 @@ class BudgetRepository implements BudgetRepositoryInterface
     }
 
     /**
-     * @param  User|Authenticatable|null  $user
+     * @param User|Authenticatable|null $user
      */
-    public function setUser(User|Authenticatable|null $user): void
+    public function setUser(User | Authenticatable | null $user): void
     {
         if (null !== $user) {
             $this->user = $user;
@@ -168,9 +168,9 @@ class BudgetRepository implements BudgetRepositoryInterface
     /**
      * How many days of this budget limit are between start and end?
      *
-     * @param  BudgetLimit  $limit
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param BudgetLimit $limit
+     * @param Carbon      $start
+     * @param Carbon      $end
      * @return int
      */
     private function daysInOverlap(BudgetLimit $limit, Carbon $start, Carbon $end): int
@@ -267,7 +267,7 @@ class BudgetRepository implements BudgetRepositoryInterface
         BudgetLimit::where('amount', 0)->delete();
         $budgets = $this->getActiveBudgets();
         /**
-         * @var int $index
+         * @var int    $index
          * @var Budget $budget
          */
         foreach ($budgets as $index => $budget) {
@@ -281,8 +281,8 @@ class BudgetRepository implements BudgetRepositoryInterface
     }
 
     /**
-     * @param  Budget  $budget
-     * @param  array  $data
+     * @param Budget $budget
+     * @param array  $data
      *
      * @return Budget
      * @throws FireflyException
@@ -330,8 +330,8 @@ class BudgetRepository implements BudgetRepositoryInterface
     }
 
     /**
-     * @param  string  $oldName
-     * @param  string  $newName
+     * @param string $oldName
+     * @param string $newName
      */
     private function updateRuleActions(string $oldName, string $newName): void
     {
@@ -351,8 +351,8 @@ class BudgetRepository implements BudgetRepositoryInterface
     }
 
     /**
-     * @param  string  $oldName
-     * @param  string  $newName
+     * @param string $oldName
+     * @param string $newName
      */
     private function updateRuleTriggers(string $oldName, string $newName): void
     {
@@ -372,8 +372,8 @@ class BudgetRepository implements BudgetRepositoryInterface
     }
 
     /**
-     * @param  Budget  $budget
-     * @param  string  $text
+     * @param Budget $budget
+     * @param string $text
      * @return void
      */
     private function setNoteText(Budget $budget, string $text): void
@@ -403,8 +403,8 @@ class BudgetRepository implements BudgetRepositoryInterface
     }
 
     /**
-     * @param  Budget  $budget
-     * @param  array  $data
+     * @param Budget $budget
+     * @param array  $data
      * @throws FireflyException
      * @throws JsonException
      */
@@ -455,7 +455,7 @@ class BudgetRepository implements BudgetRepositoryInterface
     /**
      * Find a budget or return NULL
      *
-     * @param  int|null  $budgetId  |null
+     * @param int|null $budgetId |null
      *
      * @return Budget|null
      */
@@ -465,7 +465,7 @@ class BudgetRepository implements BudgetRepositoryInterface
     }
 
     /**
-     * @param  Budget  $budget
+     * @param Budget $budget
      *
      * @return bool
      */
@@ -515,8 +515,8 @@ class BudgetRepository implements BudgetRepositoryInterface
     }
 
     /**
-     * @param  int|null  $budgetId
-     * @param  string|null  $budgetName
+     * @param int|null    $budgetId
+     * @param string|null $budgetName
      *
      * @return Budget|null
      */
@@ -540,7 +540,7 @@ class BudgetRepository implements BudgetRepositoryInterface
     /**
      * Find budget by name.
      *
-     * @param  string|null  $name
+     * @param string|null $name
      *
      * @return Budget|null
      */
@@ -558,7 +558,7 @@ class BudgetRepository implements BudgetRepositoryInterface
      * This method returns the oldest journal or transaction date known to this budget.
      * Will cache result.
      *
-     * @param  Budget  $budget
+     * @param Budget $budget
      *
      * @return Carbon|null
      */
@@ -596,7 +596,7 @@ class BudgetRepository implements BudgetRepositoryInterface
     /**
      * Get all budgets with these ID's.
      *
-     * @param  array  $budgetIds
+     * @param array $budgetIds
      *
      * @return Collection
      */
@@ -629,8 +629,8 @@ class BudgetRepository implements BudgetRepositoryInterface
     }
 
     /**
-     * @param  string  $query
-     * @param  int  $limit
+     * @param string $query
+     * @param int    $limit
      *
      * @return Collection
      */
@@ -647,8 +647,8 @@ class BudgetRepository implements BudgetRepositoryInterface
     }
 
     /**
-     * @param  Budget  $budget
-     * @param  int  $order
+     * @param Budget $budget
+     * @param int    $order
      */
     public function setBudgetOrder(Budget $budget, int $order): void
     {
@@ -783,7 +783,7 @@ class BudgetRepository implements BudgetRepositoryInterface
     }
 
     /**
-     * @param  array  $data
+     * @param array $data
      *
      * @return Budget
      * @throws FireflyException
@@ -828,6 +828,9 @@ class BudgetRepository implements BudgetRepositoryInterface
         }
         if ('rollover' === $type) {
             $type = AutoBudget::AUTO_BUDGET_ROLLOVER;
+        }
+        if ('adjusted' === $type) {
+            $type = AutoBudget::AUTO_BUDGET_ADJUSTED;
         }
 
         $repos    = app(CurrencyRepositoryInterface::class);

@@ -80,7 +80,7 @@ class TransactionGroupTransformer extends AbstractTransformer
     }
 
     /**
-     * @param  array  $group
+     * @param array $group
      *
      * @return array
      */
@@ -104,7 +104,7 @@ class TransactionGroupTransformer extends AbstractTransformer
     }
 
     /**
-     * @param  array  $transactions
+     * @param array $transactions
      * @return array
      */
     private function transformTransactions(array $transactions): array
@@ -231,9 +231,9 @@ class TransactionGroupTransformer extends AbstractTransformer
     /**
      * TODO also in the old transformer.
      *
-     * @param  NullArrayObject  $array
-     * @param  string  $key
-     * @param  string|null  $default
+     * @param NullArrayObject $array
+     * @param string          $key
+     * @param string|null     $default
      *
      * @return string|null
      */
@@ -261,7 +261,7 @@ class TransactionGroupTransformer extends AbstractTransformer
     }
 
     /**
-     * @param  string|null  $string
+     * @param string|null $string
      * @return Carbon|null
      */
     private function date(?string $string): ?Carbon
@@ -273,6 +273,7 @@ class TransactionGroupTransformer extends AbstractTransformer
         if (10 === strlen($string)) {
             return Carbon::createFromFormat('Y-m-d', $string, config('app.timezone'));
         }
-        return Carbon::createFromFormat('Y-m-d H:i:s', $string, config('app.timezone'));
+        // 2022-01-01 01:01:01
+        return Carbon::createFromFormat('Y-m-d H:i:s', substr($string, 0, 19), config('app.timezone'));
     }
 }

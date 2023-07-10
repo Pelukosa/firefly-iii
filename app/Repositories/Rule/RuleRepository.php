@@ -46,7 +46,7 @@ class RuleRepository implements RuleRepositoryInterface
     private $user;
 
     /**
-     * @param  Rule  $rule
+     * @param Rule $rule
      *
      * @return bool
      * @throws Exception
@@ -113,7 +113,7 @@ class RuleRepository implements RuleRepositoryInterface
     }
 
     /**
-     * @param  RuleGroup  $ruleGroup
+     * @param RuleGroup $ruleGroup
      *
      * @return int
      */
@@ -123,7 +123,7 @@ class RuleRepository implements RuleRepositoryInterface
     }
 
     /**
-     * @param  Rule  $rule
+     * @param Rule $rule
      *
      * @return string
      *
@@ -133,7 +133,7 @@ class RuleRepository implements RuleRepositoryInterface
     {
         $count = $rule->ruleTriggers()->count();
         if (0 === $count) {
-            throw new FireflyException('Rules should have more than zero triggers, rule #'.$rule->id.' has none!');
+            throw new FireflyException('Rules should have more than zero triggers, rule #' . $rule->id . ' has none!');
         }
 
         return $rule->ruleTriggers()->where('trigger_type', 'user_action')->first()->trigger_value;
@@ -148,7 +148,7 @@ class RuleRepository implements RuleRepositoryInterface
     }
 
     /**
-     * @param  Rule  $rule
+     * @param Rule $rule
      *
      * @return Collection
      */
@@ -158,7 +158,7 @@ class RuleRepository implements RuleRepositoryInterface
     }
 
     /**
-     * @param  Rule  $rule
+     * @param Rule $rule
      *
      * @return Collection
      */
@@ -260,7 +260,7 @@ class RuleRepository implements RuleRepositoryInterface
     }
 
     /**
-     * @param  array  $data
+     * @param array $data
      *
      * @return Rule
      * @throws FireflyException
@@ -314,7 +314,7 @@ class RuleRepository implements RuleRepositoryInterface
     }
 
     /**
-     * @param  int  $ruleId
+     * @param int $ruleId
      *
      * @return Rule|null
      */
@@ -324,8 +324,8 @@ class RuleRepository implements RuleRepositoryInterface
     }
 
     /**
-     * @param  string  $moment
-     * @param  Rule  $rule
+     * @param string $moment
+     * @param Rule   $rule
      */
     private function setRuleTrigger(string $moment, Rule $rule): void
     {
@@ -348,7 +348,7 @@ class RuleRepository implements RuleRepositoryInterface
     }
 
     /**
-     * @param  RuleGroup  $ruleGroup
+     * @param RuleGroup $ruleGroup
      *
      * @return bool
      */
@@ -362,9 +362,9 @@ class RuleRepository implements RuleRepositoryInterface
     }
 
     /**
-     * @param  User|Authenticatable|null  $user
+     * @param User|Authenticatable|null $user
      */
-    public function setUser(User|Authenticatable|null $user): void
+    public function setUser(User | Authenticatable | null $user): void
     {
         if (null !== $user) {
             $this->user = $user;
@@ -416,8 +416,8 @@ class RuleRepository implements RuleRepositoryInterface
     }
 
     /**
-     * @param  Rule  $rule
-     * @param  array  $data
+     * @param Rule  $rule
+     * @param array $data
      *
      * @return void
      */
@@ -446,8 +446,8 @@ class RuleRepository implements RuleRepositoryInterface
     }
 
     /**
-     * @param  Rule  $rule
-     * @param  array  $values
+     * @param Rule  $rule
+     * @param array $values
      *
      * @return RuleTrigger
      */
@@ -466,8 +466,8 @@ class RuleRepository implements RuleRepositoryInterface
     }
 
     /**
-     * @param  Rule  $rule
-     * @param  array  $data
+     * @param Rule  $rule
+     * @param array $data
      *
      * @return void
      */
@@ -491,8 +491,8 @@ class RuleRepository implements RuleRepositoryInterface
     }
 
     /**
-     * @param  Rule  $rule
-     * @param  array  $values
+     * @param Rule  $rule
+     * @param array $values
      *
      * @return RuleAction
      */
@@ -511,8 +511,8 @@ class RuleRepository implements RuleRepositoryInterface
     }
 
     /**
-     * @param  Rule  $rule
-     * @param  array  $data
+     * @param Rule  $rule
+     * @param array $data
      *
      * @return Rule
      */

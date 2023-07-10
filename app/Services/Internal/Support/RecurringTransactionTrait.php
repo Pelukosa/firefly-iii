@@ -40,8 +40,8 @@ use FireflyIII\Models\RecurrenceTransaction;
 use FireflyIII\Models\RecurrenceTransactionMeta;
 use FireflyIII\Repositories\Account\AccountRepositoryInterface;
 use FireflyIII\Validation\AccountValidator;
-use JsonException;
 use Illuminate\Support\Facades\Log;
+use JsonException;
 
 /**
  * Trait RecurringTransactionTrait
@@ -50,8 +50,8 @@ use Illuminate\Support\Facades\Log;
 trait RecurringTransactionTrait
 {
     /**
-     * @param  Recurrence  $recurrence
-     * @param  string  $note
+     * @param Recurrence $recurrence
+     * @param string     $note
      *
      * @return bool
      */
@@ -77,8 +77,8 @@ trait RecurringTransactionTrait
     }
 
     /**
-     * @param  Recurrence  $recurrence
-     * @param  array  $repetitions
+     * @param Recurrence $recurrence
+     * @param array      $repetitions
      */
     protected function createRepetitions(Recurrence $recurrence, array $repetitions): void
     {
@@ -99,8 +99,8 @@ trait RecurringTransactionTrait
     /**
      * Store transactions of a recurring transactions. It's complex but readable.
      *
-     * @param  Recurrence  $recurrence
-     * @param  array  $transactions
+     * @param Recurrence $recurrence
+     * @param array      $transactions
      *
      * @throws FireflyException
      * @throws JsonException
@@ -180,9 +180,9 @@ trait RecurringTransactionTrait
     }
 
     /**
-     * @param  array  $expectedTypes
-     * @param  int|null  $accountId
-     * @param  string|null  $accountName
+     * @param array       $expectedTypes
+     * @param int|null    $accountId
+     * @param string|null $accountName
      *
      * @return Account
      * @throws JsonException
@@ -231,8 +231,8 @@ trait RecurringTransactionTrait
     }
 
     /**
-     * @param  RecurrenceTransaction  $transaction
-     * @param  int  $budgetId
+     * @param RecurrenceTransaction $transaction
+     * @param int                   $budgetId
      */
     private function setBudget(RecurrenceTransaction $transaction, int $budgetId): void
     {
@@ -254,8 +254,8 @@ trait RecurringTransactionTrait
     }
 
     /**
-     * @param  RecurrenceTransaction  $transaction
-     * @param  int  $billId
+     * @param RecurrenceTransaction $transaction
+     * @param int                   $billId
      */
     private function setBill(RecurrenceTransaction $transaction, int $billId): void
     {
@@ -277,10 +277,8 @@ trait RecurringTransactionTrait
     }
 
     /**
-     * @param  RecurrenceTransaction  $transaction
-     * @param  int  $categoryId
-     *
-     * @throws FireflyException
+     * @param RecurrenceTransaction $transaction
+     * @param int                   $categoryId
      */
     private function setCategory(RecurrenceTransaction $transaction, int $categoryId): void
     {
@@ -306,8 +304,8 @@ trait RecurringTransactionTrait
     }
 
     /**
-     * @param  RecurrenceTransaction  $transaction
-     * @param  int  $piggyId
+     * @param RecurrenceTransaction $transaction
+     * @param int                   $piggyId
      */
     protected function updatePiggyBank(RecurrenceTransaction $transaction, int $piggyId): void
     {
@@ -331,8 +329,8 @@ trait RecurringTransactionTrait
     }
 
     /**
-     * @param  RecurrenceTransaction  $transaction
-     * @param  array  $tags
+     * @param RecurrenceTransaction $transaction
+     * @param array                 $tags
      */
     protected function updateTags(RecurrenceTransaction $transaction, array $tags): void
     {
@@ -352,7 +350,7 @@ trait RecurringTransactionTrait
     }
 
     /**
-     * @param  Recurrence  $recurrence
+     * @param Recurrence $recurrence
      *
 
      */
@@ -362,7 +360,7 @@ trait RecurringTransactionTrait
     }
 
     /**
-     * @param  Recurrence  $recurrence
+     * @param Recurrence $recurrence
      *
 
      */

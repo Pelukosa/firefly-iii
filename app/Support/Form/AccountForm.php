@@ -45,13 +45,13 @@ class AccountForm
     /**
      * Grouped dropdown list of all accounts that are valid as the destination of a withdrawal.
      *
-     * @param  string  $name
-     * @param  mixed  $value
-     * @param  array|null  $options
+     * @param string     $name
+     * @param mixed      $value
+     * @param array|null $options
      *
      * @return string
      */
-    public function activeDepositDestinations(string $name, $value = null, array $options = null): string
+    public function activeDepositDestinations(string $name, mixed $value = null, array $options = null): string
     {
         $types                    = [AccountType::MORTGAGE, AccountType::DEBT, AccountType::CREDITCARD, AccountType::LOAN, AccountType::REVENUE,];
         $repository               = $this->getAccountRepository();
@@ -63,6 +63,11 @@ class AccountForm
         return $this->select($name, $grouped, $value, $options);
     }
 
+    /**
+     * @param array                           $types
+     * @param AccountRepositoryInterface|null $repository
+     * @return array
+     */
     private function getAccountsGrouped(array $types, AccountRepositoryInterface $repository = null): array
     {
         if (null === $repository) {
@@ -77,13 +82,14 @@ class AccountForm
             $role = (string)$repository->getMetaValue($account, 'account_role');
             if (in_array($account->accountType->type, $liabilityTypes, true)) {
                 $role = sprintf('l_%s', $account->accountType->type);
-            } elseif ('' === $role) {
+            }
+            if ('' === $role) {
+                $role = 'no_account_type';
                 if (AccountType::EXPENSE === $account->accountType->type) {
                     $role = 'expense_account';
-                } elseif (AccountType::REVENUE === $account->accountType->type) {
+                }
+                if (AccountType::REVENUE === $account->accountType->type) {
                     $role = 'revenue_account';
-                } else {
-                    $role = 'no_account_type';
                 }
             }
             $key                         = (string)trans(sprintf('firefly.opt_group_%s', $role));
@@ -96,13 +102,13 @@ class AccountForm
     /**
      * Grouped dropdown list of all accounts that are valid as the destination of a withdrawal.
      *
-     * @param  string  $name
-     * @param  mixed  $value
-     * @param  array|null  $options
+     * @param string     $name
+     * @param mixed      $value
+     * @param array|null $options
      *
      * @return string
      */
-    public function activeWithdrawalDestinations(string $name, $value = null, array $options = null): string
+    public function activeWithdrawalDestinations(string $name, mixed $value = null, array $options = null): string
     {
         $types      = [AccountType::MORTGAGE, AccountType::DEBT, AccountType::CREDITCARD, AccountType::LOAN, AccountType::EXPENSE,];
         $repository = $this->getAccountRepository();
@@ -118,8 +124,8 @@ class AccountForm
     /**
      * Check list of asset accounts.
      *
-     * @param  string  $name
-     * @param  array|null  $options
+     * @param string     $name
+     * @param array|null $options
      *
      * @return string
      * @throws FireflyException
@@ -151,9 +157,9 @@ class AccountForm
     /**
      * Basic list of asset accounts.
      *
-     * @param  string  $name
-     * @param  mixed  $value
-     * @param  array|null  $options
+     * @param string     $name
+     * @param mixed      $value
+     * @param array|null $options
      *
      * @return string
      */
@@ -168,9 +174,9 @@ class AccountForm
     /**
      * Same list but all liabilities as well.
      *
-     * @param  string  $name
-     * @param  mixed  $value
-     * @param  array|null  $options
+     * @param string     $name
+     * @param mixed      $value
+     * @param array|null $options
      *
      * @return string
      */

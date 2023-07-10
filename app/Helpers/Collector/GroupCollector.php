@@ -316,7 +316,7 @@ class GroupCollector implements GroupCollectorInterface
     /**
      * Limit results to NOT a specific currency, either foreign or normal one.
      *
-     * @param  TransactionCurrency  $currency
+     * @param TransactionCurrency $currency
      *
      * @return GroupCollectorInterface
      */
@@ -353,7 +353,7 @@ class GroupCollector implements GroupCollectorInterface
     /**
      * Limit the result to NOT a set of specific transaction groups.
      *
-     * @param  array  $groupIds
+     * @param array $groupIds
      *
      * @return GroupCollectorInterface
      */
@@ -367,7 +367,7 @@ class GroupCollector implements GroupCollectorInterface
     /**
      * Limit the result to NOT a set of specific journals.
      *
-     * @param  array  $journalIds
+     * @param array $journalIds
      *
      * @return GroupCollectorInterface
      */
@@ -387,7 +387,7 @@ class GroupCollector implements GroupCollectorInterface
     /**
      * Search for words in descriptions.
      *
-     * @param  array  $array
+     * @param array $array
      *
      * @return GroupCollectorInterface
      */
@@ -505,7 +505,7 @@ class GroupCollector implements GroupCollectorInterface
     }
 
     /**
-     * @param  Collection  $collection
+     * @param Collection $collection
      *
      * @return Collection
      * @throws FireflyException
@@ -558,7 +558,7 @@ class GroupCollector implements GroupCollectorInterface
     }
 
     /**
-     * @param  TransactionJournal  $augumentedJournal
+     * @param TransactionJournal $augumentedJournal
      *
      * @return array
      * @throws FireflyException
@@ -648,7 +648,7 @@ class GroupCollector implements GroupCollectorInterface
     /**
      * Convert a selected set of fields to arrays.
      *
-     * @param  array  $array
+     * @param array $array
      *
      * @return array
      */
@@ -662,7 +662,7 @@ class GroupCollector implements GroupCollectorInterface
     }
 
     /**
-     * @param  array  $array
+     * @param array $array
      * @return array
      */
     private function convertToStrings(array $array): array
@@ -675,8 +675,8 @@ class GroupCollector implements GroupCollectorInterface
     }
 
     /**
-     * @param  array  $existingJournal
-     * @param  TransactionJournal  $newJournal
+     * @param array              $existingJournal
+     * @param TransactionJournal $newJournal
      *
      * @return array
      */
@@ -705,8 +705,8 @@ class GroupCollector implements GroupCollectorInterface
     }
 
     /**
-     * @param  array  $existingJournal
-     * @param  TransactionJournal  $newJournal
+     * @param array              $existingJournal
+     * @param TransactionJournal $newJournal
      *
      * @return array
      */
@@ -725,14 +725,14 @@ class GroupCollector implements GroupCollectorInterface
     }
 
     /**
-     * @param  array  $groups
+     * @param array $groups
      *
      * @return array
      */
     private function parseSums(array $groups): array
     {
         /**
-         * @var int $groudId
+         * @var int   $groudId
          * @var array $group
          */
         foreach ($groups as $groudId => $group) {
@@ -770,7 +770,7 @@ class GroupCollector implements GroupCollectorInterface
     }
 
     /**
-     * @param  Collection  $collection
+     * @param Collection $collection
      * @return Collection
      */
     private function postFilterCollection(Collection $collection): Collection
@@ -785,7 +785,7 @@ class GroupCollector implements GroupCollectorInterface
             // and save it (or not) in the new collection.
             // that new collection is the next current collection
             /**
-             * @var int $ii
+             * @var int   $ii
              * @var array $item
              */
             foreach ($currentCollection as $ii => $item) {
@@ -819,7 +819,7 @@ class GroupCollector implements GroupCollectorInterface
     /**
      * Limit the number of returned entries.
      *
-     * @param  int  $limit
+     * @param int $limit
      *
      * @return GroupCollectorInterface
      */
@@ -852,7 +852,7 @@ class GroupCollector implements GroupCollectorInterface
     /**
      * Limit results to a specific currency, either foreign or normal one.
      *
-     * @param  TransactionCurrency  $currency
+     * @param TransactionCurrency $currency
      *
      * @return GroupCollectorInterface
      */
@@ -881,7 +881,7 @@ class GroupCollector implements GroupCollectorInterface
     /**
      * Limit the result to a set of specific transaction groups.
      *
-     * @param  array  $groupIds
+     * @param array $groupIds
      *
      * @return GroupCollectorInterface
      */
@@ -895,7 +895,7 @@ class GroupCollector implements GroupCollectorInterface
     /**
      * Limit the result to a set of specific journals.
      *
-     * @param  array  $journalIds
+     * @param array $journalIds
      *
      * @return GroupCollectorInterface
      */
@@ -915,7 +915,7 @@ class GroupCollector implements GroupCollectorInterface
     /**
      * Set the page to get.
      *
-     * @param  int  $page
+     * @param int $page
      *
      * @return GroupCollectorInterface
      */
@@ -931,7 +931,7 @@ class GroupCollector implements GroupCollectorInterface
     /**
      * Search for words in descriptions.
      *
-     * @param  array  $array
+     * @param array $array
      *
      * @return GroupCollectorInterface
      */
@@ -967,7 +967,7 @@ class GroupCollector implements GroupCollectorInterface
     /**
      * Limit the search to one specific transaction group.
      *
-     * @param  TransactionGroup  $transactionGroup
+     * @param TransactionGroup $transactionGroup
      *
      * @return GroupCollectorInterface
      */
@@ -981,7 +981,7 @@ class GroupCollector implements GroupCollectorInterface
     /**
      * Limit the included transaction types.
      *
-     * @param  array  $types
+     * @param array $types
      *
      * @return GroupCollectorInterface
      */
@@ -995,7 +995,7 @@ class GroupCollector implements GroupCollectorInterface
     /**
      * Set the user object and start the query.
      *
-     * @param  User  $user
+     * @param User $user
      *
      * @return GroupCollectorInterface
      */

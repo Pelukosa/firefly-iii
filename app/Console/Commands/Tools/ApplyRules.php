@@ -24,6 +24,7 @@ declare(strict_types=1);
 namespace FireflyIII\Console\Commands\Tools;
 
 use Carbon\Carbon;
+use FireflyIII\Console\Commands\ShowsFriendlyMessages;
 use FireflyIII\Console\Commands\VerifiesAccessToken;
 use FireflyIII\Exceptions\FireflyException;
 use FireflyIII\Models\AccountType;
@@ -43,6 +44,7 @@ use Illuminate\Support\Facades\Log;
  */
 class ApplyRules extends Command
 {
+    use ShowsFriendlyMessages;
     use VerifiesAccessToken;
 
     /**
@@ -88,7 +90,7 @@ class ApplyRules extends Command
         $start = microtime(true);
         $this->stupidLaravel();
         if (!$this->verifyAccessToken()) {
-            $this->error('Invalid access token.');
+            $this->friendlyError('Invalid access token.');
 
             return 1;
         }
@@ -111,11 +113,11 @@ class ApplyRules extends Command
         $rulesToApply = $this->getRulesToApply();
         $count        = $rulesToApply->count();
         if (0 === $count) {
-            $this->error('No rules or rule groups have been included.');
-            $this->warn('Make a selection using:');
-            $this->warn('    --rules=1,2,...');
-            $this->warn('    --rule_groups=1,2,...');
-            $this->warn('    --all_rules');
+            $this->friendlyError('No rules or rule groups have been included.');
+            $this->friendlyWarning('Make a selection using:');
+            $this->friendlyWarning('    --rules=1,2,...');
+            $this->friendlyWarning('    --rule_groups=1,2,...');
+            $this->friendlyWarning('    --all_rules');
 
             return 1;
         }
@@ -139,14 +141,14 @@ class ApplyRules extends Command
         $ruleEngine->addOperator(['type' => 'date_before', 'value' => $this->endDate->format('Y-m-d')]);
 
         // start running rules.
-        $this->line(sprintf('Will apply %d rule(s) to your transaction(s).', $count));
+        $this->friendlyLine(sprintf('Will apply %d rule(s) to your transaction(s).', $count));
 
         // file the rule(s)
         $ruleEngine->fire();
 
-        $this->line('');
+        $this->friendlyLine('');
         $end = round(microtime(true) - $start, 2);
-        $this->line(sprintf('Done in %s seconds!', $end));
+        $this->friendlyPositive(sprintf('Done in %s seconds!', $end));
 
         return 0;
     }
@@ -201,7 +203,7 @@ class ApplyRules extends Command
     {
         $accountString = $this->option('accounts');
         if (null === $accountString || '' === $accountString) {
-            $this->error('Please use the --accounts option to indicate the accounts to apply rules to.');
+            $this->friendlyError('Please use the --accounts option to indicate the accounts to apply rules to.');
 
             return false;
         }
@@ -220,7 +222,7 @@ class ApplyRules extends Command
         }
 
         if (0 === $finalList->count()) {
-            $this->error('Please make sure all accounts in --accounts are asset accounts or liabilities.');
+            $this->friendlyError('Please make sure all accounts in --accounts are asset accounts or liabilities.');
 
             return false;
         }
@@ -247,7 +249,7 @@ class ApplyRules extends Command
                 $this->ruleGroupSelection[] = $ruleGroup->id;
             }
             if (false === $ruleGroup->active) {
-                $this->warn(sprintf('Will ignore inactive rule group #%d ("%s")', $ruleGroup->id, $ruleGroup->title));
+                $this->friendlyWarning(sprintf('Will ignore inactive rule group #%d ("%s")', $ruleGroup->id, $ruleGroup->title));
             }
         }
 
@@ -343,8 +345,8 @@ class ApplyRules extends Command
     }
 
     /**
-     * @param  Rule  $rule
-     * @param  RuleGroup  $group
+     * @param Rule      $rule
+     * @param RuleGroup $group
      *
      * @return bool
      */

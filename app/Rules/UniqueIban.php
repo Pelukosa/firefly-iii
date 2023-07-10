@@ -26,7 +26,6 @@ namespace FireflyIII\Rules;
 use Closure;
 use FireflyIII\Models\Account;
 use FireflyIII\Models\AccountType;
-use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Support\Facades\Log;
 
@@ -42,8 +41,8 @@ class UniqueIban implements ValidationRule
      * Create a new rule instance.
      *
      *
-     * @param  Account|null  $account
-     * @param  string|null  $expectedType
+     * @param Account|null $account
+     * @param string|null  $expectedType
      */
     public function __construct(?Account $account, ?string $expectedType)
     {
@@ -80,10 +79,20 @@ class UniqueIban implements ValidationRule
     }
 
     /**
+     * @inheritDoc
+     */
+    public function validate(string $attribute, mixed $value, Closure $fail): void
+    {
+        if (!$this->passes($attribute, $value)) {
+            $fail((string)trans('validation.unique_iban_for_user'));
+        }
+    }
+
+    /**
      * Determine if the validation rule passes.
      *
-     * @param  string  $attribute
-     * @param  mixed  $value
+     * @param string $attribute
+     * @param mixed  $value
      *
      * @return bool
      *
@@ -147,8 +156,8 @@ class UniqueIban implements ValidationRule
     }
 
     /**
-     * @param  string  $type
-     * @param  string  $iban
+     * @param string $type
+     * @param string $iban
      *
      * @return int
      */
@@ -170,15 +179,5 @@ class UniqueIban implements ValidationRule
         }
 
         return $query->count();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function validate(string $attribute, mixed $value, Closure $fail): void
-    {
-        if (!$this->passes($attribute, $value)) {
-            $fail((string)trans('validation.unique_iban_for_user'));
-        }
     }
 }

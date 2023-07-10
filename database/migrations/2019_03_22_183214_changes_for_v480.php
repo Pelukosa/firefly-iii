@@ -41,7 +41,7 @@ class ChangesForV480 extends Migration
     public function down(): void
     {
         // remove group ID
-        if(Schema::hasColumn('transaction_journals', 'transaction_group_id')) {
+        if (Schema::hasColumn('transaction_journals', 'transaction_group_id')) {
             try {
                 Schema::table(
                     'transaction_journals',
@@ -58,7 +58,7 @@ class ChangesForV480 extends Migration
                         }
                         try {
                             $table->dropColumn('transaction_group_id');
-                        } catch (QueryException|ColumnDoesNotExist $e) {
+                        } catch (QueryException | ColumnDoesNotExist $e) {
                             Log::error(sprintf('Could not drop column: %s', $e->getMessage()));
                             Log::error('If the column does not exist, this is not an problem. Otherwise, please open a GitHub discussion.');
                         }
@@ -71,14 +71,14 @@ class ChangesForV480 extends Migration
         }
 
         // remove 'stop processing' column
-        if(Schema::hasColumn('rule_groups', 'stop_processing')) {
+        if (Schema::hasColumn('rule_groups', 'stop_processing')) {
             try {
                 Schema::table(
                     'rule_groups',
                     static function (Blueprint $table) {
                         try {
                             $table->dropColumn('stop_processing');
-                        } catch (QueryException|ColumnDoesNotExist $e) {
+                        } catch (QueryException | ColumnDoesNotExist $e) {
                             Log::error(sprintf('Could not drop column: %s', $e->getMessage()));
                             Log::error('If the column does not exist, this is not an problem. Otherwise, please open a GitHub discussion.');
                         }
@@ -91,14 +91,14 @@ class ChangesForV480 extends Migration
         }
 
         // remove 'mfa_secret' column
-        if(Schema::hasColumn('users', 'mfa_secret')) {
+        if (Schema::hasColumn('users', 'mfa_secret')) {
             try {
                 Schema::table(
                     'users',
                     static function (Blueprint $table) {
                         try {
                             $table->dropColumn('mfa_secret');
-                        } catch (QueryException|ColumnDoesNotExist $e) {
+                        } catch (QueryException | ColumnDoesNotExist $e) {
                             Log::error(sprintf('Could not drop column: %s', $e->getMessage()));
                             Log::error('If the column does not exist, this is not an problem. Otherwise, please open a GitHub discussion.');
                         }
@@ -119,7 +119,7 @@ class ChangesForV480 extends Migration
     public function up(): void
     {
         // add currency_id
-        if(!Schema::hasColumn('transaction_journals', 'transaction_group_id')) {
+        if (!Schema::hasColumn('transaction_journals', 'transaction_group_id')) {
             try {
                 Schema::table(
                     'transaction_journals',
@@ -148,7 +148,7 @@ class ChangesForV480 extends Migration
         }
 
         // add 'stop processing' column
-        if(!Schema::hasColumn('rule_groups', 'stop_processing')) {
+        if (!Schema::hasColumn('rule_groups', 'stop_processing')) {
             try {
                 Schema::table(
                     'rule_groups',
@@ -163,7 +163,7 @@ class ChangesForV480 extends Migration
         }
 
         // add 'mfa_secret' column
-        if(!Schema::hasColumn('users', 'mfa_secret')) {
+        if (!Schema::hasColumn('users', 'mfa_secret')) {
             try {
                 Schema::table(
                     'users',

@@ -70,9 +70,9 @@ class EditController extends Controller
     /**
      * Edit account overview.
      *
-     * @param  Request  $request
-     * @param  Account  $account
-     * @param  AccountRepositoryInterface  $repository
+     * @param Request                    $request
+     * @param Account                    $account
+     * @param AccountRepositoryInterface $repository
      *
      * @return Factory|RedirectResponse|Redirector|View
      */
@@ -139,13 +139,13 @@ class EditController extends Controller
             'cc_type'                 => $repository->getMetaValue($account, 'cc_type'),
             'cc_monthly_payment_date' => $repository->getMetaValue($account, 'cc_monthly_payment_date'),
             'BIC'                     => $repository->getMetaValue($account, 'BIC'),
-            'opening_balance_date'    => $openingBalanceDate,
+            'opening_balance_date'    => substr((string)$openingBalanceDate, 0, 10),
             'liability_type_id'       => $account->account_type_id,
             'opening_balance'         => app('steam')->bcround($openingBalanceAmount, $currency->decimal_places),
             'liability_direction'     => $this->repository->getMetaValue($account, 'liability_direction'),
             'virtual_balance'         => app('steam')->bcround($virtualBalance, $currency->decimal_places),
             'currency_id'             => $currency->id,
-            'include_net_worth'       => $includeNetWorth,
+            'include_net_worth'       => $hasOldInput ? (bool)$request->old('include_net_worth') : $includeNetWorth,
             'interest'                => $repository->getMetaValue($account, 'interest'),
             'interest_period'         => $repository->getMetaValue($account, 'interest_period'),
             'notes'                   => $this->repository->getNoteText($account),
@@ -178,8 +178,8 @@ class EditController extends Controller
     /**
      * Update the account.
      *
-     * @param  AccountFormRequest  $request
-     * @param  Account  $account
+     * @param AccountFormRequest $request
+     * @param Account            $account
      *
      * @return $this|RedirectResponse|Redirector
      */

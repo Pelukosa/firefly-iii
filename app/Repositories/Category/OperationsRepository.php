@@ -45,10 +45,10 @@ class OperationsRepository implements OperationsRepositoryInterface
      *
      * First currency, then categories.
      *
-     * @param  Carbon  $start
-     * @param  Carbon  $end
-     * @param  Collection|null  $accounts
-     * @param  Collection|null  $categories
+     * @param Carbon          $start
+     * @param Carbon          $end
+     * @param Collection|null $accounts
+     * @param Collection|null $categories
      *
      * @return array
      */
@@ -117,9 +117,9 @@ class OperationsRepository implements OperationsRepositoryInterface
     }
 
     /**
-     * @param  User|Authenticatable|null  $user
+     * @param User|Authenticatable|null $user
      */
-    public function setUser(User|Authenticatable|null $user): void
+    public function setUser(User | Authenticatable | null $user): void
     {
         if (null !== $user) {
             $this->user = $user;
@@ -141,10 +141,10 @@ class OperationsRepository implements OperationsRepositoryInterface
      * which have the specified category set to them. It's grouped per currency, with as few details in the array
      * as possible. Amounts are always positive.
      *
-     * @param  Carbon  $start
-     * @param  Carbon  $end
-     * @param  Collection|null  $accounts
-     * @param  Collection|null  $categories
+     * @param Carbon          $start
+     * @param Carbon          $end
+     * @param Collection|null $accounts
+     * @param Collection|null $categories
      *
      * @return array
      */
@@ -344,10 +344,10 @@ class OperationsRepository implements OperationsRepositoryInterface
     /**
      * Sum of withdrawal journals in period for a set of categories, grouped per currency. Amounts are always negative.
      *
-     * @param  Carbon  $start
-     * @param  Carbon  $end
-     * @param  Collection|null  $accounts
-     * @param  Collection|null  $categories
+     * @param Carbon          $start
+     * @param Carbon          $end
+     * @param Collection|null $accounts
+     * @param Collection|null $categories
      *
      * @return array
      */
@@ -388,10 +388,10 @@ class OperationsRepository implements OperationsRepositoryInterface
     /**
      * Sum of income journals in period for a set of categories, grouped per currency. Amounts are always positive.
      *
-     * @param  Carbon  $start
-     * @param  Carbon  $end
-     * @param  Collection|null  $accounts
-     * @param  Collection|null  $categories
+     * @param Carbon          $start
+     * @param Carbon          $end
+     * @param Collection|null $accounts
+     * @param Collection|null $categories
      *
      * @return array
      */
@@ -431,10 +431,10 @@ class OperationsRepository implements OperationsRepositoryInterface
     /**
      * Sum of income journals in period for a set of categories, grouped per currency. Amounts are always positive.
      *
-     * @param  Carbon  $start
-     * @param  Carbon  $end
-     * @param  Collection|null  $accounts
-     * @param  Collection|null  $categories
+     * @param Carbon          $start
+     * @param Carbon          $end
+     * @param Collection|null $accounts
+     * @param Collection|null $categories
      *
      * @return array
      */

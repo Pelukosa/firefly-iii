@@ -67,16 +67,18 @@ class ChangesForV550 extends Migration
         }
 
         // expand budget / transaction journal table.
-        if(Schema::hasColumn('budget_transaction_journal', 'budget_limit_id')) {
+        if (Schema::hasColumn('budget_transaction_journal', 'budget_limit_id')) {
             try {
                 Schema::table(
                     'budget_transaction_journal',
                     function (Blueprint $table) {
-                        $table->dropForeign('budget_id_foreign');
+                        if ('sqlite' !== config('database.default')) {
+                            $table->dropForeign('budget_id_foreign');
+                        }
                         $table->dropColumn('budget_limit_id');
                     }
                 );
-            } catch (QueryException|ColumnDoesNotExist $e) {
+            } catch (QueryException | ColumnDoesNotExist $e) {
                 Log::error(sprintf('Could not execute query: %s', $e->getMessage()));
                 Log::error('If the column or index already exists (see error), this is not an problem. Otherwise, please open a GitHub discussion.');
             }
@@ -86,16 +88,29 @@ class ChangesForV550 extends Migration
         Schema::dropIfExists('failed_jobs');
 
         // drop fields from budget limits
-        if(Schema::hasColumn('budget_limits', 'period') && Schema::hasColumn('budget_limits', 'generated')) {
+        // in two steps for sqlite
+        if (Schema::hasColumn('budget_limits', 'period')) {
             try {
                 Schema::table(
                     'budget_limits',
                     static function (Blueprint $table) {
                         $table->dropColumn('period');
+                    }
+                );
+            } catch (QueryException | ColumnDoesNotExist $e) {
+                Log::error(sprintf('Could not execute query: %s', $e->getMessage()));
+                Log::error('If the column or index already exists (see error), this is not an problem. Otherwise, please open a GitHub discussion.');
+            }
+        }
+        if (Schema::hasColumn('budget_limits', 'generated')) {
+            try {
+                Schema::table(
+                    'budget_limits',
+                    static function (Blueprint $table) {
                         $table->dropColumn('generated');
                     }
                 );
-            } catch (QueryException|ColumnDoesNotExist $e) {
+            } catch (QueryException | ColumnDoesNotExist $e) {
                 Log::error(sprintf('Could not execute query: %s', $e->getMessage()));
                 Log::error('If the column or index already exists (see error), this is not an problem. Otherwise, please open a GitHub discussion.');
             }
@@ -161,7 +176,7 @@ class ChangesForV550 extends Migration
         }
 
         // update budget / transaction journal table.
-        if(!Schema::hasColumn('budget_transaction_journal', 'budget_limit_id')) {
+        if (!Schema::hasColumn('budget_transaction_journal', 'budget_limit_id')) {
             try {
                 Schema::table(
                     'budget_transaction_journal',
@@ -211,9 +226,9 @@ class ChangesForV550 extends Migration
                         $table->string('title', 255)->index();
                         $table->string('secret', 32)->index();
                         $table->boolean('active')->default(true);
-                        $table->unsignedSmallInteger('trigger', false);
-                        $table->unsignedSmallInteger('response', false);
-                        $table->unsignedSmallInteger('delivery', false);
+                        $table->unsignedSmallInteger('trigger');
+                        $table->unsignedSmallInteger('response');
+                        $table->unsignedSmallInteger('delivery');
                         $table->string('url', 1024);
                         $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
                         $table->unique(['user_id', 'title']);

@@ -80,8 +80,8 @@ class RuleGroupRepository implements RuleGroupRepositoryInterface
     }
 
     /**
-     * @param  RuleGroup  $ruleGroup
-     * @param  RuleGroup|null  $moveTo
+     * @param RuleGroup      $ruleGroup
+     * @param RuleGroup|null $moveTo
      *
      * @return bool
      * @throws Exception
@@ -138,7 +138,7 @@ class RuleGroupRepository implements RuleGroupRepositoryInterface
     }
 
     /**
-     * @param  RuleGroup  $ruleGroup
+     * @param RuleGroup $ruleGroup
      *
      * @return bool
      */
@@ -167,7 +167,7 @@ class RuleGroupRepository implements RuleGroupRepositoryInterface
     }
 
     /**
-     * @param  Rule  $rule
+     * @param Rule $rule
      */
     private function resetRuleActionOrder(Rule $rule): void
     {
@@ -189,7 +189,7 @@ class RuleGroupRepository implements RuleGroupRepositoryInterface
     }
 
     /**
-     * @param  Rule  $rule
+     * @param Rule $rule
      */
     private function resetRuleTriggerOrder(Rule $rule): void
     {
@@ -225,7 +225,7 @@ class RuleGroupRepository implements RuleGroupRepositoryInterface
     }
 
     /**
-     * @param  int  $ruleGroupId
+     * @param int $ruleGroupId
      *
      * @return RuleGroup|null
      */
@@ -235,7 +235,7 @@ class RuleGroupRepository implements RuleGroupRepositoryInterface
     }
 
     /**
-     * @param  string  $title
+     * @param string $title
      *
      * @return RuleGroup|null
      */
@@ -253,7 +253,7 @@ class RuleGroupRepository implements RuleGroupRepositoryInterface
     }
 
     /**
-     * @param  RuleGroup  $group
+     * @param RuleGroup $group
      *
      * @return Collection
      */
@@ -265,7 +265,7 @@ class RuleGroupRepository implements RuleGroupRepositoryInterface
     }
 
     /**
-     * @param  RuleGroup  $group
+     * @param RuleGroup $group
      *
      * @return Collection
      */
@@ -280,7 +280,7 @@ class RuleGroupRepository implements RuleGroupRepositoryInterface
     }
 
     /**
-     * @param  RuleGroup  $group
+     * @param RuleGroup $group
      *
      * @return Collection
      */
@@ -295,7 +295,7 @@ class RuleGroupRepository implements RuleGroupRepositoryInterface
     }
 
     /**
-     * @param  string|null  $filter
+     * @param string|null $filter
      *
      * @return Collection
      */
@@ -357,7 +357,7 @@ class RuleGroupRepository implements RuleGroupRepositoryInterface
     }
 
     /**
-     * @param  string|null  $filter
+     * @param string|null $filter
      *
      * @return Collection
      */
@@ -410,7 +410,7 @@ class RuleGroupRepository implements RuleGroupRepositoryInterface
     }
 
     /**
-     * @param  RuleGroup  $group
+     * @param RuleGroup $group
      *
      * @return Collection
      */
@@ -444,9 +444,9 @@ class RuleGroupRepository implements RuleGroupRepositoryInterface
     }
 
     /**
-     * @param  User|Authenticatable|null  $user
+     * @param User|Authenticatable|null $user
      */
-    public function setUser(User|Authenticatable|null $user): void
+    public function setUser(User | Authenticatable | null $user): void
     {
         if (null !== $user) {
             $this->user = $user;
@@ -454,7 +454,7 @@ class RuleGroupRepository implements RuleGroupRepositoryInterface
     }
 
     /**
-     * @param  array  $data
+     * @param array $data
      *
      * @return RuleGroup
      */
@@ -505,8 +505,8 @@ class RuleGroupRepository implements RuleGroupRepositoryInterface
     }
 
     /**
-     * @param  RuleGroup  $ruleGroup
-     * @param  array  $data
+     * @param RuleGroup $ruleGroup
+     * @param array     $data
      *
      * @return RuleGroup
      */

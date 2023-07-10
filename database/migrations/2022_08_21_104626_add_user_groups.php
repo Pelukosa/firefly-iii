@@ -67,13 +67,15 @@ return new class () extends Migration {
             Schema::table(
                 'currency_exchange_rates',
                 function (Blueprint $table) {
-                    $table->dropForeign('cer_to_ugi');
+                    if ('sqlite' !== config('database.default')) {
+                        $table->dropForeign('cer_to_ugi');
+                    }
                     if (Schema::hasColumn('currency_exchange_rates', 'user_group_id')) {
                         $table->dropColumn('user_group_id');
                     }
                 }
             );
-        } catch (QueryException|ColumnDoesNotExist $e) {
+        } catch (QueryException | ColumnDoesNotExist $e) {
             Log::error(sprintf('Could not execute query: %s', $e->getMessage()));
             Log::error('If the column or index already exists (see error), this is not an problem. Otherwise, please open a GitHub discussion.');
         }

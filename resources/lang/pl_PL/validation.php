@@ -61,6 +61,10 @@ return [
     'invalid_selection'              => 'Twój wybór jest nieprawidłowy.',
     'belongs_user'                   => 'Ta wartość jest nieprawidłowa dla tego pola.',
     'at_least_one_transaction'       => 'Wymaga co najmniej jednej transakcji.',
+    'recurring_transaction_id'       => 'Wymaga co najmniej jednej transakcji.',
+    'need_id_to_match'               => 'Musisz przesłać ten wpis z ID dla API, aby móc go dopasować.',
+    'too_many_unmatched'             => 'Zbyt wiele przesłanych transakcji nie może być dopasowanych do ich odpowiednich wpisów w bazie danych. Upewnij się, że istniejące wpisy mają poprawny ID.',
+    'id_does_not_match'              => 'Przesłane ID #:id nie pasuje do oczekiwanego ID. Upewnij się, że pasuje do pola lub pomiń to pole.',
     'at_least_one_repetition'        => 'Wymaga co najmniej jednego powtórzenia.',
     'require_repeat_until'           => 'Wymagana jest liczba powtórzeń lub data zakończenia (repeat_until), ale nie obie jednocześnie.',
     'require_currency_info'          => 'Treść tego pola jest nieprawidłowa bez informacji o walucie.',
@@ -230,17 +234,20 @@ return [
 
     // validation of accounts:
     'withdrawal_source_need_data' => 'Aby kontynuować, musisz uzyskać prawidłowy identyfikator konta źródłowego i/lub prawidłową nazwę konta źródłowego.',
-    'withdrawal_source_bad_data'  => 'Nie można znaleźć poprawnego konta źródłowego podczas wyszukiwania identyfikatora ":id" lub nazwy ":name".',
-    'withdrawal_dest_need_data'   => 'Aby kontynuować, musisz uzyskać prawidłowy identyfikator konta wydatków i/lub prawidłową nazwę konta wydatków.',
+    'withdrawal_source_bad_data'  => '[a] Could not find a valid source account when searching for ID ":id" or name ":name".',
+    'withdrawal_dest_need_data'   => '[a] Need to get a valid destination account ID and/or valid destination account name to continue.',
     'withdrawal_dest_bad_data'    => 'Nie można znaleźć poprawnego konta wydatków podczas wyszukiwania identyfikatora ":id" lub nazwy ":name".',
+
+    'withdrawal_dest_iban_exists' => 'This destination account IBAN is already in use by an asset account or a liability and cannot be used as a withdrawal destination.',
+    'deposit_src_iban_exists'     => 'This source account IBAN is already in use by an asset account or a liability and cannot be used as a deposit source.',
 
     'reconciliation_source_bad_data' => 'Nie można znaleźć prawidłowego konta uzgadniania podczas wyszukiwania ID ":id" lub nazwy ":name".',
 
-    'generic_source_bad_data' => 'Nie można znaleźć poprawnego konta źródłowego podczas wyszukiwania identyfikatora ":id" lub nazwy ":name".',
+    'generic_source_bad_data' => '[e] Could not find a valid source account when searching for ID ":id" or name ":name".',
 
     'deposit_source_need_data' => 'Aby kontynuować, musisz uzyskać prawidłowy identyfikator konta źródłowego i/lub prawidłową nazwę konta źródłowego.',
-    'deposit_source_bad_data'  => 'Nie można znaleźć poprawnego konta źródłowego podczas wyszukiwania identyfikatora ":id" lub nazwy ":name".',
-    'deposit_dest_need_data'   => 'Aby kontynuować, musisz uzyskać prawidłowy identyfikator konta wydatków i/lub prawidłową nazwę konta wydatków.',
+    'deposit_source_bad_data'  => '[b] Could not find a valid source account when searching for ID ":id" or name ":name".',
+    'deposit_dest_need_data'   => '[b] Need to get a valid destination account ID and/or valid destination account name to continue.',
     'deposit_dest_bad_data'    => 'Nie można znaleźć poprawnego konta wydatków podczas wyszukiwania identyfikatora ":id" lub nazwy ":name".',
     'deposit_dest_wrong_type'  => 'Konto docelowe nie jest poprawnego typu.',
 
@@ -257,22 +264,22 @@ return [
 
 
     'transfer_source_need_data' => 'Aby kontynuować, musisz uzyskać prawidłowy identyfikator konta źródłowego i/lub prawidłową nazwę konta źródłowego.',
-    'transfer_source_bad_data'  => 'Nie można znaleźć poprawnego konta źródłowego podczas wyszukiwania identyfikatora ":id" lub nazwy ":name".',
-    'transfer_dest_need_data'   => 'Aby kontynuować, musisz uzyskać prawidłowy identyfikator konta wydatków i/lub prawidłową nazwę konta wydatków.',
+    'transfer_source_bad_data'  => '[c] Could not find a valid source account when searching for ID ":id" or name ":name".',
+    'transfer_dest_need_data'   => '[c] Need to get a valid destination account ID and/or valid destination account name to continue.',
     'transfer_dest_bad_data'    => 'Nie można znaleźć poprawnego konta wydatków podczas wyszukiwania identyfikatora ":id" lub nazwy ":name".',
     'need_id_in_edit'           => 'Każdy podział musi posiadać transaction_journal_id (poprawny identyfikator lub 0).',
 
     'ob_source_need_data'           => 'Aby kontynuować, musisz uzyskać prawidłowy identyfikator konta źródłowego i/lub prawidłową nazwę konta źródłowego.',
     'lc_source_need_data'           => 'Potrzebujemy poprawny identyfikator konta źródłowego, aby kontynuować.',
-    'ob_dest_need_data'             => 'Aby kontynuować, musisz uzyskać prawidłowy identyfikator konta wydatków i/lub prawidłową nazwę konta wydatków.',
+    'ob_dest_need_data'             => '[d] Need to get a valid destination account ID and/or valid destination account name to continue.',
     'ob_dest_bad_data'              => 'Nie można znaleźć poprawnego konta wydatków podczas wyszukiwania identyfikatora ":id" lub nazwy ":name".',
     'reconciliation_either_account' => 'Aby przesłać uzgodnienie, musisz przesłać konto źródłowe lub docelowe. Nie oba te konto, ani nie żadnego konta.',
 
     'generic_invalid_source'      => 'Nie możesz użyć tego konta jako konta źródłowego.',
     'generic_invalid_destination' => 'Nie możesz użyć tego konta jako konta docelowego.',
 
-    'generic_no_source'      => 'You must submit source account information or submit a transaction journal ID.',
-    'generic_no_destination' => 'You must submit destination account information or submit a transaction journal ID.',
+    'generic_no_source'      => 'Musisz przesłać informacje o koncie źródłowym lub przesłać identyfikator dziennika transakcji.',
+    'generic_no_destination' => 'Musisz przesłać informacje o koncie docelowym lub przesłać identyfikator dziennika transakcji.',
 
     'gte.numeric' => ':attribute musi być większy lub równy :value.',
     'gt.numeric'  => ':attribute musi być większy niż :value.',

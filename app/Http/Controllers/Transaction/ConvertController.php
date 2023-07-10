@@ -42,8 +42,8 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
-use Illuminate\View\View;
 use Illuminate\Support\Facades\Log;
+use Illuminate\View\View;
 
 /**
  * Class ConvertController.
@@ -82,8 +82,8 @@ class ConvertController extends Controller
     /**
      * Show overview of a to be converted transaction.
      *
-     * @param  TransactionType  $destinationType
-     * @param  TransactionGroup  $group
+     * @param TransactionType  $destinationType
+     * @param TransactionGroup $group
      *
      * @return RedirectResponse|Redirector|Factory|View
      * @throws Exception
@@ -104,7 +104,7 @@ class ConvertController extends Controller
 
         $groupTitle   = $group->title ?? $first->description;
         $groupArray   = $transformer->transformObject($group);
-        $subTitle     = (string)trans('firefly.convert_to_'.$destinationType->type, ['description' => $groupTitle]);
+        $subTitle     = (string)trans('firefly.convert_to_' . $destinationType->type, ['description' => $groupTitle]);
         $subTitleIcon = 'fa-exchange';
 
         // get a list of asset accounts and liabilities and stuff, in various combinations:
@@ -120,7 +120,7 @@ class ConvertController extends Controller
 
         if ($sourceType->type === $destinationType->type) { // cannot convert to its own type.
             Log::debug('This is already a transaction of the expected type..');
-            session()->flash('info', (string)trans('firefly.convert_is_already_type_'.$destinationType->type));
+            session()->flash('info', (string)trans('firefly.convert_is_already_type_' . $destinationType->type));
 
             return redirect(route('transactions.show', [$group->id]));
         }
@@ -165,7 +165,7 @@ class ConvertController extends Controller
 
             // maybe it's a liability thing:
             if (in_array($account->accountType->type, $liabilityTypes, true)) {
-                $role = 'l_'.$account->accountType->type;
+                $role = 'l_' . $account->accountType->type;
             }
             if (AccountType::CASH === $account->accountType->type) {
                 $role = 'cash_account';
@@ -175,7 +175,7 @@ class ConvertController extends Controller
                 $role = 'revenue_account';
             }
 
-            $key                         = (string)trans('firefly.opt_group_'.$role);
+            $key                         = (string)trans('firefly.opt_group_' . $role);
             $grouped[$key][$account->id] = $name;
         }
 
@@ -204,7 +204,7 @@ class ConvertController extends Controller
 
             // maybe it's a liability thing:
             if (in_array($account->accountType->type, $liabilityTypes, true)) {
-                $role = 'l_'.$account->accountType->type;
+                $role = 'l_' . $account->accountType->type;
             }
             if (AccountType::CASH === $account->accountType->type) {
                 $role = 'cash_account';
@@ -214,7 +214,7 @@ class ConvertController extends Controller
                 $role = 'expense_account';
             }
 
-            $key                         = (string)trans('firefly.opt_group_'.$role);
+            $key                         = (string)trans('firefly.opt_group_' . $role);
             $grouped[$key][$account->id] = $name;
         }
 
@@ -236,9 +236,9 @@ class ConvertController extends Controller
         foreach ($accountList as $account) {
             $balance                     = app('steam')->balance($account, today());
             $currency                    = $this->accountRepository->getAccountCurrency($account) ?? $defaultCurrency;
-            $role                        = 'l_'.$account->accountType->type;
-            $key                         = (string)trans('firefly.opt_group_'.$role);
-            $grouped[$key][$account->id] = $account->name.' ('.app('amount')->formatAnything($currency, $balance, false).')';
+            $role                        = 'l_' . $account->accountType->type;
+            $key                         = (string)trans('firefly.opt_group_' . $role);
+            $grouped[$key][$account->id] = $account->name . ' (' . app('amount')->formatAnything($currency, $balance, false) . ')';
         }
 
         return $grouped;
@@ -264,8 +264,8 @@ class ConvertController extends Controller
                 $role = 'no_account_type';
             }
 
-            $key                         = (string)trans('firefly.opt_group_'.$role);
-            $grouped[$key][$account->id] = $account->name.' ('.app('amount')->formatAnything($currency, $balance, false).')';
+            $key                         = (string)trans('firefly.opt_group_' . $role);
+            $grouped[$key][$account->id] = $account->name . ' (' . app('amount')->formatAnything($currency, $balance, false) . ')';
         }
 
         return $grouped;
@@ -274,9 +274,9 @@ class ConvertController extends Controller
     /**
      * Do the conversion.
      *
-     * @param  Request  $request
-     * @param  TransactionType  $destinationType
-     * @param  TransactionGroup  $group
+     * @param Request          $request
+     * @param TransactionType  $destinationType
+     * @param TransactionGroup $group
      *
      * @return RedirectResponse|Redirector
      *
@@ -302,16 +302,16 @@ class ConvertController extends Controller
         // correct transfers:
         $group->refresh();
 
-        session()->flash('success', (string)trans('firefly.converted_to_'.$destinationType->type));
+        session()->flash('success', (string)trans('firefly.converted_to_' . $destinationType->type));
         event(new UpdatedTransactionGroup($group, true, true));
 
         return redirect(route('transactions.show', [$group->id]));
     }
 
     /**
-     * @param  TransactionJournal  $journal
-     * @param  TransactionType  $transactionType
-     * @param  array  $data
+     * @param TransactionJournal $journal
+     * @param TransactionType    $transactionType
+     * @param array              $data
      *
      * @return TransactionJournal
      * @throws FireflyException

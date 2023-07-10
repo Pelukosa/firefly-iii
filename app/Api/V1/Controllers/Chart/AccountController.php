@@ -76,7 +76,7 @@ class AccountController extends Controller
      * This endpoint is documented at:
      * https://api-docs.firefly-iii.org/?urls.primaryName=2.0.0%20(v1)#/charts/getChartAccountOverview
      *
-     * @param  DateRequest  $request
+     * @param DateRequest $request
      *
      * @return JsonResponse
      * @throws FireflyException
@@ -113,7 +113,7 @@ class AccountController extends Controller
             if (null === $currency) {
                 $currency = $default;
             }
-            $currentSet   = [
+            $currentSet = [
                 'label'                   => $account->name,
                 'currency_id'             => (string)$currency->id,
                 'currency_code'           => $currency->code,
@@ -125,6 +125,7 @@ class AccountController extends Controller
                 'yAxisID'                 => 0, // 0, 1, 2
                 'entries'                 => [],
             ];
+            // TODO this code is also present in the V2 chart account controller so this method is due to be deprecated.
             $currentStart = clone $start;
             $range        = app('steam')->balanceInRange($account, $start, clone $end);
             // 2022-10-11 this method no longer converts to float.

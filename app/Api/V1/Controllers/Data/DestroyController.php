@@ -58,7 +58,7 @@ class DestroyController extends Controller
      * This endpoint is documented at:
      * https://api-docs.firefly-iii.org/?urls.primaryName=2.0.0%20(v1)#/data/destroyData
      *
-     * @param  DestroyRequest  $request
+     * @param DestroyRequest $request
      *
      * @return JsonResponse
      * @throws FireflyException
@@ -287,7 +287,7 @@ class DestroyController extends Controller
     }
 
     /**
-     * @param  array  $types
+     * @param array $types
      */
     private function destroyAccounts(array $types): void
     {
@@ -312,7 +312,7 @@ class DestroyController extends Controller
     }
 
     /**
-     * @param  array  $types
+     * @param array $types
      */
     private function destroyTransactions(array $types): void
     {

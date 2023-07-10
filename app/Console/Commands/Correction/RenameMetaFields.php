@@ -24,6 +24,7 @@ declare(strict_types=1);
 namespace FireflyIII\Console\Commands\Correction;
 
 use DB;
+use FireflyIII\Console\Commands\ShowsFriendlyMessages;
 use Illuminate\Console\Command;
 
 /**
@@ -31,18 +32,10 @@ use Illuminate\Console\Command;
  */
 class RenameMetaFields extends Command
 {
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
+    use ShowsFriendlyMessages;
+
     protected $description = 'Rename changed meta fields.';
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'firefly-iii:rename-meta-fields';
+    protected $signature   = 'firefly-iii:rename-meta-fields';
 
     private int $count;
 
@@ -54,7 +47,6 @@ class RenameMetaFields extends Command
     public function handle(): int
     {
         $this->count = 0;
-        $start       = microtime(true);
 
         $changes = [
             'original-source' => 'original_source',
@@ -74,21 +66,17 @@ class RenameMetaFields extends Command
             $this->rename($original, $update);
         }
         if (0 === $this->count) {
-            $this->line('All meta fields are correct.');
+            $this->friendlyPositive('All meta fields are correct.');
         }
         if (0 !== $this->count) {
-            $this->line(sprintf('Renamed %d meta field(s).', $this->count));
+            $this->friendlyInfo(sprintf('Renamed %d meta field(s).', $this->count));
         }
-
-        $end = round(microtime(true) - $start, 2);
-        $this->info(sprintf('Renamed meta fields in %s seconds', $end));
-
         return 0;
     }
 
     /**
-     * @param  string  $original
-     * @param  string  $update
+     * @param string $original
+     * @param string $update
      */
     private function rename(string $original, string $update): void
     {

@@ -54,7 +54,7 @@ class IsValidAttachmentModel implements Rule
      * IsValidAttachmentModel constructor.
      *
      *
-     * @param  string  $model
+     * @param string $model
      */
     public function __construct(string $model)
     {
@@ -63,7 +63,7 @@ class IsValidAttachmentModel implements Rule
     }
 
     /**
-     * @param  string  $model
+     * @param string $model
      *
      * @return string
      */
@@ -89,8 +89,8 @@ class IsValidAttachmentModel implements Rule
     /**
      * Determine if the validation rule passes.
      *
-     * @param  string  $attribute
-     * @param  mixed  $value
+     * @param string $attribute
+     * @param mixed  $value
      *
      * @return bool
      */
@@ -120,7 +120,7 @@ class IsValidAttachmentModel implements Rule
     }
 
     /**
-     * @param  int  $value
+     * @param int $value
      *
      * @return bool
      */
@@ -134,7 +134,7 @@ class IsValidAttachmentModel implements Rule
     }
 
     /**
-     * @param  int  $value
+     * @param int $value
      *
      * @return bool
      */
@@ -148,7 +148,7 @@ class IsValidAttachmentModel implements Rule
     }
 
     /**
-     * @param  int  $value
+     * @param int $value
      *
      * @return bool
      */
@@ -162,7 +162,7 @@ class IsValidAttachmentModel implements Rule
     }
 
     /**
-     * @param  int  $value
+     * @param int $value
      *
      * @return bool
      */
@@ -176,7 +176,7 @@ class IsValidAttachmentModel implements Rule
     }
 
     /**
-     * @param  int  $value
+     * @param int $value
      *
      * @return bool
      */
@@ -189,7 +189,7 @@ class IsValidAttachmentModel implements Rule
     }
 
     /**
-     * @param  int  $value
+     * @param int $value
      *
      * @return bool
      */
@@ -203,7 +203,7 @@ class IsValidAttachmentModel implements Rule
     }
 
     /**
-     * @param  int  $value
+     * @param int $value
      *
      * @return bool
      */
@@ -217,7 +217,7 @@ class IsValidAttachmentModel implements Rule
     }
 
     /**
-     * @param  int  $value
+     * @param int $value
      *
      * @return bool
      */

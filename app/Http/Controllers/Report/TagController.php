@@ -31,8 +31,8 @@ use FireflyIII\Models\Tag;
 use FireflyIII\Repositories\Tag\OperationsRepositoryInterface;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Support\Collection;
-use Illuminate\View\View;
 use Illuminate\Support\Facades\Log;
+use Illuminate\View\View;
 use Throwable;
 
 /**
@@ -61,10 +61,10 @@ class TagController extends Controller
     }
 
     /**
-     * @param  Collection  $accounts
-     * @param  Collection  $tags
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Collection $tags
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return Factory|View
      */
@@ -160,10 +160,10 @@ class TagController extends Controller
     }
 
     /**
-     * @param  Collection  $accounts
-     * @param  Collection  $tags
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Collection $tags
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return Factory|View
      */
@@ -264,10 +264,10 @@ class TagController extends Controller
     }
 
     /**
-     * @param  Collection  $accounts
-     * @param  Collection  $tags
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Collection $tags
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return string
      * @throws FireflyException
@@ -317,10 +317,10 @@ class TagController extends Controller
     }
 
     /**
-     * @param  Collection  $accounts
-     * @param  Collection  $tags
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Collection $tags
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return string
      * @throws FireflyException
@@ -370,10 +370,10 @@ class TagController extends Controller
     }
 
     /**
-     * @param  Collection  $accounts
-     * @param  Collection  $tags
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Collection $tags
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return Factory|View
      */
@@ -478,10 +478,10 @@ class TagController extends Controller
     }
 
     /**
-     * @param  Collection  $accounts
-     * @param  Collection  $tags
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Collection $tags
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return string
      * @throws FireflyException
@@ -529,10 +529,10 @@ class TagController extends Controller
     }
 
     /**
-     * @param  Collection  $accounts
-     * @param  Collection  $tags
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Collection $tags
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return string
      * @throws FireflyException

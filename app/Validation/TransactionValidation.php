@@ -42,7 +42,7 @@ trait TransactionValidation
     /**
      * Validates the given account information. Switches on given transaction type.
      *
-     * @param  Validator  $validator
+     * @param Validator $validator
      */
     public function validateAccountInformation(Validator $validator): void
     {
@@ -57,7 +57,7 @@ trait TransactionValidation
 
         Log::debug(sprintf('Going to loop %d transaction(s)', count($transactions)));
         /**
-         * @var int $index
+         * @var int   $index
          * @var array $transaction
          */
         foreach ($transactions as $index => $transaction) {
@@ -69,7 +69,7 @@ trait TransactionValidation
     }
 
     /**
-     * @param  Validator  $validator
+     * @param Validator $validator
      *
      * @return array
      */
@@ -90,16 +90,16 @@ trait TransactionValidation
             Log::error(sprintf('Transactions array is not countable, because its a %s', gettype($transactions)));
             return [];
         }
-        Log::debug('Returning transactions.', $transactions);
+        //Log::debug('Returning transactions.', $transactions);
 
         return $transactions;
     }
 
     /**
-     * @param  Validator  $validator
-     * @param  int  $index
-     * @param  string  $transactionType
-     * @param  array  $transaction
+     * @param Validator $validator
+     * @param int       $index
+     * @param string    $transactionType
+     * @param array     $transaction
      */
     protected function validateSingleAccount(Validator $validator, int $index, string $transactionType, array $transaction): void
     {
@@ -154,20 +154,53 @@ trait TransactionValidation
     }
 
     /**
+     * @param Validator $validator
+     * @param string    $transactionType
+     * @param int       $index
+     * @param array     $source
+     * @param array     $destination
+     * @return void
+     */
+    protected function sanityCheckReconciliation(Validator $validator, string $transactionType, int $index, array $source, array $destination): void
+    {
+        Log::debug('Now in sanityCheckReconciliation');
+        if (TransactionType::RECONCILIATION === ucfirst($transactionType) &&
+            null === $source['id'] && null === $source['name'] && null === $destination['id'] && null === $destination['name']
+        ) {
+            Log::debug('Both are NULL, error!');
+            $validator->errors()->add(sprintf('transactions.%d.source_id', $index), trans('validation.reconciliation_either_account'));
+            $validator->errors()->add(sprintf('transactions.%d.source_name', $index), trans('validation.reconciliation_either_account'));
+            $validator->errors()->add(sprintf('transactions.%d.destination_id', $index), trans('validation.reconciliation_either_account'));
+            $validator->errors()->add(sprintf('transactions.%d.destination_name', $index), trans('validation.reconciliation_either_account'));
+        }
+
+        if (TransactionType::RECONCILIATION === $transactionType &&
+            (null !== $source['id'] || null !== $source['name']) &&
+            (null !== $destination['id'] || null !== $destination['name'])) {
+            Log::debug('Both are not NULL, error!');
+            $validator->errors()->add(sprintf('transactions.%d.source_id', $index), trans('validation.reconciliation_either_account'));
+            $validator->errors()->add(sprintf('transactions.%d.source_name', $index), trans('validation.reconciliation_either_account'));
+            $validator->errors()->add(sprintf('transactions.%d.destination_id', $index), trans('validation.reconciliation_either_account'));
+            $validator->errors()->add(sprintf('transactions.%d.destination_name', $index), trans('validation.reconciliation_either_account'));
+        }
+    }
+
+    /**
      * TODO describe this method.
-     * @param  Validator  $validator
-     * @param  AccountValidator  $accountValidator
-     * @param  array  $transaction
-     * @param  string  $transactionType
-     * @param  int  $index
+     *
+     * @param Validator        $validator
+     * @param AccountValidator $accountValidator
+     * @param array            $transaction
+     * @param string           $transactionType
+     * @param int              $index
      * @return void
      */
     private function sanityCheckForeignCurrency(
-        Validator $validator,
+        Validator        $validator,
         AccountValidator $accountValidator,
-        array $transaction,
-        string $transactionType,
-        int $index
+        array            $transaction,
+        string           $transactionType,
+        int              $index
     ): void {
         Log::debug('Now in sanityCheckForeignCurrency()');
         if (0 !== $validator->errors()->count()) {
@@ -259,7 +292,7 @@ trait TransactionValidation
     }
 
     /**
-     * @param  Account  $account
+     * @param Account $account
      * @return bool
      */
     private function isLiabilityOrAsset(Account $account): bool
@@ -268,7 +301,7 @@ trait TransactionValidation
     }
 
     /**
-     * @param  Account  $account
+     * @param Account $account
      * @return bool
      */
     private function isLiability(Account $account): bool
@@ -281,7 +314,7 @@ trait TransactionValidation
     }
 
     /**
-     * @param  Account  $account
+     * @param Account $account
      * @return bool
      */
     private function isAsset(Account $account): bool
@@ -291,7 +324,7 @@ trait TransactionValidation
     }
 
     /**
-     * @param  array  $transaction
+     * @param array $transaction
      * @return bool
      */
     private function hasForeignCurrencyInfo(array $transaction): bool
@@ -312,42 +345,10 @@ trait TransactionValidation
     }
 
     /**
-     * @param  Validator  $validator
-     * @param  string  $transactionType
-     * @param  int  $index
-     * @param  array  $source
-     * @param  array  $destination
-     * @return void
-     */
-    protected function sanityCheckReconciliation(Validator $validator, string $transactionType, int $index, array $source, array $destination): void
-    {
-        Log::debug('Now in sanityCheckReconciliation');
-        if (TransactionType::RECONCILIATION === ucfirst($transactionType) &&
-            null === $source['id'] && null === $source['name'] && null === $destination['id'] && null === $destination['name']
-        ) {
-            Log::debug('Both are NULL, error!');
-            $validator->errors()->add(sprintf('transactions.%d.source_id', $index), trans('validation.reconciliation_either_account'));
-            $validator->errors()->add(sprintf('transactions.%d.source_name', $index), trans('validation.reconciliation_either_account'));
-            $validator->errors()->add(sprintf('transactions.%d.destination_id', $index), trans('validation.reconciliation_either_account'));
-            $validator->errors()->add(sprintf('transactions.%d.destination_name', $index), trans('validation.reconciliation_either_account'));
-        }
-
-        if (TransactionType::RECONCILIATION === $transactionType &&
-            (null !== $source['id'] || null !== $source['name']) &&
-            (null !== $destination['id'] || null !== $destination['name'])) {
-            Log::debug('Both are not NULL, error!');
-            $validator->errors()->add(sprintf('transactions.%d.source_id', $index), trans('validation.reconciliation_either_account'));
-            $validator->errors()->add(sprintf('transactions.%d.source_name', $index), trans('validation.reconciliation_either_account'));
-            $validator->errors()->add(sprintf('transactions.%d.destination_id', $index), trans('validation.reconciliation_either_account'));
-            $validator->errors()->add(sprintf('transactions.%d.destination_name', $index), trans('validation.reconciliation_either_account'));
-        }
-    }
-
-    /**
      * Validates the given account information. Switches on given transaction type.
      *
-     * @param  Validator  $validator
-     * @param  TransactionGroup  $transactionGroup
+     * @param Validator        $validator
+     * @param TransactionGroup $transactionGroup
      */
     public function validateAccountInformationUpdate(Validator $validator, TransactionGroup $transactionGroup): void
     {
@@ -355,11 +356,11 @@ trait TransactionValidation
         $transactions = $this->getTransactionsArray($validator);
 
         /**
-         * @var int $index
+         * @var int   $index
          * @var array $transaction
          */
         foreach ($transactions as $index => $transaction) {
-            if(!is_int($index)) {
+            if (!is_int($index)) {
                 throw new FireflyException('Invalid data submitted: transaction is not array.');
             }
             $this->validateSingleUpdate($validator, $index, $transaction, $transactionGroup);
@@ -367,10 +368,10 @@ trait TransactionValidation
     }
 
     /**
-     * @param  Validator  $validator
-     * @param  int  $index
-     * @param  array  $transaction
-     * @param  TransactionGroup  $transactionGroup
+     * @param Validator        $validator
+     * @param int              $index
+     * @param array            $transaction
+     * @param TransactionGroup $transactionGroup
      */
     protected function validateSingleUpdate(Validator $validator, int $index, array $transaction, TransactionGroup $transactionGroup): void
     {
@@ -393,25 +394,42 @@ trait TransactionValidation
         // get the transaction type using the original transaction group:
         $accountValidator->setTransactionType($this->getTransactionType($transactionGroup, []));
 
-        // validate if the submitted source and / or name are valid
-        if (array_key_exists('source_id', $transaction) || array_key_exists('source_name', $transaction)) {
+        // validate if the submitted source ID/name/iban/number are valid
+        if (
+            array_key_exists('source_id', $transaction) ||
+            array_key_exists('source_name', $transaction) ||
+            array_key_exists('source_iban', $transaction) ||
+            array_key_exists('source_number', $transaction)
+        ) {
             Log::debug('Will try to validate source account information.');
             $sourceId    = (int)($transaction['source_id'] ?? 0);
             $sourceName  = $transaction['source_name'] ?? null;
-            $validSource = $accountValidator->validateSource(['id' => $sourceId, 'name' => $sourceName]);
+            $sourceIban = $transaction['source_iban'] ?? null;
+            $sourceNumber = $transaction['source_number'] ?? null;
+            $validSource = $accountValidator->validateSource(
+                ['id' => $sourceId, 'name' => $sourceName, 'iban' => $sourceIban, 'number' => $sourceNumber]
+            );
 
             // do something with result:
             if (false === $validSource) {
                 app('log')->warning('Looks like the source account is not valid so complain to the user about it.');
                 $validator->errors()->add(sprintf('transactions.%d.source_id', $index), $accountValidator->sourceError);
                 $validator->errors()->add(sprintf('transactions.%d.source_name', $index), $accountValidator->sourceError);
+                $validator->errors()->add(sprintf('transactions.%d.source_iban', $index), $accountValidator->sourceError);
+                $validator->errors()->add(sprintf('transactions.%d.source_number', $index), $accountValidator->sourceError);
 
                 return;
             }
             Log::debug('Source account info is valid.');
         }
 
-        if (array_key_exists('destination_id', $transaction) || array_key_exists('destination_name', $transaction)) {
+        if (
+            array_key_exists('destination_id', $transaction) ||
+            array_key_exists('destination_name', $transaction) ||
+        array_key_exists('destination_iban', $transaction) ||
+            array_key_exists('destination_number', $transaction)
+
+        ) {
             Log::debug('Will try to validate destination account information.');
             // at this point the validator may not have a source account, because it was never submitted for validation.
             // must add it ourselves or the validator can never check if the destination is correct.
@@ -426,7 +444,9 @@ trait TransactionValidation
             }
             $destinationId    = (int)($transaction['destination_id'] ?? 0);
             $destinationName  = $transaction['destination_name'] ?? null;
-            $array            = ['id' => $destinationId, 'name' => $destinationName,];
+            $destinationIban  = $transaction['destination_iban'] ?? null;
+            $destinationNumber  = $transaction['destination_number'] ?? null;
+            $array            = ['id' => $destinationId, 'name' => $destinationName, 'iban' => $destinationIban, 'number' => $destinationNumber];
             $validDestination = $accountValidator->validateDestination($array);
             // do something with result:
             if (false === $validDestination) {
@@ -440,8 +460,8 @@ trait TransactionValidation
     }
 
     /**
-     * @param  TransactionGroup  $group
-     * @param  array  $transactions
+     * @param TransactionGroup $group
+     * @param array            $transactions
      *
      * @return string
      */
@@ -451,8 +471,8 @@ trait TransactionValidation
     }
 
     /**
-     * @param  array  $transaction
-     * @param  TransactionGroup  $transactionGroup
+     * @param array            $transaction
+     * @param TransactionGroup $transactionGroup
      *
      * @return Account|null
      */
@@ -476,7 +496,7 @@ trait TransactionValidation
     /**
      * Adds an error to the validator when there are no transactions in the array of data.
      *
-     * @param  Validator  $validator
+     * @param Validator $validator
      */
     public function validateOneRecurrenceTransaction(Validator $validator): void
     {
@@ -492,7 +512,7 @@ trait TransactionValidation
     /**
      * Adds an error to the validator when there are no transactions in the array of data.
      *
-     * @param  Validator  $validator
+     * @param Validator $validator
      */
     public function validateOneTransaction(Validator $validator): void
     {
@@ -513,7 +533,7 @@ trait TransactionValidation
     }
 
     /**
-     * @param  Validator  $validator
+     * @param Validator $validator
      */
     public function validateTransactionArray(Validator $validator): void
     {
@@ -534,7 +554,7 @@ trait TransactionValidation
     /**
      * All types of splits must be equal.
      *
-     * @param  Validator  $validator
+     * @param Validator $validator
      */
     public function validateTransactionTypes(Validator $validator): void
     {
@@ -563,7 +583,7 @@ trait TransactionValidation
     /**
      * All types of splits must be equal.
      *
-     * @param  Validator  $validator
+     * @param Validator $validator
      */
     public function validateTransactionTypesForUpdate(Validator $validator): void
     {
@@ -586,7 +606,7 @@ trait TransactionValidation
     }
 
     /**
-     * @param  int  $journalId
+     * @param int $journalId
      *
      * @return string
      */
@@ -605,7 +625,7 @@ trait TransactionValidation
     }
 
     /**
-     * @param  Validator  $validator
+     * @param Validator $validator
      */
     private function validateEqualAccounts(Validator $validator): void
     {
@@ -650,8 +670,8 @@ trait TransactionValidation
     }
 
     /**
-     * @param  Validator  $validator
-     * @param  TransactionGroup  $transactionGroup
+     * @param Validator        $validator
+     * @param TransactionGroup $transactionGroup
      */
     private function validateEqualAccountsForUpdate(Validator $validator, TransactionGroup $transactionGroup): void
     {
@@ -691,7 +711,7 @@ trait TransactionValidation
     }
 
     /**
-     * @param  array  $transactions
+     * @param array $transactions
      *
      * @return array
      */
@@ -715,7 +735,7 @@ trait TransactionValidation
     }
 
     /**
-     * @param  int  $journalId
+     * @param int $journalId
      *
      * @return array
      */
@@ -747,8 +767,8 @@ trait TransactionValidation
     }
 
     /**
-     * @param  string  $type
-     * @param  array  $comparison
+     * @param string $type
+     * @param array  $comparison
      *
      * @return bool
      */
@@ -762,7 +782,7 @@ trait TransactionValidation
     }
 
     /**
-     * @param  array  $comparison
+     * @param array $comparison
      *
      * @return bool
      */
@@ -781,7 +801,7 @@ trait TransactionValidation
     }
 
     /**
-     * @param  array  $array
+     * @param array $array
      *
      * @return bool
      */
@@ -791,7 +811,7 @@ trait TransactionValidation
     }
 
     /**
-     * @param  array  $comparison
+     * @param array $comparison
      *
      * @return bool
      */
@@ -810,7 +830,7 @@ trait TransactionValidation
     }
 
     /**
-     * @param  array  $comparison
+     * @param array $comparison
      *
      * @return bool
      */

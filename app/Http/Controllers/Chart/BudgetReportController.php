@@ -71,10 +71,10 @@ class BudgetReportController extends Controller
     /**
      * Chart that groups the expenses by budget.
      *
-     * @param  Collection  $accounts
-     * @param  Collection  $budgets
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Collection $budgets
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return JsonResponse
      */
@@ -107,10 +107,10 @@ class BudgetReportController extends Controller
     /**
      * Chart that groups the expenses by budget.
      *
-     * @param  Collection  $accounts
-     * @param  Collection  $budgets
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Collection $budgets
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return JsonResponse
      */
@@ -144,10 +144,10 @@ class BudgetReportController extends Controller
     /**
      * Chart that groups expenses by the account.
      *
-     * @param  Collection  $accounts
-     * @param  Collection  $budgets
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Collection $budgets
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return JsonResponse
      */
@@ -181,10 +181,10 @@ class BudgetReportController extends Controller
     /**
      * Main overview of a budget in the budget report.
      *
-     * @param  Collection  $accounts
-     * @param  Budget  $budget
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Budget     $budget
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return JsonResponse
      */
@@ -227,8 +227,8 @@ class BudgetReportController extends Controller
     }
 
     /**
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Carbon $start
+     * @param Carbon $end
      *
      * @return array
      */
@@ -252,10 +252,10 @@ class BudgetReportController extends Controller
     /**
      * Chart that groups expenses by the account.
      *
-     * @param  Collection  $accounts
-     * @param  Collection  $budgets
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Collection $budgets
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return JsonResponse
      */

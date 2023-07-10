@@ -50,7 +50,7 @@ class CacheProperties
     }
 
     /**
-     * @param  mixed  $property
+     * @param mixed $property
      */
     public function addProperty($property): void
     {
@@ -103,7 +103,7 @@ class CacheProperties
     }
 
     /**
-     * @param  mixed  $data
+     * @param mixed $data
      */
     public function store($data): void
     {

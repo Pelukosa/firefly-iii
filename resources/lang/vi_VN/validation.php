@@ -61,6 +61,10 @@ return [
     'invalid_selection'              => 'Lựa chọn của bạn không hợp lệ.',
     'belongs_user'                   => 'Giá trị này không hợp lệ cho trường này.',
     'at_least_one_transaction'       => 'Cần ít nhất một giao dịch.',
+    'recurring_transaction_id'       => 'Need at least one transaction.',
+    'need_id_to_match'               => 'You need to submit this entry with an ID for the API to be able to match it.',
+    'too_many_unmatched'             => 'Too many submitted transactions cannot be matched to their respective database entries. Make sure existing entries have a valid ID.',
+    'id_does_not_match'              => 'Submitted ID #:id does not match expected ID. Make sure it matches or omit the field.',
     'at_least_one_repetition'        => 'Cần ít nhất một lần lặp lại.',
     'require_repeat_until'           => 'Yêu cầu một số lần lặp lại hoặc ngày kết thúc (repeat_until). Không phải cả hai.',
     'require_currency_info'          => 'Nội dung của trường này không hợp lệ nếu không có thông tin về tiền tệ.',
@@ -230,17 +234,20 @@ return [
 
     // validation of accounts:
     'withdrawal_source_need_data' => 'Cần lấy ID tài khoản nguồn hợp lệ và / hoặc tên tài khoản nguồn hợp lệ để tiếp tục.',
-    'withdrawal_source_bad_data'  => 'Không thể tìm thấy tài khoản nguồn hợp lệ khi tìm kiếm ID ":id" hoặc tên ":name".',
-    'withdrawal_dest_need_data'   => 'Cần lấy ID tài khoản đích hợp lệ và / hoặc tên tài khoản đích hợp lệ để tiếp tục.',
+    'withdrawal_source_bad_data'  => '[a] Could not find a valid source account when searching for ID ":id" or name ":name".',
+    'withdrawal_dest_need_data'   => '[a] Need to get a valid destination account ID and/or valid destination account name to continue.',
     'withdrawal_dest_bad_data'    => 'Không thể tìm thấy tài khoản đích hợp lệ khi tìm kiếm ID ":id" hoặc tên ":name".',
+
+    'withdrawal_dest_iban_exists' => 'This destination account IBAN is already in use by an asset account or a liability and cannot be used as a withdrawal destination.',
+    'deposit_src_iban_exists'     => 'This source account IBAN is already in use by an asset account or a liability and cannot be used as a deposit source.',
 
     'reconciliation_source_bad_data' => 'Could not find a valid reconciliation account when searching for ID ":id" or name ":name".',
 
-    'generic_source_bad_data' => 'Không thể tìm thấy tài khoản nguồn hợp lệ khi tìm kiếm ID ":id" hoặc tên ":name".',
+    'generic_source_bad_data' => '[e] Could not find a valid source account when searching for ID ":id" or name ":name".',
 
     'deposit_source_need_data' => 'Cần lấy ID tài khoản nguồn hợp lệ và / hoặc tên tài khoản nguồn hợp lệ để tiếp tục.',
-    'deposit_source_bad_data'  => 'Cần lấy ID tài khoản nguồn hợp lệ và / hoặc tên tài khoản nguồn hợp lệ để continuaCould không tìm thấy tài khoản nguồn hợp lệ khi tìm kiếm IDe ":id" hoặc tên ":name".',
-    'deposit_dest_need_data'   => 'Cần lấy ID tài khoản đích hợp lệ và / hoặc tên tài khoản đích hợp lệ để tiếp tục.',
+    'deposit_source_bad_data'  => '[b] Could not find a valid source account when searching for ID ":id" or name ":name".',
+    'deposit_dest_need_data'   => '[b] Need to get a valid destination account ID and/or valid destination account name to continue.',
     'deposit_dest_bad_data'    => 'Không thể tìm thấy tài khoản đích hợp lệ khi tìm kiếm ID ":id" hoặc tên ":name".',
     'deposit_dest_wrong_type'  => 'Tài khoản đích đã gửi không đúng loại.',
 
@@ -257,14 +264,14 @@ return [
 
 
     'transfer_source_need_data' => 'Cần lấy ID tài khoản nguồn hợp lệ và / hoặc tên tài khoản nguồn hợp lệ để tiếp tục.',
-    'transfer_source_bad_data'  => 'Không thể tìm thấy tài khoản nguồn hợp lệ khi tìm kiếm ID ":id" hoặc tên ":name".',
-    'transfer_dest_need_data'   => 'Cần lấy ID tài khoản đích hợp lệ và / hoặc tên tài khoản đích hợp lệ để tiếp tục.',
+    'transfer_source_bad_data'  => '[c] Could not find a valid source account when searching for ID ":id" or name ":name".',
+    'transfer_dest_need_data'   => '[c] Need to get a valid destination account ID and/or valid destination account name to continue.',
     'transfer_dest_bad_data'    => 'Không thể tìm thấy tài khoản đích hợp lệ khi tìm kiếm ID ":id" hoặc tên ":name".',
     'need_id_in_edit'           => 'Mỗi phân chia phải có giao dịch_journal_id (ID hợp lệ hoặc 0).',
 
     'ob_source_need_data'           => 'Cần lấy ID tài khoản nguồn hợp lệ và / hoặc tên tài khoản nguồn hợp lệ để tiếp tục.',
     'lc_source_need_data'           => 'Cần lấy ID tài khoản hợp lệ để tiếp tục.',
-    'ob_dest_need_data'             => 'Cần lấy ID tài khoản đích hợp lệ và / hoặc tên tài khoản đích hợp lệ để tiếp tục.',
+    'ob_dest_need_data'             => '[d] Need to get a valid destination account ID and/or valid destination account name to continue.',
     'ob_dest_bad_data'              => 'Không thể tìm thấy tài khoản đích hợp lệ khi tìm kiếm ID ":id" hoặc tên ":name".',
     'reconciliation_either_account' => 'To submit a reconciliation, you must submit either a source or a destination account. Not both, not neither.',
 

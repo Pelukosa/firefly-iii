@@ -36,7 +36,7 @@ class TagFactory
     private User $user;
 
     /**
-     * @param  string  $tag
+     * @param string $tag
      *
      * @return Tag|null
      */
@@ -73,7 +73,7 @@ class TagFactory
     }
 
     /**
-     * @param  array  $data
+     * @param array $data
      *
      * @return Tag|null
      */
@@ -107,7 +107,7 @@ class TagFactory
     }
 
     /**
-     * @param  User  $user
+     * @param User $user
      */
     public function setUser(User $user): void
     {

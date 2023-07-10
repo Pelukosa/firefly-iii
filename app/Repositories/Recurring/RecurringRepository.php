@@ -47,8 +47,8 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
-use JsonException;
 use Illuminate\Support\Facades\Log;
+use JsonException;
 
 /**
  * Class RecurringRepository
@@ -68,8 +68,8 @@ class RecurringRepository implements RecurringRepositoryInterface
     public function createdPreviously(Recurrence $recurrence, Carbon $date): bool
     {
         // if not, loop set and try to read the recurrence_date. If it matches start or end, return it as well.
-        $set =
-            TransactionJournalMeta::where(function (Builder $q1) use ($recurrence) {
+        $set
+            = TransactionJournalMeta::where(function (Builder $q1) use ($recurrence) {
                 $q1->where('name', 'recurrence_id');
                 $q1->where('data', json_encode((string)$recurrence->id));
             })->get(['journal_meta.transaction_journal_id']);
@@ -110,7 +110,7 @@ class RecurringRepository implements RecurringRepositoryInterface
     /**
      * Destroy a recurring transaction.
      *
-     * @param  Recurrence  $recurrence
+     * @param Recurrence $recurrence
      */
     public function destroy(Recurrence $recurrence): void
     {
@@ -160,7 +160,7 @@ class RecurringRepository implements RecurringRepositoryInterface
     /**
      * Get the budget ID from a recurring transaction transaction.
      *
-     * @param  RecurrenceTransaction  $recTransaction
+     * @param RecurrenceTransaction $recTransaction
      *
      * @return null|int
      */
@@ -180,7 +180,7 @@ class RecurringRepository implements RecurringRepositoryInterface
     /**
      * Get the category from a recurring transaction transaction.
      *
-     * @param  RecurrenceTransaction  $recTransaction
+     * @param RecurrenceTransaction $recTransaction
      *
      * @return null|int
      */
@@ -200,7 +200,7 @@ class RecurringRepository implements RecurringRepositoryInterface
     /**
      * Get the category from a recurring transaction transaction.
      *
-     * @param  RecurrenceTransaction  $recTransaction
+     * @param RecurrenceTransaction $recTransaction
      *
      * @return null|string
      */
@@ -220,9 +220,9 @@ class RecurringRepository implements RecurringRepositoryInterface
     /**
      * Returns the journals created for this recurrence, possibly limited by time.
      *
-     * @param  Recurrence  $recurrence
-     * @param  Carbon|null  $start
-     * @param  Carbon|null  $end
+     * @param Recurrence  $recurrence
+     * @param Carbon|null $start
+     * @param Carbon|null $end
      *
      * @return int
      */
@@ -232,7 +232,7 @@ class RecurringRepository implements RecurringRepositoryInterface
                                    ->where('transaction_journals.user_id', $recurrence->user_id)
                                    ->whereNull('transaction_journals.deleted_at')
                                    ->where('journal_meta.name', 'recurrence_id')
-                                   ->where('journal_meta.data', '"'.$recurrence->id.'"');
+                                   ->where('journal_meta.data', '"' . $recurrence->id . '"');
         if (null !== $start) {
             $query->where('transaction_journals.date', '>=', $start->format('Y-m-d 00:00:00'));
         }
@@ -245,7 +245,7 @@ class RecurringRepository implements RecurringRepositoryInterface
     /**
      * Get journal ID's for journals created by this recurring transaction.
      *
-     * @param  Recurrence  $recurrence
+     * @param Recurrence $recurrence
      *
      * @return array
      */
@@ -261,7 +261,7 @@ class RecurringRepository implements RecurringRepositoryInterface
     /**
      * Get the notes.
      *
-     * @param  Recurrence  $recurrence
+     * @param Recurrence $recurrence
      *
      * @return string
      */
@@ -277,7 +277,7 @@ class RecurringRepository implements RecurringRepositoryInterface
     }
 
     /**
-     * @param  RecurrenceTransaction  $transaction
+     * @param RecurrenceTransaction $transaction
      *
      * @return int|null
      */
@@ -297,7 +297,7 @@ class RecurringRepository implements RecurringRepositoryInterface
     /**
      * Get the tags from the recurring transaction.
      *
-     * @param  RecurrenceTransaction  $transaction
+     * @param RecurrenceTransaction $transaction
      *
      * @return array
      * @throws JsonException
@@ -316,9 +316,9 @@ class RecurringRepository implements RecurringRepositoryInterface
     }
 
     /**
-     * @param  Recurrence  $recurrence
-     * @param  int  $page
-     * @param  int  $pageSize
+     * @param Recurrence $recurrence
+     * @param int        $page
+     * @param int        $pageSize
      *
      * @return LengthAwarePaginator
      */
@@ -346,9 +346,9 @@ class RecurringRepository implements RecurringRepositoryInterface
     }
 
     /**
-     * @param  User|Authenticatable|null  $user
+     * @param User|Authenticatable|null $user
      */
-    public function setUser(User|Authenticatable|null $user): void
+    public function setUser(User | Authenticatable | null $user): void
     {
         if (null !== $user) {
             $this->user = $user;
@@ -356,7 +356,7 @@ class RecurringRepository implements RecurringRepositoryInterface
     }
 
     /**
-     * @param  Recurrence  $recurrence
+     * @param Recurrence $recurrence
      *
      * @return Collection
      */
@@ -391,9 +391,9 @@ class RecurringRepository implements RecurringRepositoryInterface
     /**
      * Calculate the next X iterations starting on the date given in $date.
      *
-     * @param  RecurrenceRepetition  $repetition
-     * @param  Carbon  $date
-     * @param  int  $count
+     * @param RecurrenceRepetition $repetition
+     * @param Carbon               $date
+     * @param int                  $count
      *
      * @return array
      *
@@ -428,10 +428,10 @@ class RecurringRepository implements RecurringRepositoryInterface
      *
      * Only returns them of they are after $afterDate
      *
-     * @param  RecurrenceRepetition  $repetition
-     * @param  Carbon  $date
-     * @param  Carbon  $afterDate
-     * @param  int  $count
+     * @param RecurrenceRepetition $repetition
+     * @param Carbon               $date
+     * @param Carbon               $afterDate
+     * @param int                  $count
      *
      * @return array
      */
@@ -466,8 +466,8 @@ class RecurringRepository implements RecurringRepositoryInterface
     }
 
     /**
-     * @param  Carbon|null  $max
-     * @param  array  $occurrences
+     * @param Carbon|null $max
+     * @param array       $occurrences
      *
      * @return array
      */
@@ -489,7 +489,7 @@ class RecurringRepository implements RecurringRepositoryInterface
     /**
      * Parse the repetition in a string that is user readable.
      *
-     * @param  RecurrenceRepetition  $repetition
+     * @param RecurrenceRepetition $repetition
      *
      * @return string
      * @throws FireflyException
@@ -563,7 +563,7 @@ class RecurringRepository implements RecurringRepositoryInterface
     }
 
     /**
-     * @param  array  $data
+     * @param array $data
      *
      * @return Recurrence
      * @throws FireflyException
@@ -608,9 +608,9 @@ class RecurringRepository implements RecurringRepositoryInterface
     /**
      * Generate events in the date range.
      *
-     * @param  RecurrenceRepetition  $repetition
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param RecurrenceRepetition $repetition
+     * @param Carbon               $start
+     * @param Carbon               $end
      *
      * @return array
      *
@@ -647,8 +647,8 @@ class RecurringRepository implements RecurringRepositoryInterface
     /**
      * Update a recurring transaction.
      *
-     * @param  Recurrence  $recurrence
-     * @param  array  $data
+     * @param Recurrence $recurrence
+     * @param array      $data
      *
      * @return Recurrence
      * @throws FireflyException

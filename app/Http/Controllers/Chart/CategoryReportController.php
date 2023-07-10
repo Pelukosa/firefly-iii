@@ -67,10 +67,10 @@ class CategoryReportController extends Controller
     }
 
     /**
-     * @param  Collection  $accounts
-     * @param  Collection  $categories
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Collection $categories
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return JsonResponse
      */
@@ -103,10 +103,10 @@ class CategoryReportController extends Controller
     }
 
     /**
-     * @param  Collection  $accounts
-     * @param  Collection  $categories
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Collection $categories
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return JsonResponse
      */
@@ -138,10 +138,10 @@ class CategoryReportController extends Controller
     }
 
     /**
-     * @param  Collection  $accounts
-     * @param  Collection  $categories
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Collection $categories
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return JsonResponse
      */
@@ -173,10 +173,10 @@ class CategoryReportController extends Controller
     }
 
     /**
-     * @param  Collection  $accounts
-     * @param  Collection  $categories
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Collection $categories
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return JsonResponse
      */
@@ -209,10 +209,10 @@ class CategoryReportController extends Controller
     }
 
     /**
-     * @param  Collection  $accounts
-     * @param  Collection  $categories
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Collection $categories
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return JsonResponse
      */
@@ -245,10 +245,10 @@ class CategoryReportController extends Controller
     }
 
     /**
-     * @param  Collection  $accounts
-     * @param  Category  $category
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Category   $category
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return JsonResponse
      *
@@ -322,8 +322,8 @@ class CategoryReportController extends Controller
     /**
      * TODO duplicate function
      *
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Carbon $start
+     * @param Carbon $end
      *
      * @return array
      */
@@ -345,10 +345,10 @@ class CategoryReportController extends Controller
     }
 
     /**
-     * @param  Collection  $accounts
-     * @param  Collection  $categories
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Collection $categories
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return JsonResponse
      */
@@ -381,10 +381,10 @@ class CategoryReportController extends Controller
     }
 
     /**
-     * @param  Collection  $accounts
-     * @param  Collection  $categories
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Collection $accounts
+     * @param Collection $categories
+     * @param Carbon     $start
+     * @param Carbon     $end
      *
      * @return JsonResponse
      */

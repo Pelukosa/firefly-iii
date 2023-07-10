@@ -56,7 +56,7 @@ class TagRepository implements TagRepositoryInterface
     }
 
     /**
-     * @param  Tag  $tag
+     * @param Tag $tag
      *
      * @return bool
      * @throws Exception
@@ -92,9 +92,9 @@ class TagRepository implements TagRepositoryInterface
     }
 
     /**
-     * @param  Tag  $tag
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Tag    $tag
+     * @param Carbon $start
+     * @param Carbon $end
      *
      * @return array
      */
@@ -110,9 +110,9 @@ class TagRepository implements TagRepositoryInterface
     }
 
     /**
-     * @param  User|Authenticatable|null  $user
+     * @param User|Authenticatable|null $user
      */
-    public function setUser(User|Authenticatable|null $user): void
+    public function setUser(User | Authenticatable | null $user): void
     {
         if (null !== $user) {
             $this->user = $user;
@@ -120,7 +120,7 @@ class TagRepository implements TagRepositoryInterface
     }
 
     /**
-     * @param  int  $tagId
+     * @param int $tagId
      *
      * @return Tag|null
      */
@@ -130,7 +130,7 @@ class TagRepository implements TagRepositoryInterface
     }
 
     /**
-     * @param  string  $tag
+     * @param string $tag
      *
      * @return Tag|null
      */
@@ -141,7 +141,7 @@ class TagRepository implements TagRepositoryInterface
     }
 
     /**
-     * @param  Tag  $tag
+     * @param Tag $tag
      *
      * @return Carbon|null
      */
@@ -172,7 +172,7 @@ class TagRepository implements TagRepositoryInterface
     }
 
     /**
-     * @param  int|null  $year
+     * @param int|null $year
      *
      * @return array
      */
@@ -189,7 +189,7 @@ class TagRepository implements TagRepositoryInterface
 
         if (null !== $year) {
             Log::debug(sprintf('Get tags with year %s.', $year));
-            $tagQuery->where('tags.date', '>=', $year.'-01-01 00:00:00')->where('tags.date', '<=', $year.'-12-31 23:59:59');
+            $tagQuery->where('tags.date', '>=', $year . '-01-01 00:00:00')->where('tags.date', '<=', $year . '-12-31 23:59:59');
         }
         $collection = $tagQuery->get();
         $return     = [];
@@ -209,9 +209,9 @@ class TagRepository implements TagRepositoryInterface
     }
 
     /**
-     * @param  Tag  $tag
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Tag    $tag
+     * @param Carbon $start
+     * @param Carbon $end
      *
      * @return array
      */
@@ -227,7 +227,7 @@ class TagRepository implements TagRepositoryInterface
     }
 
     /**
-     * @param  Tag  $tag
+     * @param Tag $tag
      *
      * @return Carbon|null
      */
@@ -260,7 +260,7 @@ class TagRepository implements TagRepositoryInterface
     /**
      * Find one or more tags based on the query.
      *
-     * @param  string  $query
+     * @param string $query
      *
      * @return Collection
      */
@@ -274,8 +274,8 @@ class TagRepository implements TagRepositoryInterface
     /**
      * Search the users tags.
      *
-     * @param  string  $query
-     * @param  int  $limit
+     * @param string $query
+     * @param int    $limit
      *
      * @return Collection
      */
@@ -292,7 +292,7 @@ class TagRepository implements TagRepositoryInterface
     }
 
     /**
-     * @param  array  $data
+     * @param array $data
      *
      * @return Tag
      */
@@ -306,9 +306,9 @@ class TagRepository implements TagRepositoryInterface
     }
 
     /**
-     * @param  Tag  $tag
-     * @param  Carbon|null  $start
-     * @param  Carbon|null  $end
+     * @param Tag         $tag
+     * @param Carbon|null $start
+     * @param Carbon|null $end
      *
      * @return array
      *
@@ -376,9 +376,9 @@ class TagRepository implements TagRepositoryInterface
     }
 
     /**
-     * @param  Tag  $tag
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Tag    $tag
+     * @param Carbon $start
+     * @param Carbon $end
      *
      * @return array
      */
@@ -393,8 +393,8 @@ class TagRepository implements TagRepositoryInterface
     }
 
     /**
-     * @param  Tag  $tag
-     * @param  array  $data
+     * @param Tag   $tag
+     * @param array $data
      *
      * @return Tag
      */

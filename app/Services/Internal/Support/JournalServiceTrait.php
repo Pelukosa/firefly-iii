@@ -49,9 +49,9 @@ trait JournalServiceTrait
     private TagFactory                  $tagFactory;
 
     /**
-     * @param  string  $transactionType
-     * @param  string  $direction
-     * @param  array  $data
+     * @param string $transactionType
+     * @param string $direction
+     * @param array  $data
      *
      * @return Account|null
      * @throws FireflyException
@@ -118,8 +118,8 @@ trait JournalServiceTrait
     }
 
     /**
-     * @param  array  $data
-     * @param  array  $types
+     * @param array $data
+     * @param array $types
      *
      * @return Account|null
      */
@@ -146,9 +146,9 @@ trait JournalServiceTrait
     }
 
     /**
-     * @param  Account|null  $account
-     * @param  array  $data
-     * @param  array  $types
+     * @param Account|null $account
+     * @param array        $data
+     * @param array        $types
      *
      * @return Account|null
      */
@@ -177,9 +177,9 @@ trait JournalServiceTrait
     }
 
     /**
-     * @param  Account|null  $account
-     * @param  array  $data
-     * @param  array  $types
+     * @param Account|null $account
+     * @param array        $data
+     * @param array        $types
      *
      * @return Account|null
      */
@@ -210,9 +210,9 @@ trait JournalServiceTrait
     }
 
     /**
-     * @param  Account|null  $account
-     * @param  array  $data
-     * @param  array  $types
+     * @param Account|null $account
+     * @param array        $data
+     * @param array        $types
      *
      * @return Account|null
      */
@@ -243,7 +243,7 @@ trait JournalServiceTrait
     }
 
     /**
-     * @param  array  $types
+     * @param array $types
      * @return null|string
      */
     private function getCreatableType(array $types): ?string
@@ -261,9 +261,9 @@ trait JournalServiceTrait
     }
 
     /**
-     * @param  Account|null  $account
-     * @param  array  $data
-     * @param  string  $preferredType
+     * @param Account|null $account
+     * @param array        $data
+     * @param string       $preferredType
      *
      * @return Account|null
      * @throws FireflyException
@@ -334,9 +334,9 @@ trait JournalServiceTrait
     }
 
     /**
-     * @param  Account|null  $account
-     * @param  array  $data
-     * @param  array  $types
+     * @param Account|null $account
+     * @param array        $data
+     * @param array        $types
      *
      * @return Account|null
      */
@@ -352,7 +352,7 @@ trait JournalServiceTrait
     }
 
     /**
-     * @param  string  $amount
+     * @param string $amount
      *
      * @return string
      * @throws FireflyException
@@ -371,7 +371,7 @@ trait JournalServiceTrait
     }
 
     /**
-     * @param  string|null  $amount
+     * @param string|null $amount
      *
      * @return string|null
      */
@@ -398,8 +398,8 @@ trait JournalServiceTrait
     }
 
     /**
-     * @param  TransactionJournal  $journal
-     * @param  NullArrayObject  $data
+     * @param TransactionJournal $journal
+     * @param NullArrayObject    $data
      *
 
      */
@@ -422,8 +422,8 @@ trait JournalServiceTrait
     }
 
     /**
-     * @param  TransactionJournal  $journal
-     * @param  NullArrayObject  $data
+     * @param TransactionJournal $journal
+     * @param NullArrayObject    $data
      *
 
      */
@@ -441,8 +441,8 @@ trait JournalServiceTrait
     }
 
     /**
-     * @param  TransactionJournal  $journal
-     * @param  string|null  $notes
+     * @param TransactionJournal $journal
+     * @param string|null        $notes
      *
 
      */
@@ -470,8 +470,8 @@ trait JournalServiceTrait
     /**
      * Link tags to journal.
      *
-     * @param  TransactionJournal  $journal
-     * @param  array|null  $tags
+     * @param TransactionJournal $journal
+     * @param array|null         $tags
      *
 
      */
@@ -499,6 +499,5 @@ trait JournalServiceTrait
         Log::debug('End of loop.');
         Log::debug(sprintf('Total nr. of tags: %d', count($tags)), $tags);
         $journal->tags()->sync($set);
-        Log::debug('Done!');
     }
 }

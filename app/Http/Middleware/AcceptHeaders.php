@@ -37,12 +37,12 @@ class AcceptHeaders
     /**
      * Handle the incoming requests.
      *
-     * @param  Request  $request
-     * @param  callable  $next
+     * @param Request  $request
+     * @param callable $next
      * @return Response
      * @throws BadHttpHeaderException
      */
-    public function handle($request, $next): mixed
+    public function handle(Request $request, callable $next): mixed
     {
         $method       = $request->getMethod();
         $accepts      = ['application/x-www-form-urlencoded', 'application/json', 'application/vnd.api+json', 'application/octet-stream', '*/*'];
@@ -67,7 +67,7 @@ class AcceptHeaders
         }
 
         // throw bad request if trace id is not a UUID
-        $uuid = $request->header('X-Trace-Id', null);
+        $uuid = $request->header('X-Trace-Id');
         if (is_string($uuid) && '' !== trim($uuid) && (preg_match('/^[a-f\d]{8}(-[a-f\d]{4}){4}[a-f\d]{8}$/i', trim($uuid)) !== 1)) {
             throw new BadRequestHttpException('Bad X-Trace-Id header.');
         }
@@ -76,8 +76,8 @@ class AcceptHeaders
     }
 
     /**
-     * @param  string  $content
-     * @param  array  $accepted
+     * @param string $content
+     * @param array  $accepted
      * @return bool
      */
     private function acceptsHeader(string $content, array $accepted): bool

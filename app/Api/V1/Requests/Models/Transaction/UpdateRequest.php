@@ -62,7 +62,6 @@ class UpdateRequest extends FormRequest
      */
     public function getAll(): array
     {
-
         Log::debug(sprintf('Now in %s', __METHOD__));
         $this->integerFields = [
             'order',
@@ -165,7 +164,7 @@ class UpdateRequest extends FormRequest
 
         /** @var array $transaction */
         foreach ($this->get('transactions') as $transaction) {
-            if(!is_array($transaction)) {
+            if (!is_array($transaction)) {
                 throw new FireflyException('Invalid data submitted: transaction is not array.');
             }
             // default response is to update nothing in the transaction:
@@ -186,8 +185,8 @@ class UpdateRequest extends FormRequest
     /**
      * For each field, add it to the array if a reference is present in the request:
      *
-     * @param  array  $current
-     * @param  array  $transaction
+     * @param array $current
+     * @param array $transaction
      *
      * @return array
      */
@@ -203,8 +202,8 @@ class UpdateRequest extends FormRequest
     }
 
     /**
-     * @param  array  $current
-     * @param  array  $transaction
+     * @param array $current
+     * @param array $transaction
      *
      * @return array
      */
@@ -220,8 +219,8 @@ class UpdateRequest extends FormRequest
     }
 
     /**
-     * @param  array  $current
-     * @param  array  $transaction
+     * @param array $current
+     * @param array $transaction
      *
      * @return array
      */
@@ -237,8 +236,8 @@ class UpdateRequest extends FormRequest
     }
 
     /**
-     * @param  array  $current
-     * @param  array  $transaction
+     * @param array $current
+     * @param array $transaction
      *
      * @return array
      */
@@ -256,8 +255,8 @@ class UpdateRequest extends FormRequest
     }
 
     /**
-     * @param  array  $current
-     * @param  array  $transaction
+     * @param array $current
+     * @param array $transaction
      *
      * @return array
      */
@@ -273,8 +272,8 @@ class UpdateRequest extends FormRequest
     }
 
     /**
-     * @param  array  $current
-     * @param  array  $transaction
+     * @param array $current
+     * @param array $transaction
      *
      * @return array
      */
@@ -290,8 +289,9 @@ class UpdateRequest extends FormRequest
     }
 
     /**
-     * @param  array  $current
-     * @param  array  $transaction
+     * @param array $current
+     * @param array $transaction
+     *
      * @return array
      */
     private function getFloatData(array $current, array $transaction): array
@@ -300,7 +300,7 @@ class UpdateRequest extends FormRequest
             if (array_key_exists($fieldName, $transaction)) {
                 $value = $transaction[$fieldName];
                 if (is_float($value)) {
-                    $current[$fieldName] = sprintf('%.24f', $value);
+                    $current[$fieldName] = sprintf('%.12f', $value);
                 }
                 if (!is_float($value)) {
                     $current[$fieldName] = (string)$value;
@@ -319,6 +319,7 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         Log::debug(sprintf('Now in %s', __METHOD__));
+
         return [
             // basic fields for group:
             'group_title'                           => 'between:1,1000',
@@ -397,7 +398,7 @@ class UpdateRequest extends FormRequest
     /**
      * Configure the validator instance.
      *
-     * @param  Validator  $validator
+     * @param Validator $validator
      *
      * @return void
      */

@@ -108,9 +108,15 @@ abstract class Controller extends BaseController
             if (null !== $date) {
                 try {
                     $obj = Carbon::parse($date);
-                } catch (InvalidDateException|InvalidFormatException $e) {
+                } catch (InvalidDateException | InvalidFormatException $e) {
                     // don't care
-                    app('log')->warning(sprintf('Ignored invalid date "%s" in API controller parameter check: %s', substr($date, 0, 20), $e->getMessage()));
+                    app('log')->warning(
+                        sprintf(
+                            'Ignored invalid date "%s" in API controller parameter check: %s',
+                            substr($date, 0, 20),
+                            $e->getMessage()
+                        )
+                    );
                 }
             }
             $bag->set($field, $obj);
@@ -136,7 +142,7 @@ abstract class Controller extends BaseController
     }
 
     /**
-     * @param  ParameterBag  $bag
+     * @param ParameterBag $bag
      *
      * @return ParameterBag
      */
@@ -170,7 +176,6 @@ abstract class Controller extends BaseController
         return $bag;
     }
 
-
     /**
      * Method to help build URL's.
      *
@@ -191,7 +196,7 @@ abstract class Controller extends BaseController
             $params[$key] = $value;
         }
 
-        return $return.http_build_query($params);
+        return $return . http_build_query($params);
     }
 
     /**
@@ -201,7 +206,7 @@ abstract class Controller extends BaseController
     {
         // create some objects:
         $manager = new Manager();
-        $baseUrl = request()->getSchemeAndHttpHost().'/api/v1';
+        $baseUrl = request()->getSchemeAndHttpHost() . '/api/v1';
         $manager->setSerializer(new JsonApiSerializer($baseUrl));
 
         return $manager;

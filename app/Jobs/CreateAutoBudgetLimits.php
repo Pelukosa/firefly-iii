@@ -54,7 +54,7 @@ class CreateAutoBudgetLimits implements ShouldQueue
      * Create a new job instance.
      *
      *
-     * @param  Carbon|null  $date
+     * @param Carbon|null $date
      */
     public function __construct(?Carbon $date)
     {
@@ -82,7 +82,7 @@ class CreateAutoBudgetLimits implements ShouldQueue
     }
 
     /**
-     * @param  AutoBudget  $autoBudget
+     * @param AutoBudget $autoBudget
      *
      * @throws FireflyException
      */
@@ -148,11 +148,18 @@ class CreateAutoBudgetLimits implements ShouldQueue
 
             return;
         }
+        if (null === $budgetLimit && AutoBudget::AUTO_BUDGET_ADJUSTED === (int)$autoBudget->auto_budget_type) {
+            // budget limit exists already,
+            $this->createAdjustedLimit($autoBudget);
+            Log::debug(sprintf('Done with auto budget #%d', $autoBudget->id));
+
+            return;
+        }
         Log::debug(sprintf('Done with auto budget #%d', $autoBudget->id));
     }
 
     /**
-     * @param  AutoBudget  $autoBudget
+     * @param AutoBudget $autoBudget
      *
      * @return bool
      * @throws FireflyException
@@ -192,9 +199,9 @@ class CreateAutoBudgetLimits implements ShouldQueue
     }
 
     /**
-     * @param  Budget  $budget
-     * @param  Carbon  $start
-     * @param  Carbon  $end
+     * @param Budget $budget
+     * @param Carbon $start
+     * @param Carbon $end
      *
      * @return BudgetLimit|null
      */
@@ -216,10 +223,10 @@ class CreateAutoBudgetLimits implements ShouldQueue
     }
 
     /**
-     * @param  AutoBudget  $autoBudget
-     * @param  Carbon  $start
-     * @param  Carbon  $end
-     * @param  string|null  $amount
+     * @param AutoBudget  $autoBudget
+     * @param Carbon      $start
+     * @param Carbon      $end
+     * @param string|null $amount
      */
     private function createBudgetLimit(AutoBudget $autoBudget, Carbon $start, Carbon $end, ?string $amount = null)
     {
@@ -241,7 +248,7 @@ class CreateAutoBudgetLimits implements ShouldQueue
     }
 
     /**
-     * @param  AutoBudget  $autoBudget
+     * @param AutoBudget $autoBudget
      *
      * @throws FireflyException
      */
@@ -306,7 +313,77 @@ class CreateAutoBudgetLimits implements ShouldQueue
     }
 
     /**
-     * @param  Carbon  $date
+     * @param AutoBudget $autoBudget
+     * @return void
+     */
+    private function createAdjustedLimit(AutoBudget $autoBudget): void
+    {
+        Log::debug(sprintf('Will now manage rollover for auto budget #%d', $autoBudget->id));
+        // current period:
+        $start = app('navigation')->startOfPeriod($this->date, $autoBudget->period);
+        $end   = app('navigation')->endOfPeriod($start, $autoBudget->period);
+
+        // which means previous period:
+        $previousStart = app('navigation')->subtractPeriod($start, $autoBudget->period);
+        $previousEnd   = app('navigation')->endOfPeriod($previousStart, $autoBudget->period);
+
+        Log::debug(
+            sprintf(
+                'Current period is %s-%s, so previous period is %s-%s',
+                $start->format('Y-m-d'),
+                $end->format('Y-m-d'),
+                $previousStart->format('Y-m-d'),
+                $previousEnd->format('Y-m-d')
+            )
+        );
+
+        // has budget limit in previous period?
+        $budgetLimit = $this->findBudgetLimit($autoBudget->budget, $previousStart, $previousEnd);
+
+        if (null === $budgetLimit) {
+            Log::debug('No budget limit exists in previous period, so create one.');
+            // if not, create standard amount, and we're done.
+            $this->createBudgetLimit($autoBudget, $start, $end);
+            return;
+        }
+        Log::debug('Budget limit exists for previous period.');
+
+        // if has one, calculate expenses and use that as a base.
+        $repository = app(OperationsRepositoryInterface::class);
+        $repository->setUser($autoBudget->budget->user);
+        $spent       = $repository->sumExpenses($previousStart, $previousEnd, null, new Collection([$autoBudget->budget]), $autoBudget->transactionCurrency);
+        $currencyId  = (int)$autoBudget->transaction_currency_id;
+        $spentAmount = $spent[$currencyId]['sum'] ?? '0';
+        Log::debug(sprintf('Spent in previous budget period (%s-%s) is %s', $previousStart->format('Y-m-d'), $previousEnd->format('Y-m-d'), $spentAmount));
+
+        // what you spent in previous period PLUS the amount for the current period,
+        // if that is more than zero, that's the amount that will be set.
+
+        $budgetAvailable = bcadd(bcadd($budgetLimit->amount, $autoBudget->amount), $spentAmount);
+        $totalAmount     = $autoBudget->amount;
+        Log::debug(sprintf('Total amount available for current budget period is %s', $budgetAvailable));
+
+
+        if (-1 !== bccomp($budgetAvailable, $totalAmount)) {
+            Log::info(sprintf('There is no overspending, no need to adjust. Budget limit amount will be %s.', $budgetAvailable));
+            // create budget limit:
+            $this->createBudgetLimit($autoBudget, $start, $end, $budgetAvailable);
+        }
+        if (1 !== bccomp($budgetAvailable, $totalAmount) && 1 === bccomp($budgetAvailable, '0')) {
+            Log::info(sprintf('There was overspending, so the new amount will be %s.', $budgetAvailable));
+            // create budget limit:
+            $this->createBudgetLimit($autoBudget, $start, $end, $budgetAvailable);
+        }
+        if (1 !== bccomp($budgetAvailable, $totalAmount) && -1 === bccomp($budgetAvailable, '0')) {
+            Log::info('There was overspending, but so much even this period cant fix that. Reset it to 1.');
+            // create budget limit:
+            $this->createBudgetLimit($autoBudget, $start, $end, '1');
+        }
+        Log::debug(sprintf('Done with auto budget #%d', $autoBudget->id));
+    }
+
+    /**
+     * @param Carbon $date
      */
     public function setDate(Carbon $date): void
     {

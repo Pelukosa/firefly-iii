@@ -23,7 +23,6 @@ declare(strict_types=1);
 
 namespace FireflyIII\Support;
 
-use Amount as Amt;
 use Eloquent;
 use FireflyIII\Exceptions\FireflyException;
 use FireflyIII\Support\Form\FormSupport;
@@ -42,9 +41,9 @@ class ExpandedForm
     use FormSupport;
 
     /**
-     * @param  string  $name
-     * @param  mixed  $value
-     * @param  array|null  $options
+     * @param string     $name
+     * @param mixed      $value
+     * @param array|null $options
      *
      * @return string
      * @throws FireflyException
@@ -75,10 +74,10 @@ class ExpandedForm
     }
 
     /**
-     * @param  string  $name
-     * @param  int|null  $value
-     * @param  mixed  $checked
-     * @param  array|null  $options
+     * @param string     $name
+     * @param int|null   $value
+     * @param mixed      $checked
+     * @param array|null $options
      *
      * @return string
      * @throws FireflyException
@@ -112,9 +111,9 @@ class ExpandedForm
     }
 
     /**
-     * @param  string  $name
-     * @param  mixed  $value
-     * @param  array|null  $options
+     * @param string     $name
+     * @param mixed      $value
+     * @param array|null $options
      *
      * @return string
      * @throws FireflyException
@@ -138,8 +137,8 @@ class ExpandedForm
     }
 
     /**
-     * @param  string  $name
-     * @param  array|null  $options
+     * @param string     $name
+     * @param array|null $options
      *
      * @return string
      * @throws FireflyException
@@ -162,9 +161,9 @@ class ExpandedForm
     }
 
     /**
-     * @param  string  $name
-     * @param  mixed  $value
-     * @param  array|null  $options
+     * @param string     $name
+     * @param mixed      $value
+     * @param array|null $options
      *
      * @return string
      * @throws FireflyException
@@ -176,7 +175,7 @@ class ExpandedForm
         $options         = $this->expandOptionArray($name, $label, $options);
         $classes         = $this->getHolderClasses($name);
         $value           = $this->fillFieldValue($name, $value);
-        $options['step'] = '1';
+        $options['step'] = $options['step'] ?? '1';
         try {
             $html = view('form.integer', compact('classes', 'name', 'label', 'value', 'options'))->render();
         } catch (Throwable $e) {
@@ -189,9 +188,9 @@ class ExpandedForm
     }
 
     /**
-     * @param  string  $name
-     * @param  mixed  $value
-     * @param  array|null  $options
+     * @param string     $name
+     * @param mixed      $value
+     * @param array|null $options
      *
      * @return string
      * @throws FireflyException
@@ -215,7 +214,7 @@ class ExpandedForm
     }
 
     /**
-     * @param  Collection  $set
+     * @param Collection $set
      *
      * @return array
      *
@@ -242,69 +241,10 @@ class ExpandedForm
         return $selectList;
     }
 
-    /**
-     * @param  string  $name
-     * @param  mixed  $value
-     * @param  array|null  $options
-     *
-     * @return string
-     * @throws FireflyException
-     */
-    public function nonSelectableAmount(string $name, $value = null, array $options = null): string
-    {
-        $label            = $this->label($name, $options);
-        $options          = $this->expandOptionArray($name, $label, $options);
-        $classes          = $this->getHolderClasses($name);
-        $value            = $this->fillFieldValue($name, $value);
-        $options['step']  = 'any';
-        $selectedCurrency = $options['currency'] ?? Amt::getDefaultCurrency();
-        unset($options['currency'], $options['placeholder']);
-
-        // make sure value is formatted nicely:
-        if (null !== $value && '' !== $value) {
-            //            $value = round((float)$value, $selectedCurrency->decimal_places);
-        }
-        try {
-            $html = view('form.non-selectable-amount', compact('selectedCurrency', 'classes', 'name', 'label', 'value', 'options'))->render();
-        } catch (Throwable $e) {
-            Log::debug(sprintf('Could not render nonSelectableAmount(): %s', $e->getMessage()));
-            $html = 'Could not render nonSelectableAmount.';
-            throw new FireflyException($html, 0, $e);
-        }
-
-        return $html;
-    }
 
     /**
-     * @param  string  $name
-     * @param  mixed  $value
-     * @param  array|null  $options
-     *
-     * @return string
-     * @throws FireflyException
-     */
-    public function number(string $name, $value = null, array $options = null): string
-    {
-        $label           = $this->label($name, $options);
-        $options         = $this->expandOptionArray($name, $label, $options);
-        $classes         = $this->getHolderClasses($name);
-        $value           = $this->fillFieldValue($name, $value);
-        $options['step'] = 'any';
-        unset($options['placeholder']);
-        try {
-            $html = view('form.number', compact('classes', 'name', 'label', 'value', 'options'))->render();
-        } catch (Throwable $e) {
-            Log::debug(sprintf('Could not render number(): %s', $e->getMessage()));
-            $html = 'Could not render number.';
-            throw new FireflyException($html, 0, $e);
-        }
-
-        return $html;
-    }
-
-    /**
-     * @param  null  $value
-     * @param  array|null  $options
+     * @param null       $value
+     * @param array|null $options
      *
      * @return string
      * @throws FireflyException
@@ -334,8 +274,8 @@ class ExpandedForm
     }
 
     /**
-     * @param  string  $type
-     * @param  string  $name
+     * @param string $type
+     * @param string $name
      *
      * @return string
      * @throws FireflyException
@@ -354,8 +294,8 @@ class ExpandedForm
     }
 
     /**
-     * @param  string  $name
-     * @param  array|null  $options
+     * @param string     $name
+     * @param array|null $options
      *
      * @return string
      * @throws FireflyException
@@ -379,9 +319,9 @@ class ExpandedForm
     /**
      * Function to render a percentage.
      *
-     * @param  string  $name
-     * @param  mixed  $value
-     * @param  array|null  $options
+     * @param string     $name
+     * @param mixed      $value
+     * @param array|null $options
      *
      * @return string
      * @throws FireflyException
@@ -406,9 +346,9 @@ class ExpandedForm
     }
 
     /**
-     * @param  string  $name
-     * @param  mixed  $value
-     * @param  array|null  $options
+     * @param string     $name
+     * @param mixed      $value
+     * @param array|null $options
      *
      * @return string
      * @throws FireflyException
@@ -430,9 +370,9 @@ class ExpandedForm
     }
 
     /**
-     * @param  string  $name
-     * @param  mixed  $value
-     * @param  array|null  $options
+     * @param string     $name
+     * @param mixed      $value
+     * @param array|null $options
      *
      * @return string
      * @throws FireflyException
@@ -455,9 +395,9 @@ class ExpandedForm
     }
 
     /**
-     * @param  string  $name
-     * @param  mixed  $value
-     * @param  array|null  $options
+     * @param string     $name
+     * @param mixed      $value
+     * @param array|null $options
      *
      * @return string
      * @throws FireflyException

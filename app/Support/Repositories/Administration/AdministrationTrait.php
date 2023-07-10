@@ -34,8 +34,8 @@ use Illuminate\Contracts\Auth\Authenticatable;
  */
 trait AdministrationTrait
 {
-    protected User       $user;
     protected ?int       $administrationId = null;
+    protected User       $user;
     protected ?UserGroup $userGroup        = null;
 
     /**
@@ -47,7 +47,7 @@ trait AdministrationTrait
     }
 
     /**
-     * @param  int  $administrationId
+     * @param int $administrationId
      * @throws FireflyException
      */
     public function setAdministrationId(int $administrationId): void
@@ -63,8 +63,8 @@ trait AdministrationTrait
     {
         if (null !== $this->administrationId) {
             $memberships = GroupMembership::where('user_id', $this->user->id)
-                ->where('user_group_id', $this->administrationId)
-                ->count();
+                                          ->where('user_group_id', $this->administrationId)
+                                          ->count();
             if (0 === $memberships) {
                 throw new FireflyException(sprintf('User #%d has no access to administration #%d', $this->user->id, $this->administrationId));
             }
@@ -74,8 +74,7 @@ trait AdministrationTrait
         throw new FireflyException(sprintf('Cannot validate administration for user #%d', $this->user->id));
     }
 
-
-    public function setUser(Authenticatable|User|null $user): void
+    public function setUser(Authenticatable | User | null $user): void
     {
         if (null !== $user) {
             $this->user = $user;
